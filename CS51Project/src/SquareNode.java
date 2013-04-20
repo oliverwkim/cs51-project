@@ -4,6 +4,8 @@ public class SquareNode extends Node {
 	private static final int maxConnections = 4;
 	private int marker = 0;
 
+	
+	// hi Roger
 	public SquareNode(){
 		super(maxConnections);
 	}
