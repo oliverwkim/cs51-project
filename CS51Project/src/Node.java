@@ -3,10 +3,10 @@ public abstract class Node {
 	protected Point position;
 	protected boolean passable;
 	protected int cost;
-	
+
 	// Array of all Nodes this Node is connected to
 	protected Node[] connections;
-	
+
 	public Node(int maxConnections){
 		position = new Point(0,0);
 		passable = true;
@@ -20,17 +20,17 @@ public abstract class Node {
 		cost = 1;
 		connections = new Node[maxConnections];
 	}
-	
+
 	public Node(int x, int y, int c, boolean pass, int maxConnections){
 		position = new Point(x, y);
 		passable = pass;
 		cost = c;
 		connections = new Node[maxConnections];
 	}
-	
+
 	// Adds the specified Node to connections
 	abstract void linkNode(Node n);
-	
+
 	Node[] connectedNodes(){
 		return connections;
 	}
