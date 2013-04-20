@@ -2,6 +2,7 @@ public class SquareNode extends Node {
 
 	// Maximum number of nodes this can be connected to
 	private static final int maxConnections = 4;
+	private int marker = 0;
 	
 	public SquareNode(){
 		super(maxConnections);
@@ -16,7 +17,7 @@ public class SquareNode extends Node {
 	}
 	
 	void linkNode(Node n) {
-		
+		connections[marker++] = n;
 	}
 
 }
