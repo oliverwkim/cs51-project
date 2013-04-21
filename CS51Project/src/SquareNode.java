@@ -19,9 +19,16 @@ public class SquareNode extends Node {
 		super(x, y, cost, pass, maxConnections);
 		marker = 0;
 	}
+	
+	public int getMaxConnections(){
+		return maxConnections;
+	}
 
-	void linkNode(Node n) {
-		connections[marker++] = n;
+	public void linkNode(Node n) {
+		if (marker < maxConnections)
+			connections[marker++] = n;
+		else
+			return;
 	}
 
 }
