@@ -18,10 +18,11 @@ public class AStar {
 			
 			if (current.equals(goal))
 			{
-				return list
+				return list;
 			}
 
-			openSet.
+			openSet.remove(current);
+			closedSet.add(current);
 			
 			if closedSet.add(openSet.poll())
 			{
