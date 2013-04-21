@@ -11,62 +11,45 @@ public class AStar {
 		PriorityQueue openSet = new PriorityQueue<Node>(11, comparator);
 		openSet.add(start);
 		Node current = null;
-		ArrayList<Node> list = new ArrayList<Node>();
+		ArrayList<Node> list = new ArrayList<Node>(); // came_from := the empty map
+
+		start.setGScore(0);
+		start.setFScore(hScore(start, goal));
 		
 		while(openSet.size() != 0)
 		{
 			current = openSet.peek();
 			
 			if (current.equals(goal))
-			{
-				return list;
-			}
+				return list; //reconstruct_path(came_from, goal)
 
 			openSet.remove(current);
 			closedSet.add(current);
 			
-			if closedSet.add(openSet.poll())
+			for (current.getConnections() : neighbor)
 			{
-					current.getConnections()
-			}	
-			else 
-			{
-					failure
+				tentativeGScore = gScore(current) + g.getEdgeLength(current,neighbor);
+
+				if (closedSet.contains(neighbor) && tentativeGScore >= gScore(neighbor))
+					continue;
+
+				if (!openSet.contains(neighbor) || tentativeGScore < gScore(neighbor))
+				{
+					//came_from[neighbor] := current
+					neighbor.setGScore(tentativeGScore);
+					neighbor.setFScore(tentativeGScore + hScore(neighbor, goal));
+
+					if(!openSet.contains(neighbor))
+						openSet.add(neighbor);
+				}
+
 			}
+
+			return null;
 
 		}
 		/*
-		 *  function A*(start,goal)
-     closedset := the empty set    // The set of nodes already evaluated.
-     openset := {start}    // The set of tentative nodes to be evaluated, initially containing the start node
-     came_from := the empty map    // The map of navigated nodes.
- 
-     g_score[start] := 0    // Cost from start along best known path.
-     // Estimated total cost from start to goal through y.
-     f_score[start] := g_score[start] + heuristic_cost_estimate(start, goal)
- 
-     while openset is not empty
-         current := the node in openset having the lowest f_score[] value
-         if current = goal
-             return reconstruct_path(came_from, goal)
- 
-         remove current from openset
-         add current to closedset
-         for each neighbor in neighbor_nodes(current)
-             tentative_g_score := g_score[current] + dist_between(current,neighbor)
-             if neighbor in closedset
-                 if tentative_g_score >= g_score[neighbor]
-                     continue
- 
-             if neighbor not in openset or tentative_g_score < g_score[neighbor] 
-                 came_from[neighbor] := current
-                 g_score[neighbor] := tentative_g_score
-                 f_score[neighbor] := g_score[neighbor] + heuristic_cost_estimate(neighbor, goal)
-                 if neighbor not in openset
-                     add neighbor to openset
- 
-     return failure
- 
+
  function reconstruct_path(came_from, current_node)
      if current_node in came_from
          p := reconstruct_path(came_from, came_from[current_node])
@@ -78,9 +61,16 @@ public class AStar {
 		 */
 	}
 	
-	public static fScore ()
+	// calculates the h score based on the diagonal shortcut heuristic
+	public int hScore (Node neighbor, Node goal)
 	{
+		int xDiff = Math.abs(neighbor.getPosition().getX() - goal.getPosition().getX());
+		int yDiff = Math.abs(neighbor.getPOsition().getY() - goal.getPosition().getY());
 		
+		if (xDiff > yDiff)
+			return 14 * yDiff + 10 * (xDiff - yDiff)
+		else
+			return 14 * xDiff + 10 * (yDiff - xDiff)
 	}
 
 	
