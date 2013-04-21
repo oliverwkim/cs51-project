@@ -1,5 +1,5 @@
 import java.awt.Point;
-public interface gridInterface {
+public interface GridInterface {
 	// Used to get specific Nodes from inside a grid
 	Node getNode(Point c);
 
