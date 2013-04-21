@@ -12,17 +12,24 @@ public class AStar {
 		Node current = null;
 		ArrayList<Node> list = new ArrayList<Node>();
 		
-		while(openSet.size() == 0)
+		while(openSet.size() != 0)
 		{
 			current = openSet.peek();
 			
 			if (Grid.getCoordinates(current) == Grid.getCoordinates(goal))
 			{
-				return 
+				return list
 			}
-			else 
+			else
 			{
-				
+				if closedSet.add(openSet.poll())
+				{
+					current.getConnections()
+				}	
+				else 
+				{
+					failure
+				}
 			}
 		}
 		/*
@@ -67,6 +74,8 @@ public class AStar {
 		 * 
 		 */
 	}
+
+	
 }
 
 
