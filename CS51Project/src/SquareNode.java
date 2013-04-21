@@ -1,7 +1,7 @@
 public class SquareNode extends Node {
 
 	// Maximum number of nodes this can be connected to
-	private static final int maxConnections = 4;
+	private static final int maxConnections = 8;
 	private int marker;
 
 	
@@ -24,11 +24,14 @@ public class SquareNode extends Node {
 		return maxConnections;
 	}
 
-	public void linkNode(Node n) {
-		if (marker < maxConnections)
-			connections[marker++] = n;
+	public boolean linkNode(Node n, int length) {
+		if (marker < maxConnections){
+			connections[marker] = n;
+			edges[marker++] = new Edge(this, n, length);
+			return true;
+		}
 		else
-			return;
+			return false;
 	}
 
 }

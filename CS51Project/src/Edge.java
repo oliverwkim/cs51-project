@@ -20,10 +20,14 @@ public class Edge {
 		return length;
 	}
 	
+	// Takes in one end of the edge and returns the other end.
+	// Returns null if the passed-in node is not part of this edge
 	public Node getEnd(Node a){
-		if(a==begin)
+		if(a.equals(begin))
 			return end;
-		else
+		else if(a.equals(end))
 			return begin;
+		else
+			return null;
 	}
 }
