@@ -71,5 +71,17 @@ public class AStar {
 		
 	}
 
+	// calculates the h score based on the diagonal shortcut heuristic
+	public int hScore (Node neighbor, Node goal)
+	{
+		int xDiff = Math.abs(neighbor.getPosition().getX() - goal.getPosition().getX());
+		int yDiff = Math.abs(neighbor.getPOsition().getY() - goal.getPosition().getY());
+		
+		if (xDiff > yDiff)
+			return 14 * yDiff + 10 * (xDiff - yDiff)
+		else
+			return 14 * xDiff + 10 * (yDiff - xDiff)
+	}
+
 	
 }
