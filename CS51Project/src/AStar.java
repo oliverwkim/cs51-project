@@ -74,6 +74,11 @@ public class AStar {
 		 * 
 		 */
 	}
+	
+	public static fScore ()
+	{
+		
+	}
 
 	
 }
