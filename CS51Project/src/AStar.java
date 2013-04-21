@@ -1,14 +1,15 @@
-
 import java.awt.Point;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.ArrayList;
-//test
+
 public class AStar {
 	public Node[] algorithm (Grid g, Point start, Point goal)
 	{
-		PriorityQueue closedSet = new PriorityQueue();
-		PriorityQueue openSet = new PriorityQueue(Grid.getCoordinates(start));
+		Comparator<Node> comparator = new NodeComparator();
+		PriorityQueue closedSet = new PriorityQueue<Node>(11, comparator);
+		PriorityQueue openSet = new PriorityQueue<Node>(11, comparator);
+		openSet.add(start);
 		Node current = null;
 		ArrayList<Node> list = new ArrayList<Node>();
 		
@@ -16,21 +17,23 @@ public class AStar {
 		{
 			current = openSet.peek();
 			
-			if (Grid.getCoordinates(current) == Grid.getCoordinates(goal))
+			if (current.equals(goal))
 			{
-				return list
+				return list;
 			}
-			else
+
+			openSet.remove(current);
+			closedSet.add(current);
+			
+			if closedSet.add(openSet.poll())
 			{
-				if closedSet.add(openSet.poll())
-				{
 					current.getConnections()
-				}	
-				else 
-				{
+			}	
+			else 
+			{
 					failure
-				}
 			}
+
 		}
 		/*
 		 *  function A*(start,goal)
