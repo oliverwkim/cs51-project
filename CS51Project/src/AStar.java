@@ -3,7 +3,7 @@ import java.awt.Point;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.ArrayList;
-//test
+
 public class AStar {
 	public Node[] algorithm (Grid g, Point start, Point goal)
 	{
@@ -16,21 +16,22 @@ public class AStar {
 		{
 			current = openSet.peek();
 			
-			if (Grid.getCoordinates(current) == Grid.getCoordinates(goal))
+			if (current.equals(goal))
 			{
 				return list
 			}
-			else
+
+			openSet.
+			
+			if closedSet.add(openSet.poll())
 			{
-				if closedSet.add(openSet.poll())
-				{
 					current.getConnections()
-				}	
-				else 
-				{
+			}	
+			else 
+			{
 					failure
-				}
 			}
+
 		}
 		/*
 		 *  function A*(start,goal)
