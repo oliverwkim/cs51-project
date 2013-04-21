@@ -1,4 +1,3 @@
-
 import java.awt.Point;
 import java.util.PriorityQueue;
 import java.util.Comparator;
@@ -7,8 +6,10 @@ import java.util.ArrayList;
 public class AStar {
 	public Node[] algorithm (Grid g, Point start, Point goal)
 	{
-		PriorityQueue closedSet = new PriorityQueue();
-		PriorityQueue openSet = new PriorityQueue(Grid.getCoordinates(start));
+		Comparator<Node> comparator = new NodeComparator();
+		PriorityQueue closedSet = new PriorityQueue<Node>(11, comparator);
+		PriorityQueue openSet = new PriorityQueue<Node>(11, comparator);
+		openSet.add(start);
 		Node current = null;
 		ArrayList<Node> list = new ArrayList<Node>();
 		
