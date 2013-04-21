@@ -10,20 +10,15 @@ public abstract class Node {
 	// Array of all this Node's edges
 	protected Edge[] edges;
 	
-	protected int fScore;
-
-	public Node(int maxConnections){
-		position = new Point(0,0);
-		passable = true;
-		cost = 1;
-		connections = new Node[maxConnections];
-	}
+	protected int fScore = 0;
+	protected int gScore = 0;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
 		passable = pass;
 		cost = 1;
 		connections = new Node[maxConnections];
+		edges = new Edge[maxConnections];
 	}
 
 	public Node(int x, int y, int c, boolean pass, int maxConnections){
@@ -31,6 +26,7 @@ public abstract class Node {
 		passable = pass;
 		cost = c;
 		connections = new Node[maxConnections];
+		edges = new Edge[maxConnections];
 	}
 
 	/* Links this node to another node, with path length of length between them. 
@@ -73,8 +69,18 @@ public abstract class Node {
 		fScore = score;
 	}
 	
+	int getGScore(){
+		return gScore;
+	}
+	
+	void setGScore(int score){
+		gScore = score;
+	}
+	
 	// Checks for equality of the nodes by checking their positions
 	boolean equals(Node n){
+		if(n == null)
+			return false;
 		return (position.equals(n.getPosition())) && (passable == n.isPassable())
 				&& (cost == n.getCost());
 	}

@@ -4,12 +4,6 @@ public class SquareNode extends Node {
 	private static final int maxConnections = 8;
 	private int marker;
 
-	
-	public SquareNode(){
-		super(maxConnections);
-		marker = 0;
-	}
-
 	public SquareNode(int x, int y, boolean pass){
 		super(x, y, pass, maxConnections);
 		marker = 0;
@@ -36,7 +30,7 @@ public class SquareNode extends Node {
 	
 	public boolean connectionExists(Node n){
 		for (Node t: connections){
-			if(t.equals(n))
+			if(t != null && t.equals(n))
 				return true;
 		}
 		return false;

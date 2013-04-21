@@ -18,6 +18,7 @@ public interface GridInterface{
 	Node[] getNeighbors(Node n);
 	
 	// Returns length of edge connecting two nodes
+	// Returns 0 if they're not connected
 	int getEdgeLength(Node a, Node b);
 	
 	// Methods for creating standard and random grids

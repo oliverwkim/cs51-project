@@ -15,6 +15,14 @@ public class Grid implements GridInterface {
 		grid = new Node[xLength][yLength];
 	}
 	
+	public int getX(){
+		return xLength;
+	}
+	
+	public int getY(){
+		return yLength;
+	}
+	
 	public Node getNode(Point c) {
 		int tempX = (int) c.getX();
 		int tempY = (int) c.getY();
@@ -46,7 +54,11 @@ public class Grid implements GridInterface {
 	// Returns length of the edge connecting 2 nodes
 	// Returns 0 if there is no edge connecting them
 	public int getEdgeLength(Node a, Node b) {
+		if(a == null || b == null)
+			return 0;
 		for(Edge e: a.getEdges()){
+			if(e == null)
+				continue;
 			if(e.getEnd(a).equals(b))
 				return e.getLength();
 		}
@@ -79,7 +91,7 @@ public class Grid implements GridInterface {
 		for(int addX = -1; addX <= 1; addX++){
 			for(int addY = -1; addY <= 1; addY++){
 				Node temp = getNode(x + addX, y + addY);
-				if(temp != null && (addX != 0 && addY != 0))
+				if(temp != null && (addX != 0 || addY != 0))
 					neighbors[place++] = temp;
 			}
 		}
