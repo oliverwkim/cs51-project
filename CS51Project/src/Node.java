@@ -9,6 +9,8 @@ public abstract class Node {
 	
 	// Array of all this Node's edges
 	protected Edge[] edges;
+	
+	protected int fScore;
 
 	public Node(int maxConnections){
 		position = new Point(0,0);
@@ -61,6 +63,14 @@ public abstract class Node {
 	
 	int getCost(){
 		return cost;
+	}
+	
+	int getFScore(){
+		return fScore;
+	}
+	
+	void setFScore(int score){
+		fScore = score;
 	}
 	
 	// Checks for equality of the nodes by checking their positions
