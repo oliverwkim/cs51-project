@@ -15,13 +15,14 @@ public class AStar {
 
 		start.setGScore(0);
 		start.setFScore(hScore(start, goal));
-		
+		list.add(current);
+
 		while(openSet.size() != 0)
 		{
 			current = openSet.peek();
 			
 			if (current.equals(goal))
-				return list; //reconstruct_path(came_from, goal)
+				return list.toArray();
 
 			openSet.remove(current);
 			closedSet.add(current);
@@ -35,7 +36,7 @@ public class AStar {
 
 				if (!openSet.contains(neighbor) || tentativeGScore < gScore(neighbor))
 				{
-					//came_from[neighbor] := current
+					list.add(neighbor);
 					neighbor.setGScore(tentativeGScore);
 					neighbor.setFScore(tentativeGScore + hScore(neighbor, goal));
 
@@ -60,7 +61,7 @@ public class AStar {
 		 * 
 		 */
 	}
-	
+
 	// calculates the h score based on the diagonal shortcut heuristic
 	public int hScore (Node neighbor, Node goal)
 	{
