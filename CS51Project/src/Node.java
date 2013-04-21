@@ -31,9 +31,14 @@ public abstract class Node {
 		connections = new Node[maxConnections];
 	}
 
-	// Links this node to another node, with path length of length between them. 
-	// Returns true if successful, false otherwise
-	abstract boolean linkNode(Node n, int length);
+	/* Links this node to another node, with path length of length between them. 
+	   Returns true if successful, false otherwise 
+	   Linking of nodes should be done through the grid method linkNodes,
+	   since it requires the connection is added to both nodes */
+	abstract boolean addConnection(Node n, int length);
+	
+	// Checks if there is a connection to given node
+	abstract boolean connectionExists(Node n);
 
 	Node[] getConnections(){
 		return connections;
@@ -53,10 +58,12 @@ public abstract class Node {
 	boolean isPassable(){
 		return passable;
 	}
+	
 	int getCost(){
 		return cost;
 	}
 	
+	// Checks for equality of the nodes by checking their positions
 	boolean equals(Node n){
 		return (position.equals(n.getPosition())) && (passable == n.isPassable())
 				&& (cost == n.getCost());

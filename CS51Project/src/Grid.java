@@ -2,19 +2,26 @@ import java.awt.Point;
 
 public class Grid implements GridInterface {
 
-	private Node[] grid;
+	protected Node[][] grid;
+	protected int xLength;
+	protected int yLength;
+	
 	public Node getNode(Point c) {
-		for(Node n: grid){
+		int tempX = (int) c.getX();
+		int tempY = (int) c.getY();
+		if(tempX < xLength && tempY < yLength){
+			return grid[tempX][tempY];
+		}
+		return null;
+		/*for(Node n: grid){
 			if(n.getPosition().equals(c))
 				return n;
 		}
-		return null;
+		return null; */
 	}
 
 	public boolean hasNode(Point c) {
-		if(getNode(c) == null)
-			return false;
-		return true;
+		return (getNode(c) != null);
 	}
 
 	public Node[] getNeighbors(Node n) {
@@ -24,23 +31,31 @@ public class Grid implements GridInterface {
 	// Returns length of the edge connecting 2 nodes
 	// Returns 0 if there is no edge connecting them
 	public int getEdgeLength(Node a, Node b) {
-		for(Node n: grid){
-			for(Edge e: n.getEdges()){
-				if(e.getEnd(a).equals(b) || e.getEnd(b).equals(a))
-					return e.getLength();
-			}
+		for(Edge e: a.getEdges()){
+			if(e.getEnd(a).equals(b))
+				return e.getLength();
 		}
 		return 0;
 	}
+	
+	public boolean linkNodes(Node a, Node b, int length){
+		if(!(a.connectionExists(b) || b.connectionExists(a)))
+			return false;
+		else{
+			a.addConnection(b, length);
+			b.addConnection(a, length);
+			return true;
+		}
+	}
 
 	@Override
-	public void createStandard(int size) {
+	public void createStandard() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void createRandom(int size) {
+	public void createRandom() {
 		// TODO Auto-generated method stub
 
 	}
