@@ -6,6 +6,9 @@ public abstract class Node {
 
 	// Array of all Nodes this Node is connected to
 	protected Node[] connections;
+	
+	// Array of all this Node's edges
+	protected Edge[] edges;
 
 	public Node(int maxConnections){
 		position = new Point(0,0);
@@ -28,16 +31,20 @@ public abstract class Node {
 		connections = new Node[maxConnections];
 	}
 
-	// Adds the specified Node to connections
-	abstract void linkNode(Node n);
+	// Links this node to another node, with path length of length between them. 
+	// Returns true if successful, false otherwise
+	abstract boolean linkNode(Node n, int length);
 
-	Node[] connectedNodes(){
+	Node[] getConnections(){
 		return connections;
 	}
-	void setCoordinates(int x, int y){
+	Edge[] getEdges(){
+		return edges;
+	}
+	void setPosition(int x, int y){
 		position = new Point(x, y);
 	}
-	Point getCoordinates(){
+	Point getPosition(){
 		return position;
 	}
 	void setPassable(boolean value){
@@ -45,6 +52,14 @@ public abstract class Node {
 	}
 	boolean isPassable(){
 		return passable;
+	}
+	int getCost(){
+		return cost;
+	}
+	
+	boolean equals(Node n){
+		return (position.equals(n.getPosition())) && (passable == n.isPassable())
+				&& (cost == n.getCost());
 	}
 
 }
