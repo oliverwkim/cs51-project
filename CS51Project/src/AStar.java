@@ -11,15 +11,10 @@ public class AStar {
 		PriorityQueue openSet = new PriorityQueue<Node>(11, comparator);
 		openSet.add(start);
 		Node current = null;
-		ArrayList<Node> list = new ArrayList<Node>(); // came_from := the empty map    // The map of navigated nodes
+		ArrayList<Node> list = new ArrayList<Node>(); // came_from := the empty map
 
-		/*
-
-     g_score[start] := 0    // Cost from start along best known path.
-     // Estimated total cost from start to goal through y.
-     f_score[start] := g_score[start] + heuristic_cost_estimate(start, goal)
-
-		*/
+		start.setGScore(0);
+		start.setFScore(hScore(start, goal));
 		
 		while(openSet.size() != 0)
 		{
@@ -66,11 +61,6 @@ public class AStar {
 		 */
 	}
 	
-	public static fScore ()
-	{
-		
-	}
-
 	// calculates the h score based on the diagonal shortcut heuristic
 	public int hScore (Node neighbor, Node goal)
 	{
