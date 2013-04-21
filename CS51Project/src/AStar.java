@@ -18,20 +18,23 @@ public class AStar {
 			current = openSet.peek();
 			
 			if (current.equals(goal))
-			{
 				return list;
-			}
 
 			openSet.remove(current);
 			closedSet.add(current);
 			
-			if closedSet.add(openSet.poll())
+			for (current.getConnections() : neighbor)
 			{
-					current.getConnections()
-			}	
-			else 
-			{
-					failure
+				tentativeGScore = gScore(current) + g.getEdgeLength(current,neighbor);
+
+				if (closedSet.contains(neighbor) && tentativeGScore >= gScore(neighbor))
+					continue;
+
+				if (!openSet.contains(neighbor) || tentativeGScore < gScore(neighbor))
+				{
+					
+				}
+
 			}
 
 		}
