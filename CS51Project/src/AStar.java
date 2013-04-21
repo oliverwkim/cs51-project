@@ -3,7 +3,7 @@ import java.awt.Point;
 import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.ArrayList;
-
+//test
 public class AStar {
 	public Node[] algorithm (Grid g, Point start, Point goal)
 	{
@@ -74,23 +74,11 @@ public class AStar {
 		 * 
 		 */
 	}
+	
+	public static fScore ()
+	{
+		
+	}
 
 	
 }
-
-
-
-/************** NEW FILE ****************/
-
-
-public class NodeComparator implements Comparator<Node> {
-
-	@Override public int compare(Node one, Node two) {
-		
-	}
-	
-	public boolean equals(Node one, Node two) {
-		
-	}
-}
-
