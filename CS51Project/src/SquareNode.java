@@ -24,7 +24,7 @@ public class SquareNode extends Node {
 		return maxConnections;
 	}
 
-	public boolean linkNode(Node n, int length) {
+	public boolean addConnection(Node n, int length) {
 		if (marker < maxConnections){
 			connections[marker] = n;
 			edges[marker++] = new Edge(this, n, length);
@@ -32,6 +32,14 @@ public class SquareNode extends Node {
 		}
 		else
 			return false;
+	}
+	
+	public boolean connectionExists(Node n){
+		for (Node t: connections){
+			if(t.equals(n))
+				return true;
+		}
+		return false;
 	}
 
 }
