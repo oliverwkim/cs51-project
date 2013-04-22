@@ -30,7 +30,9 @@ public class AStar {
 			for (Node neighbor: current.getConnections())
 			{
 				if (neighbor == null)
+				{
 					continue;
+				}
 				
 				int tentativeGScore = current.getGScore() + g.getEdgeLength(current,neighbor);
 
@@ -48,8 +50,9 @@ public class AStar {
 				}
 
 			}
-			return null;
+			return (Node[]) list.toArray();
 		}
+		System.out.println("hello 2!");
 		return null;
 	}
 
