@@ -11,7 +11,6 @@ public class AStar {
 		PriorityQueue<Node> openSet = new PriorityQueue<Node>(11, comparator);
 		openSet.add(start);
 		Node current = null;
-		Node parent = null;
 		
 		start.setGScore(0);
 		start.setFScore(hScore(start, goal));
