@@ -21,8 +21,10 @@ public class AStar {
 		{
 			current = openSet.peek();
 			
-			if (current.equals(goal))
-				return (Node[]) list.toArray();
+			if (current.equals(goal)){
+				Node[] result = list.toArray(new Node[list.size()]);
+				return result;
+			}
 
 			openSet.remove(current);
 			closedSet.add(current);
@@ -48,7 +50,6 @@ public class AStar {
 				}
 
 			}
-			return null;
 		}
 		return null;
 	}
