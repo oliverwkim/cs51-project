@@ -66,7 +66,7 @@ public class Grid implements GridInterface {
 	}
 	
 	public boolean linkNodes(Node a, Node b, int length){
-		if(!(a.connectionExists(b) || b.connectionExists(a)) || a == null || b == null)
+		if(a.connectionExists(b) || b.connectionExists(a) || a == null || b == null)
 			return false;
 		else{
 			a.addConnection(b, length);

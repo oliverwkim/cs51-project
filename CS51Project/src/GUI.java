@@ -3,10 +3,11 @@ public class GUI {
 	public static void main(String[] args){
 		Grid g = new Grid(10, 10);
 		g.createStandard();
-		printGrid(g);
+		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(7,9));
+		printGrid(g, path);
 	}
 	
-	private static void printGrid(Grid g){
+	private static void printGrid(Grid g, Node[] path){
 		for(int y = (g.getY() * 2) -2; y >= 0; y--){
 			for(int x = 0; x < (g.getX() * 2)-1; x++){			
 				if(x%2 == 1 && y%2 == 1){
@@ -32,12 +33,20 @@ public class GUI {
 						System.out.print("|");
 					else
 						System.out.print(" ");
+					if(x == (g.getX() * 2) - 2)
+						System.out.println();
 				}
-				else if(x == (g.getX() * 2) - 1){
-					System.out.println(g.getNode(x/2, y/2).getCost());
-				}
-				else
+				else{
+					for(Node n: path){
+						if(n.equals(g.getNode(x/2,y/2)))
+							System.out.print("P");
+					}
 					System.out.print(g.getNode(x/2,y/2).getCost());
+				}
+				if(x == (g.getX() * 2) - 2){
+					System.out.println();
+				}	
+					
 			}
 		}
 	}
