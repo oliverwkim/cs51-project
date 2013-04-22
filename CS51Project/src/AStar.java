@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 
 public class AStar {
-	public Node[] algorithm (Grid g, Point start, Point goal)
+	public Node[] algorithm (Grid g, Node start, Node goal)
 	{
 		Comparator<Node> comparator = new NodeComparator();
 		PriorityQueue closedSet = new PriorityQueue<Node>(11, comparator);
