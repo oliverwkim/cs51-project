@@ -7,8 +7,8 @@ public class AStar {
 	public static Node[] algorithm (Grid g, Node start, Node goal)
 	{
 		Comparator<Node> comparator = new NodeComparator();
-		PriorityQueue closedSet = new PriorityQueue<Node>(11, comparator);
-		PriorityQueue openSet = new PriorityQueue<Node>(11, comparator);
+		PriorityQueue<Node> closedSet = new PriorityQueue<Node>(11, comparator);
+		PriorityQueue<Node> openSet = new PriorityQueue<Node>(11, comparator);
 		openSet.add(start);
 		Node current = null;
 		ArrayList<Node> list = new ArrayList<Node>(); // came_from := the empty map
@@ -22,19 +22,19 @@ public class AStar {
 			current = openSet.peek();
 			
 			if (current.equals(goal))
-				return list.toArray();
+				return (Node[]) list.toArray();
 
 			openSet.remove(current);
 			closedSet.add(current);
 			
-			for (current.getConnections() : neighbor)
+			for (Node neighbor: current.getConnections())
 			{
-				tentativeGScore = gScore(current) + g.getEdgeLength(current,neighbor);
+				int tentativeGScore = current.getGScore() + g.getEdgeLength(current,neighbor);
 
-				if (closedSet.contains(neighbor) && tentativeGScore >= gScore(neighbor))
+				if (closedSet.contains(neighbor) && tentativeGScore >= neighbor.getGScore())
 					continue;
 
-				if (!openSet.contains(neighbor) || tentativeGScore < gScore(neighbor))
+				if (!openSet.contains(neighbor) || tentativeGScore < neighbor.getGScore())
 				{
 					list.add(neighbor);
 					neighbor.setGScore(tentativeGScore);
@@ -45,22 +45,21 @@ public class AStar {
 				}
 
 			}
-
 			return null;
-
 		}
+		return null;
 	}
 
 	// calculates the h score based on the diagonal shortcut heuristic
-	private int hScore (Node neighbor, Node goal)
+	private static int hScore (Node neighbor, Node goal)
 	{
-		int xDiff = Math.abs(neighbor.getPosition().getX() - goal.getPosition().getX());
-		int yDiff = Math.abs(neighbor.getPOsition().getY() - goal.getPosition().getY());
+		int xDiff = (int) Math.abs(neighbor.getPosition().getX() - goal.getPosition().getX());
+		int yDiff = (int) Math.abs(neighbor.getPosition().getY() - goal.getPosition().getY());
 		
 		if (xDiff > yDiff)
-			return 14 * yDiff + 10 * (xDiff - yDiff)
+			return 14 * yDiff + 10 * (xDiff - yDiff);
 		else
-			return 14 * xDiff + 10 * (yDiff - xDiff)
+			return 14 * xDiff + 10 * (yDiff - xDiff);
 	}
 
 	

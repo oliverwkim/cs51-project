@@ -1,10 +1,11 @@
+import java.util.Comparator; 
 
 public class NodeComparator implements Comparator<Node> {
 	
 	public int compare(Node one, Node two) {
-		if AStar.getFScore(one) < AStar.getFScore(two)
+		if (one.getFScore() < two.getFScore())
 			return -1;
-		else if AStar.getFScore(one) > AStar.getFScore(two)
+		else if (one.getFScore() > two.getFScore())
 			return 1;
 		else return 0;
 	}
