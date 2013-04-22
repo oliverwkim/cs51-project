@@ -10,6 +10,8 @@ public abstract class Node {
 	// Array of all this Node's edges
 	protected Edge[] edges;
 	
+	protected Node parent;
+	
 	protected int fScore = 0;
 	protected int gScore = 0;
 
@@ -75,6 +77,14 @@ public abstract class Node {
 	
 	void setGScore(int score){
 		gScore = score;
+	}
+	
+	Node getParent(){
+		return parent;
+	}
+	
+	void setParent(Node n){
+		parent = n;
 	}
 	
 	// Checks for equality of the nodes by checking their positions
