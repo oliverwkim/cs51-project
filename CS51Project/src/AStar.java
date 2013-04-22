@@ -11,7 +11,7 @@ public class AStar {
 		PriorityQueue<Node> openSet = new PriorityQueue<Node>(11, comparator);
 		openSet.add(start);
 		Node current = null;
-		ArrayList<Node> list = new ArrayList<Node>(); // came_from := the empty map
+		ArrayList<Node> list = new ArrayList<Node>();
 		
 		list.add(start);
 		start.setGScore(0);
@@ -43,7 +43,7 @@ public class AStar {
 
 				if (!openSet.contains(neighbor) || tentativeGScore < neighbor.getGScore())
 				{
-					list.add(neighbor);
+					neighbor.setCameFrom(current);
 					neighbor.setGScore(tentativeGScore);
 					neighbor.setFScore(tentativeGScore + hScore(neighbor, goal));
 
