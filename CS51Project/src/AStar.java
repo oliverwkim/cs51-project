@@ -63,6 +63,5 @@ public class AStar {
 		else
 			return 14 * xDiff + 10 * (yDiff - xDiff);
 	}
-
 	
 }
