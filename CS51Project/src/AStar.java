@@ -11,9 +11,8 @@ public class AStar {
 		PriorityQueue<Node> openSet = new PriorityQueue<Node>(11, comparator);
 		openSet.add(start);
 		Node current = null;
-		ArrayList<Node> list = new ArrayList<Node>();
+		Node parent = null;
 		
-		list.add(start);
 		start.setGScore(0);
 		start.setFScore(hScore(start, goal));
 
@@ -22,8 +21,7 @@ public class AStar {
 			current = openSet.peek();
 			
 			if (current.equals(goal)){
-				Node[] result = list.toArray(new Node[list.size()]);
-				return result;
+				return reconstructPath(parent, goal);
 			}
 
 			openSet.remove(current);
@@ -32,9 +30,7 @@ public class AStar {
 			for (Node neighbor: current.getConnections())
 			{
 				if (neighbor == null)
-				{
 					continue;
-				}
 				
 				int tentativeGScore = current.getGScore() + g.getEdgeLength(current,neighbor);
 
@@ -43,7 +39,7 @@ public class AStar {
 
 				if (!openSet.contains(neighbor) || tentativeGScore < neighbor.getGScore())
 				{
-					neighbor.setCameFrom(current);
+					neighbor.setParent(current);
 					neighbor.setGScore(tentativeGScore);
 					neighbor.setFScore(tentativeGScore + hScore(neighbor, goal));
 
