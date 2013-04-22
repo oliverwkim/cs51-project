@@ -51,12 +51,7 @@ public class AStar {
 				}
 
 			}
-<<<<<<< HEAD
-			return (Node[]) list.toArray();
-=======
->>>>>>> 6c0c00ebe54fb91ec90a42e165fde39c5902ff67
 		}
-		System.out.println("hello 2!");
 		return null;
 	}
 
