@@ -90,7 +90,7 @@ public class AStar {
 			current = openSet.peek();
 			
 			if (current.equals(goal)){
-				return reconstructPath(parent, goal);
+				return reconstructPath(start, goal);
 			}
 
 			openSet.remove(current);
@@ -133,13 +133,17 @@ public class AStar {
 			return 14 * xDiff + 10 * (yDiff - xDiff);
 	}
 
-	private static Node[] reconstructPath(Node current)
+	private static Node[] reconstructPath(Node start, Node current)
 	{
-		Node[] path = [];
-		if (current.getParent.Equals(start))
-			return path;
-		else
-			reconstructPath(current.getParent).add(current.getParent);
+		ArrayList<Node> path = new ArrayList<Node> ();
+		Node n = current;
+		while(!n.equals(start)){
+			path.add(n);
+			n = n.getParent();
+		}
+		path.add(start);
+		Node[] result = path.toArray(new Node[path.size()]);
+		return result;
 	}
 }
 >>>>>>> 93584fe236a5280b28a16c7065a07958a9509fe5
