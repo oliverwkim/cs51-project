@@ -15,7 +15,6 @@ public class AStar {
 
 		start.setGScore(0);
 		start.setFScore(hScore(start, goal));
-		list.add(current);
 
 		while(openSet.size() != 0)
 		{

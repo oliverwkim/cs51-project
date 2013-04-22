@@ -3,7 +3,7 @@ public class GUI {
 	public static void main(String[] args){
 		Grid g = new Grid(10, 10);
 		g.createStandard();
-		Node[] path = AStar.algorithm(g, g.getNode(1,1), g.getNode(7,8));
+		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(7,8));
 		printGrid(g, path);
 	}
 	
@@ -37,11 +37,15 @@ public class GUI {
 						System.out.println();
 				}
 				else{
+					boolean printed = false;
 					for(Node n: path){
-						if(n.equals(g.getNode(x/2,y/2)))
+						if(n.equals(g.getNode(x/2,y/2))){
 							System.out.print("P");
+							printed = true;
+						}
 					}
-					System.out.print(g.getNode(x/2,y/2).getCost());
+					if(!printed)
+						System.out.print(g.getNode(x/2,y/2).getCost());
 					if(x == (g.getX() * 2) - 2){
 						System.out.println();
 					}	
