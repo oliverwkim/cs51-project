@@ -12,7 +12,8 @@ public class AStar {
 		openSet.add(start);
 		Node current = null;
 		ArrayList<Node> list = new ArrayList<Node>(); // came_from := the empty map
-
+		
+		list.add(start);
 		start.setGScore(0);
 		start.setFScore(hScore(start, goal));
 
@@ -50,11 +51,7 @@ public class AStar {
 						openSet.add(neighbor);
 				}
 
-<<<<<<< HEAD
 			}
-=======
-			}
->>>>>>> 373abdeea856659563e22ddb8d4661ab5b30d74a
 		}
 		return null;
 	}
