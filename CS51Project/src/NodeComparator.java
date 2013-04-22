@@ -1,10 +1,6 @@
 
 public class NodeComparator implements Comparator<Node> {
 	
-	public NodeComparator(){
-		
-	}
-
 	public int compare(Node one, Node two) {
 		if AStar.getFScore(one) < AStar.getFScore(two)
 			return -1;

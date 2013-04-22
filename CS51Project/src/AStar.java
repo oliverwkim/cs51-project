@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 
 public class AStar {
-	public Node[] algorithm (Grid g, Node start, Node goal)
+	public static Node[] algorithm (Grid g, Node start, Node goal)
 	{
 		Comparator<Node> comparator = new NodeComparator();
 		PriorityQueue closedSet = new PriorityQueue<Node>(11, comparator);
@@ -49,21 +49,10 @@ public class AStar {
 			return null;
 
 		}
-		/*
-
- function reconstruct_path(came_from, current_node)
-     if current_node in came_from
-         p := reconstruct_path(came_from, came_from[current_node])
-         return (p + current_node)
-     else
-         return current_node
-
-		 * 
-		 */
 	}
 
 	// calculates the h score based on the diagonal shortcut heuristic
-	public int hScore (Node neighbor, Node goal)
+	private int hScore (Node neighbor, Node goal)
 	{
 		int xDiff = Math.abs(neighbor.getPosition().getX() - goal.getPosition().getX());
 		int yDiff = Math.abs(neighbor.getPOsition().getY() - goal.getPosition().getY());
