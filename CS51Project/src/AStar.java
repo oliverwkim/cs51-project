@@ -29,6 +29,9 @@ public class AStar {
 			
 			for (Node neighbor: current.getConnections())
 			{
+				if (neighbor == null)
+					continue;
+				
 				int tentativeGScore = current.getGScore() + g.getEdgeLength(current,neighbor);
 
 				if (closedSet.contains(neighbor) && tentativeGScore >= neighbor.getGScore())
