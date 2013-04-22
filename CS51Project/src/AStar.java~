@@ -64,12 +64,18 @@ public class AStar {
 			return 14 * xDiff + 10 * (yDiff - xDiff);
 	}
 
-	private static Node[] reconstructPath(Node current)
+	private static Node[] reconstructPath(current)
 	{
-		Node[] path = [];
-		if (current.getParent.Equals(start))
-			return path;
+		Node[] path = []
+
+		if current.getParent.Equals(start)
+		{
+		       return path
+		}
 		else
-			reconstructPath(current.getParent).add(current.getParent);
+		{
+			reconstructPath(current.getParent).add(current.getParent)
+		}
+
 	}
 }
