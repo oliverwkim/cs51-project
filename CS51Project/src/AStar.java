@@ -50,7 +50,11 @@ public class AStar {
 						openSet.add(neighbor);
 				}
 
+<<<<<<< HEAD
 			}
+=======
+			}
+>>>>>>> 373abdeea856659563e22ddb8d4661ab5b30d74a
 		}
 		return null;
 	}
