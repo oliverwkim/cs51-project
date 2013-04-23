@@ -1,7 +1,5 @@
 import java.util.Comparator; 
 
-// hello Roger
-
 public class NodeComparator implements Comparator<Node> {
 	
 	public int compare(Node one, Node two) {

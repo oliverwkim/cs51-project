@@ -14,6 +14,7 @@ public abstract class Node {
 	
 	protected int fScore = 0;
 	protected int gScore = 0;
+	protected int kScore = 0;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
@@ -85,6 +86,14 @@ public abstract class Node {
 	
 	void setParent(Node n){
 		parent = n;
+	}
+	
+	int getKScore(){
+		return kScore;
+	}
+	
+	void setKScore(int score){
+		kScore = score;
 	}
 	
 	// Checks for equality of the nodes by checking their positions
