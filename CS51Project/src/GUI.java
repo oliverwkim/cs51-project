@@ -1,8 +1,8 @@
-
+import java.awt.Point;
 public class GUI {
 	public static void main(String[] args){
 		Grid g = new Grid(10, 10);
-		g.createStandard();
+		g.createRandom(new Point(0,0), new Point(7,8));
 		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(7,8));
 		printGrid(g, path);
 	}

@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Grid implements GridInterface {
 
@@ -75,6 +76,20 @@ public class Grid implements GridInterface {
 		}
 	}
 	
+	public Node[] getVision(Node n, int sight){
+		int x = (int) n.getPosition().getX();
+		int y = (int) n.getPosition().getY();
+		ArrayList<Node> visible = new ArrayList<Node>();
+		for(int addX = -1 * sight; addX <= sight; addX++){
+			for(int addY = -1 * sight; addY <= sight; addY++){
+				Node temp = getNode(x + addX, y + addY);
+				if(temp != null && (temp.getDistance(n) <= sight))
+					visible.add(temp);
+			}
+		}
+		return visible.toArray(new Node[visible.size()]);
+	}
+	
 	// Returns the adjacent nodes, regardless of whether a connection actually exists
 	private Node[] getAdjacent(Node n){
 		int x = (int) n.getPosition().getX();
@@ -118,11 +133,94 @@ public class Grid implements GridInterface {
 			}
 		}
 	}
+	
+	public void turnOnFog(Node current, int sight){
+		Node[] visibles = getVision(current, sight);
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				boolean canSee = false;
+				for(Node n: visibles){
+					if(n.equals(grid[x][y]))
+						canSee = true;
+				}
+				if(!canSee)
+					grid[x][y].setVisibility(false);
+			}
+		}
+	}
+	
+	public void turnOffFog(){
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				grid[x][y].setVisibility(true);
+			}
+		}
+	}
 
-	@Override
-	public void createRandom() {
-		// TODO Auto-generated method stub
-
+	// Generates a random path between the nodes
+	private void generateRandomPath(Node start, Node end){
+		int x = (int) (end.getPosition().getX() - start.getPosition().getX());
+		int y = (int) (end.getPosition().getY() - start.getPosition().getY());
+		double posXprob;
+		double posYprob;
+		if(x > 0)
+			posXprob = .8;
+		else
+			posXprob = .3;
+		if(y > 0)
+			posYprob = .8;
+		else
+			posYprob = .3;
+		Node current = start;
+		while(!current.equals(end)){
+			int newY;
+			int newX;
+			double temp = Math.random();
+			if (temp < 0.1)
+				newX = (int) current.getPosition().getX();
+			else if (temp < posXprob)
+				newX = (int) (current.getPosition().getX() + 1);
+			else
+				newX = (int) (current.getPosition().getX() - 1);
+			temp = Math.random();
+			if (temp < 0.1)
+				newY = (int) current.getPosition().getY();
+			else if (temp < posYprob)
+				newY = (int) (current.getPosition().getY() + 1);
+			else
+				newY = (int) (current.getPosition().getY() - 1);
+			if(newX < 0 || newX >= xLength || newY < 0 || newY >= yLength || grid[newX][newY] == null)
+				continue;
+			else if(newX == 0 || newY == 0)
+				linkNodes(current, grid[newX][newY], cardinal);
+			else
+				linkNodes(current, grid[newX][newY], diagonal);
+			current = grid[newX][newY];
+		}
+	}
+	public void createRandom(Point start, Point end) {
+		double linkProb = 0.25;
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				grid[x][y] = new SquareNode(x, y, true);
+			}
+		}
+		generateRandomPath(getNode(start), getNode(end));
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				Node current = grid[x][y];
+				Node[] neighbors = getAdjacent(current);
+				for(Node n: neighbors){
+					if(Math.random() < linkProb){
+						if(n.getPosition().getX() == current.getPosition().getX()
+								|| n.getPosition().getY() == current.getPosition().getY())
+							linkNodes(current, n, cardinal);
+						else
+							linkNodes(current, n, diagonal);
+					}
+				}
+			}
+		}
 	}
 
 }

@@ -1,14 +1,17 @@
 import java.awt.Point;
+import java.util.ArrayList;
+
 public abstract class Node {
 	protected Point position;
 	protected boolean passable;
 	protected int cost;
+	protected boolean visible;
 
 	// Array of all Nodes this Node is connected to
-	protected Node[] connections;
+	protected ArrayList<Node> connections;
 	
 	// Array of all this Node's edges
-	protected Edge[] edges;
+	protected ArrayList<Edge> edges;
 	
 	protected Node parent;
 	
@@ -20,16 +23,18 @@ public abstract class Node {
 		position = new Point(x, y);
 		passable = pass;
 		cost = 1;
-		connections = new Node[maxConnections];
-		edges = new Edge[maxConnections];
+		connections = new ArrayList<Node>();
+		edges = new ArrayList<Edge>();
+		visible = true;
 	}
 
 	public Node(int x, int y, int c, boolean pass, int maxConnections){
 		position = new Point(x, y);
 		passable = pass;
 		cost = c;
-		connections = new Node[maxConnections];
-		edges = new Edge[maxConnections];
+		connections = new ArrayList<Node>();
+		edges = new ArrayList<Edge>();
+		visible = true;
 	}
 
 	/* Links this node to another node, with path length of length between them. 
@@ -40,12 +45,22 @@ public abstract class Node {
 	
 	// Checks if there is a connection to given node
 	abstract boolean connectionExists(Node n);
+	
+	// Deletes the connection to the given node. Returns the edge that has been deleted, or null if it did not exist
+	abstract Edge deleteConnection(Node n);
 
 	Node[] getConnections(){
-		return connections;
+		Node[] result = connections.toArray(new Node[connections.size()]);
+		return result;
 	}
 	Edge[] getEdges(){
-		return edges;
+		Edge[] result = edges.toArray(new Edge[edges.size()]);
+		return result;
+	}
+	
+	double getDistance(Node n){
+		return Math.sqrt(Math.pow(position.getX() - n.getPosition().getX(), 2) + 
+				Math.pow(position.getY() - n.getPosition().getY(), 2));
 	}
 	void setPosition(int x, int y){
 		position = new Point(x, y);
@@ -94,6 +109,14 @@ public abstract class Node {
 	
 	void setKScore(int score){
 		kScore = score;
+	}
+	
+	boolean getVisibility(){
+		return visible;
+	}
+	
+	void setVisibility(boolean value){
+		visible = value;
 	}
 	
 	// Checks for equality of the nodes by checking their positions
