@@ -16,6 +16,9 @@ public class SquareNode extends Node {
 	}
 
 	public boolean addConnection(Node n, int length) {
+		// Check if connection already exists
+		if(connectionExists(n))
+			return false;
 		// Checks for empty spots, and fills them in if present
 		for (int i = 0; i < connections.size(); i++){
 			if(connections.get(i) == null){
