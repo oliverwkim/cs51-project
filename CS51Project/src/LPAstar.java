@@ -14,8 +14,8 @@ public class LPAStar extends Astar { // for the hScore method
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, comparator); 
 		for (Node s : start.getAllVisible()) 
 		{
-			s.setGScore(-1); 
-			s.setRhsScore(-1);
+			s.setGScore(1000); 
+			s.setRhsScore(1000);
 		}
 		start.setRhsScore(0);
 		open_set.add(s,[s.hscore();0]);
@@ -48,7 +48,7 @@ public class LPAStar extends Astar { // for the hScore method
 			}
 			else
 			{
-				u.setGScore(-1);
+				u.setGScore(1000);
 				for (Node s : g.getAdjacent(u)) 
 					updateVertex(s, g, open_set);
 				updateVertex(u, g, open_set);
@@ -60,6 +60,13 @@ public class LPAStar extends Astar { // for the hScore method
 	{
 		initialize(g, start);
 		computeShortestPath(open_set, goal, g);
+		//for our implementation edge costs don't actually change
+		//instead nodes simply go from passable to impassable, and back
+		//so for our implementation thusfar, LPA* doesn't actually add 
+		//any unique functionality, since we filter out the impassable
+		//nodes from our search in the first place.
+		//in order for LPA* to be relevant, we would need to 
+		
 	}
 
 	public static Node[] reconstructPath(Node goal, Node start, Grid g)
