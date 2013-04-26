@@ -215,7 +215,7 @@ public class Grid implements GridInterface {
 		}
 	}
 	public void createRandom(Point start, Point end) {
-		double linkProb = 0.25;
+		double linkProb = 0.3;
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
 				grid[x][y] = new SquareNode(x, y, true);
