@@ -87,7 +87,11 @@ public class Grid implements GridInterface {
 					visible.add(temp);
 			}
 		}
-		return visible.toArray(new Node[visible.size()]);
+		Node[] update = visible.toArray(new Node[visible.size()]);
+		for(Node i: update){
+			i.setVisibility(true);
+		}
+		return update;
 	}
 	
 	/*
