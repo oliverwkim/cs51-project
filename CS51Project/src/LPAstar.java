@@ -2,7 +2,6 @@ import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.ArrayList;
 
-
 public class LPAStar extends AStar {
 
 	public static int[] calculateKey(Node s, Node goal) 
@@ -12,28 +11,23 @@ public class LPAStar extends AStar {
 
 	public static PriorityQueue<Node> initialize(Grid g, Node start)
 	{
-		//need a new comparator 
-		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, comparator); // the open set is a priority queue of node, key pairs orered by key value
-		for (Node s : g.getNodes()) // need a better way to implement this
+		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, comparator); 
+		for (Node s : g.getNodes()) 
 		{
-			s.setGScore(-1); // use -1 to replace infinity 
-			s.setRhs(-1);
+			s.setGScore(-1); 
+			s.setRhsScore(-1);
 		}
-		start.setRhs(0);
+		start.setRhsScore(0);
 		open_set.add(s,[s.hscore();0]);
 		return open_set;
 	}
 
-	public static void updateVertex(Node u, Grid g, PriorityQueue open_set)
+	public static void updateVertex(Node u, Grid g, PriorityQueue open_set, Mode start)
 	{
-		if(u <> start)
+		if(!u.equals(start))
 		{
-			ArrayList<int> values = new ArrayList<int>;
-			for (Node s : u.getPred()) //List.map (fun x  -> x.getG() + c(u,s))
-				values.add(s.getG() + g.edgelength(s,u));
+			u.setRhsScore(findNodeRhs(u, start, g));
 		}
-
-		u.setRhs(values.min);
 
 		if (open_set.contains(u))
 			open_set.remove(u));
@@ -50,13 +44,13 @@ public class LPAStar extends AStar {
 			if (u.getG() > u.getRhs()) 
 			{
 				u.setGScore(u.getRhs());
-				for (Node s : g.getAdjacent(u)) // undirected graph
+				for (Node s : g.getAdjacent(u)) 
 					updateVertex(s, g, open_set);
 			}
 			else
 			{
 				u.setGScore(-1);
-				for (Node s : g.getAdjacent(u)) //undirected graph
+				for (Node s : g.getAdjacent(u)) 
 					updateVertex(s, g, open_set);
 				updateVertex(u);
 			}
@@ -69,17 +63,17 @@ public class LPAStar extends AStar {
 		forever
 			computeShortestPath(open_set, goal, g)
 			//Wait for changes in edge costs
-			//for all directed edges (u,v) with changed edge costs
+			//for all edges (u,v) with changed edge costs
 				//update edge cost c(u,v)
 				//updateVertex(v)
 	}
 
 	public static Node[] reconstructPath(Node goal, Node start)
 	{
-
+		
 	}
-	//on a nondirected graph, the predecessors/sucessors are simply the adjacent nodes?
-	public static int setNodeRhs(Node s, Node start, Grid g)
+
+	public static int findRhs(Node s, Node start, Grid g)
 	{
 		if(s.equals(start))
 		{
@@ -87,9 +81,10 @@ public class LPAStar extends AStar {
 		}
 		else
 		{
-			ArrayList<int> values = new ArrayList<int>;
-			for (Node s : g.getAdjacent(s)) //List.map (fun x  -> x.getG() + c(u,s))
+			PriorityQueue<int> values = new PriorityQueue<int>;
+			for (Node s : g.getAdjacent(s)) 
 				values.add(s.getG() + g.edgelength(s,u));
+			s.setRhsScore(values.peek());
 		}
 	}
 }
