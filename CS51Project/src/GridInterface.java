@@ -21,7 +21,8 @@ public interface GridInterface{
 	// Returns 0 if they're not connected
 	int getEdgeLength(Node a, Node b);
 	
-	/* Returns an array containing all of the nodes that are within sight range of the given node
+	/* Updates grid to set all the nodes within sight range of Node n to be visible
+	 * Also returns the nodes visible from this position, after changing their visibility values
 	 * Uses Euclidean distance to determine which nodes are in range
 	 */
 	Node[] getVision(Node n, int sight);

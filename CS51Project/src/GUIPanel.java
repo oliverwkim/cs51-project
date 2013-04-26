@@ -6,6 +6,19 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/*
+ * The main thread will look like this:
+ * Initialize grid
+ * Node current = start;
+ * g.turnOnFog, which will set everything not visible from the start to be not visible
+ * while(current != goal){
+ * 	g.getVision, which will expose any newly visible nodes
+ * 	runLPAStar
+ * 	constructPath
+ * 	current = next node in the constructed path
+ * 	}
+ */
+
 public class GUIPanel extends JPanel {
 	
 	private int gridX;
@@ -104,11 +117,15 @@ public class GUIPanel extends JPanel {
 		
 		JFrame f = new JFrame();
 		Grid g = new Grid(15,15);
+<<<<<<< HEAD
 		
 		while(true){
 		g.createRandom(new Point(0,0), new Point(14,14));
+=======
+		g.createRandom(new Point(0,0), new Point(13,13));
+>>>>>>> 496f4b73df1b36907194f201f791dcd4d8c824c6
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY());
-		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(14,14));
+		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(13,13));
 		f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 		f.setVisible(true);
 		Thread.sleep(500);

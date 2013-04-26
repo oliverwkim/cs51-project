@@ -87,7 +87,11 @@ public class Grid implements GridInterface {
 					visible.add(temp);
 			}
 		}
-		return visible.toArray(new Node[visible.size()]);
+		Node[] update = visible.toArray(new Node[visible.size()]);
+		for(Node i: update){
+			i.setVisibility(true);
+		}
+		return update;
 	}
 	
 	/*
@@ -214,14 +218,15 @@ public class Grid implements GridInterface {
 			current = grid[newX][newY];
 		}
 	}
+	
 	public void createRandom(Point start, Point end) {
-		double linkProb = 0.25;
+		double linkProb = 0.3;
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
 				grid[x][y] = new SquareNode(x, y, true);
 			}
 		}
-		generateRandomPath(getNode(start), getNode(end));
+		//generateRandomPath(getNode(start), getNode(end));
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
 				Node current = grid[x][y];
