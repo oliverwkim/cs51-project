@@ -39,11 +39,19 @@ public class GUIPanel extends JPanel {
 				
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i+1, j)))
 				{
-					p.drawLine(padding + margin * i + diameter, padding + j * margin + (diameter / 2), padding + margin * i + margin, padding + j * margin + (diameter / 2));
+					int x1 = padding + margin * i + diameter;
+					int y1 = padding + margin * j + (diameter / 2);
+					int x2 = padding + margin * (i + 1);
+					int y2 = y1;
+					p.drawLine(x1, y1, x2, y2);
 				}
 				
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i,j+1))){
-					p.drawLine(padding + margin * i + (diameter / 2), padding + j * margin + diameter, padding + margin * i + (diameter / 2), padding + margin * j + margin);
+					int x1 = padding + margin * i + (diameter / 2);
+					int y1 = padding + margin * j + diameter;
+					int x2 = x1;
+					int y2 = padding + margin * (j + 1);
+					p.drawLine(x1, y1, x2, y2);
 				}
 				
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i+1,j+1))){
@@ -88,7 +96,7 @@ public class GUIPanel extends JPanel {
 		}
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		int padding = 10;
 		int diameter = 30;
@@ -96,10 +104,15 @@ public class GUIPanel extends JPanel {
 		
 		JFrame f = new JFrame();
 		Grid g = new Grid(15,15);
+		
+		while(true){
 		g.createRandom(new Point(0,0), new Point(14,14));
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY());
 		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(14,14));
 		f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 		f.setVisible(true);
+		Thread.sleep(500);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}
 	}
 }
