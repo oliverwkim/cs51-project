@@ -14,7 +14,7 @@ public class SquareNode extends Node {
 	public int getMaxConnections(){
 		return maxConnections;
 	}
-
+	
 	public boolean addConnection(Node n, int length) {
 		// Check if connection already exists
 		if(connectionExists(n))

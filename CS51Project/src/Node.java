@@ -22,7 +22,7 @@ public abstract class Node {
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
 		passable = pass;
-		cost = 1;
+		cost = 0;
 		connections = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		visible = true;
@@ -49,13 +49,35 @@ public abstract class Node {
 	// Deletes the connection to the given node. Returns the edge that has been deleted, or null if it did not exist
 	abstract Edge deleteConnection(Node n);
 
-	Node[] getConnections(){
+	// These methods return all of the connections and edges
+	Node[] getAllConnections(){
 		Node[] result = connections.toArray(new Node[connections.size()]);
 		return result;
 	}
-	Edge[] getEdges(){
+	Edge[] getAllEdges(){
 		Edge[] result = edges.toArray(new Edge[edges.size()]);
 		return result;
+	}
+	
+	// These two methods return only the connections to passable nodes
+	public Node[] getConnections(){
+		ArrayList<Node> result = new ArrayList<Node>();
+		for(Node n: connections){
+			if(n.isPassable())
+				result.add(n);
+		}
+		Node[] actualResult = result.toArray(new Node[result.size()]);
+		return actualResult;
+	}
+
+	public Edge[] getEdges(){
+		ArrayList<Edge> result = new ArrayList<Edge>();
+		for(Edge e: edges){
+			if(e.getEnd(this).isPassable())
+				result.add(e);
+		}
+		Edge[] actualResult = result.toArray(new Edge[result.size()]);
+		return actualResult;
 	}
 	
 	double getDistance(Node n){

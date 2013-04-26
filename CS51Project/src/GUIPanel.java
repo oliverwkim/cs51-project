@@ -6,6 +6,19 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/*
+ * The main thread will look like this:
+ * Initialize grid
+ * Node current = start;
+ * g.turnOnFog, which will set everything not visible from the start to be not visible
+ * while(current != goal){
+ * 	g.getVision, which will expose any newly visible nodes
+ * 	runLPAStar
+ * 	constructPath
+ * 	current = next node in the constructed path
+ * 	}
+ */
+
 public class GUIPanel extends JPanel {
 	
 	private int gridX;
