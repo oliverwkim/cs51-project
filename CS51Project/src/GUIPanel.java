@@ -95,10 +95,10 @@ public class GUIPanel extends JPanel {
 		int margin = diameter + 20;
 		
 		JFrame f = new JFrame();
-		Grid g = new Grid(9,9);
-		g.createStandard();
+		Grid g = new Grid(15,15);
+		g.createRandom(new Point(0,0), new Point(14,14)));
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY());
-		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(7,8));
+		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(14,14));
 		f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 		f.setVisible(true);
 	}
