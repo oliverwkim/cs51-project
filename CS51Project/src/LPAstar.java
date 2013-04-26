@@ -12,7 +12,7 @@ public class LPAStar extends AStar {
 	public static PriorityQueue<Node> initialize(Grid g, Node start)
 	{
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, comparator); 
-		for (Node s : g.getNodes()) 
+		for (Node s : start.getConnections()) 
 		{
 			s.setGScore(-1); 
 			s.setRhsScore(-1);
@@ -44,7 +44,7 @@ public class LPAStar extends AStar {
 			if (u.getG() > u.getRhs()) 
 			{
 				u.setGScore(u.getRhs());
-				for (Node s : g.getAdjacent(u)) 
+				for (Node s : u.getConnections()) 
 					updateVertex(s, g, open_set);
 			}
 			else
@@ -68,21 +68,34 @@ public class LPAStar extends AStar {
 				//updateVertex(v)
 	}
 
-	public static Node[] reconstructPath(Node goal, Node start)
+	public static Node[] reconstructPath(Node goal, Node start, Grid g)
 	{
-		
-	}
+		ArrayList<Node> path = new ArrayList<Node> ();
 
-	public static int findRhs(Node s, Node start, Grid g)
-	{
-		if(s.equals(start))
+		if(goal.Equals(start))
 		{
-			s.setRhsScore(0);
+			Node[] result = path.toArray(new Node[path.size()]);
+			return result;
 		}
 		else
 		{
 			PriorityQueue<int> values = new PriorityQueue<int>;
-			for (Node s : g.getAdjacent(s)) 
+			for (Node s : goal.getConnections))
+				values.add(s.getG() + g.edgelength)
+
+		}
+	}
+
+	public static int findRhs(Node u, Node start, Grid g)
+	{
+		if(u.equals(start))
+		{
+			u.setRhsScore(0);
+		}
+		else
+		{
+			PriorityQueue<int> values = new PriorityQueue<int>;
+			for (Node s : u.getConnections())) 
 				values.add(s.getG() + g.edgelength(s,u));
 			s.setRhsScore(values.peek());
 		}

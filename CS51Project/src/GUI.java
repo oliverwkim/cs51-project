@@ -1,4 +1,7 @@
 import java.awt.Point;
+
+// 
+
 public class GUI {
 	public static void main(String[] args){
 		Grid g = new Grid(10, 10);
