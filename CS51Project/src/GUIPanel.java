@@ -66,19 +66,19 @@ public class GUIPanel extends JPanel {
 					p.drawLine(x1, y1, x2, y2);
 				}
 				
-				if (path[0].equals(grid.getNode(i,j)))
+				if (path != null && path[0].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.green);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 					p.setColor(Color.black);
 				} 
-				else if (path[path.length - 1].equals(grid.getNode(i,j)))
+				else if (path != null && path[path.length - 1].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.red);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 					p.setColor(Color.black);
 				} 
-				else if (Arrays.asList(path).contains(grid.getNode(i,j)))
+				else if (path != null && Arrays.asList(path).contains(grid.getNode(i,j)))
 				{
 					p.setColor(Color.blue);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
