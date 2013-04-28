@@ -39,8 +39,18 @@ public class DStarLite extends LPAStar {
 		}
 	}
 	
+	public static void computeShortestPath()
+	{
+		while(keyCompare(open_set.peek(), calculateKey(start)) || start.getRhsScore() != start.getGScore())
+		{
+			
+		}
+	}
+	
 	public static Node[] algorithm()
 	{
+		initialize();
+		
 	}
 
 	
