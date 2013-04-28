@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class LPAstar extends AStar { 
 
+	final static int lineOfSight = 2;
+	
 	public static ArrayList<Integer> calculateKey(Node s, Node goal) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
@@ -17,7 +19,7 @@ public class LPAstar extends AStar {
 		Comparator<Pair> pairComparator = new LPAPairComparator();
 		Comparator<ArrayList<Integer>> keyComparator = new KeyComparator();
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, pairComparator); 
-		for (Node s : g.getVision(goal, /* line of sight here*/)) 
+		for (Node s : g.getVision(goal, lineOfSight)) 
 		{
 			s.setGScore(1000); 
 			s.setRhsScore(1000);
