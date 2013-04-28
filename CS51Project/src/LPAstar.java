@@ -69,7 +69,7 @@ public class LPAStar extends AStar {
 				goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
-			if (u.getGScore() > u.getRhsScore())
+			if ((u.getGScore() > u.getRhsScore()) || u.getGScore() < 0)
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
@@ -102,11 +102,10 @@ public class LPAStar extends AStar {
 		}
 		else
 		{
-			PriorityQueue<Node> values = new PriorityQueue<Node>(11, new KNodeComparator());
+			PriorityQueue<Node> values = new PriorityQueue<Node>(11, kNodeComparator);
 			for (Node s : goal.getConnections())
 			{
 				s.setKScore(calculateKey(s, goal));
-				values.add(s);
 			}
 			Node closestNode = values.peek();
 			path.add(closestNode);
