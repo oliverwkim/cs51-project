@@ -117,8 +117,12 @@ public class LPAstar extends AStar {
 				path.add(closestNode);
 				return reconstructPath(closestNode, pathStart, g);
 			}
+<<<<<<< HEAD
 			else 
 				return null;
+=======
+			else return null;
+>>>>>>> e070489a6aa8100fc1f7c31850284b970bd5436e
 		}
 	}
 

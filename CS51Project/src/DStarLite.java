@@ -34,8 +34,8 @@ public class DStarLite extends LPAstar {
 	
 	public static void updateVertex(Node u)
 	{
-		if (!u.equals(start))
-			u.setRhsScore(findRhs(u)); 
+		if (!u.equals(goal))
+			u.setRhsScore(minimize(u.getConnections()).getRhsScore()); 
 
 		if (open_set.contains(u))
 			open_set.remove(u);
@@ -50,10 +50,17 @@ public class DStarLite extends LPAstar {
 	
 	public static void computeShortestPath()
 	{
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) || start.getRhsScore() != start.getGScore())
 		{
+			ArrayList<Integer> kOld = open_set.peek().getKScore();
 			Node u = open_set.poll();
-			if ((u.getGScore() > u.getRhsScore()))
+			
+			if(keyCompare(kOld, calculateKey(u)))
+			{
+				u.setKScore(calculateKey(u));
+				open_set.add(u);
+			}
+			else if ((u.getGScore() > u.getRhsScore()))
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
@@ -69,17 +76,29 @@ public class DStarLite extends LPAstar {
 		}	
 	}
 	
-	public static Node[] algorithm()
+	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
 		Node last = null;
 		initialize();
 		computeShortestPath();
-		initialize(g, goal, start);
+		initialize(gInput, goalInput, startInput);
 		
 		while(!start.equals(goal))
 		{
+			if (start.getGScore() == 10000) return null;
 			start = minimize(start.getConnections());
 			g.setPos(start);
+			
+			/* 
+			 * Scan for changed edge costs
+			 * If any edge costs changed
+			 * 	km = km + h(slast, sstart)
+			 * 	slast = sstart
+			 * 	for all directed edges (u, v) with changed edge costs
+			 * 		update the edge cost c(u,v)
+			 * 		update vertex (u)
+			 * 	compute shortestpath()
+			 */
 			
 		}
 		return null;
@@ -96,8 +115,4 @@ public class DStarLite extends LPAstar {
 		}
 		return min;
 	}
-
-	
-
-	
 }
