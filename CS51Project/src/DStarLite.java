@@ -33,7 +33,7 @@ public class DStarLite extends LPAstar {
 	
 	public static void updateVertex(Node u)
 	{
-		if (!u.equals(goal))
+		if (!u.equals(start))
 		{
 			u.setRhsScore(findRhs(u, start, g)); 
 		}
@@ -49,13 +49,25 @@ public class DStarLite extends LPAstar {
 		}
 	}
 	
-	public static void computeShortestPath()
+	public static void computeShortestPath(PriorityQueue<Node> open_set, Node goal, Grid g, Node start)
 	{
-		while(keyCompare(open_set.peek(), calculateKey(start)) || start.getRhsScore() != start.getGScore())
+		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal))
 		{
-			
-		}
-	}
+			Node u = open_set.poll();
+			if ((u.getGScore() > u.getRhsScore()))
+			{
+				u.setGScore(u.getRhsScore());
+				for (Node s : u.getConnections())
+					updateVertex(s, g, open_set, start, goal);
+			}
+			else
+			{
+				u.setGScore(1000);
+				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
+					updateVertex(s, g, open_set, start, goal);
+				updateVertex(u, g, open_set, start, goal);
+			}
+		}	
 	
 	public static Node[] algorithm()
 	{
@@ -68,6 +80,8 @@ public class DStarLite extends LPAstar {
 			
 		}
 	}
+
+	
 
 	
 }
