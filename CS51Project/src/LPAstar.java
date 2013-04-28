@@ -8,7 +8,7 @@ public class LPAStar extends AStar {
 	final static Comparator<Node> kNodeComparator = new KNodeComparator();
 	static ArrayList<Node> path = new ArrayList<Node> ();
 	private static PriorityQueue<Node> open_set = null;
-
+static int counter = 0;
 	public static ArrayList<Integer> calculateKey(Node s, Node goal) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
@@ -44,7 +44,8 @@ public class LPAStar extends AStar {
 		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u, goal));
-			open_set.add(u);
+			if(!open_set.contains(u))
+				open_set.add(u);
 		}
 	}
 
@@ -68,6 +69,7 @@ public class LPAStar extends AStar {
 		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || 
 				goal.getRhsScore() != goal.getGScore())
 		{
+			System.out.println(counter++);
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()) || u.getGScore() < 0)
 			{
@@ -78,7 +80,7 @@ public class LPAStar extends AStar {
 			else
 			{
 				u.setGScore(1000);
-				for (Node s : g.getAdjacent(u)) 
+				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
 					updateVertex(s, g, open_set, start, goal);
 				updateVertex(u, g, open_set, start, goal);
 			}
@@ -124,6 +126,8 @@ public class LPAStar extends AStar {
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
 			}
 			//System.out.print(values.toString());
+			if (values.size() == 0)
+				return -1;
 			return values.peek();			
 		}
 		return 0;

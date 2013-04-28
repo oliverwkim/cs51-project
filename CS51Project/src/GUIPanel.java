@@ -145,6 +145,7 @@ public class GUIPanel extends JPanel {
 		buttonContainer.add(end);
 		*/
 		
+		//g.createStandard();
 		g.createRandom(new Point(0,0), new Point(12,13));
 		Node start = g.getNode(0,0);
 		Node end = g.getNode(12,13);

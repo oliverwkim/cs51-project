@@ -20,4 +20,8 @@ public class KNodeComparator implements Comparator<Node> {
 			return 0;
 		}
 	}
+	
+	public boolean equals(Node one, Node two){
+		return one.equals(two);
+	}
 }
