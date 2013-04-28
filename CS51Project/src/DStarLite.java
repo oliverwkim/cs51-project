@@ -34,9 +34,7 @@ public class DStarLite extends LPAstar {
 	public static void updateVertex(Node u)
 	{
 		if (!u.equals(start))
-		{
-			u.setRhsScore(findRhs(u, start, g)); 
-		}
+			u.setRhsScore(findRhs(u)); 
 
 		if (open_set.contains(u))
 			open_set.remove(u);
@@ -49,31 +47,33 @@ public class DStarLite extends LPAstar {
 		}
 	}
 	
-	public static void computeShortestPath(PriorityQueue<Node> open_set, Node goal, Grid g, Node start)
+	public static void computeShortestPath(PriorityQueue<Node> open_set)
 	{
-		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal))
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
-					updateVertex(s, g, open_set, start, goal);
+					updateVertex(s);
 			}
 			else
 			{
 				u.setGScore(1000);
 				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
-					updateVertex(s, g, open_set, start, goal);
-				updateVertex(u, g, open_set, start, goal);
+					updateVertex(s);
+				updateVertex(u);
 			}
 		}	
+	}
 	
 	public static Node[] algorithm()
 	{
 		Node last = null;
 		initialize();
 		computeShortestPath();
+		initialize(g, goal, start);
 		
 		while(!start.equals(goal))
 		{
@@ -81,24 +81,20 @@ public class DStarLite extends LPAstar {
 			int min = 0;
 			int prevMin = 0;
 			
-			for(Node s : start.getConnections())
-			{
-				min = g.getEdgeLength(s, start) + s.getGScore();
-				
-				if (min < prevMin)
-				{
-					
-				}
-			}
+			start = minimize(start.getConnections());
 		}
 	}
 	
 	private static Node minimize (Node[] nodeList)
 	{
+		Node min = nodeList[0];
+		
 		for(Node s : nodeList)
 		{
-			
+			if (g.getEdgeLength(s, start) + s.getGScore() < g.getEdgeLength(min, start) + min.getGScore())
+				min = s;
 		}
+		return min;
 	}
 
 	
