@@ -171,7 +171,7 @@ public class GUIPanel extends JPanel {
 		while(!current.equals(end)){
 			g.getVision(current, 2);
 			Node[] path = LPAStar.algorithm(g, end, current);
-			current = path[path.length];
+			current = path[path.length-1];
 			f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 			f.setVisible(true);
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

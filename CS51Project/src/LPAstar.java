@@ -59,10 +59,8 @@ static int counter = 0;
 	
 	public static void computeShortestPath(PriorityQueue<Node> open_set, Node goal, Grid g, Node start)
 	{
-		//System.out.println(open_set.toString());
 		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)))
 		{
-			System.out.println(counter++);
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()) || u.getGScore() < 0)
 			{
@@ -118,7 +116,6 @@ static int counter = 0;
 			{
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
 			}
-			//System.out.print(values.toString());
 			if (values.size() == 0)
 				return -1;
 			return values.peek();			

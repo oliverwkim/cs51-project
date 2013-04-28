@@ -16,9 +16,9 @@ public abstract class Node {
 	protected Node parent;
 	
 	protected int fScore = 0;
-	protected int gScore = -1;
+	protected int gScore = 10000;
 	protected ArrayList<Integer> kScore = null;
-	protected int rhsScore = -1;
+	protected int rhsScore = 10000;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
