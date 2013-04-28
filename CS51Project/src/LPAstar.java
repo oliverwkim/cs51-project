@@ -33,7 +33,7 @@ public class LPAstar extends AStar {
 		if (open_set.contains(u))
 			open_set.remove(u);
 		
-		if (u.getG() <> u.getRhs())
+		if (u.getGScore() != u.getRhsScore())
 			open_set.add(u,calculateKey(u, goal));
 	}
 
@@ -92,10 +92,12 @@ public class LPAstar extends AStar {
 		}
 		else
 		{
-			PriorityQueue<int> values = new PriorityQueue<int>(11);
+			PriorityQueue<Integer> values = new PriorityQueue<Integer>(11);
 			for (Node s : u.getConnections())
-				values.add(s.getG() + g.edgelength(s,u));
-			s.setRhsScore(values.peek());
+			{
+				values.add(s.getGScore() + g.getEdgeLength(s,u));
+				s.setRhsScore(values.peek());	
+			}
 		}
 	}
 }
