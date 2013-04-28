@@ -115,7 +115,7 @@ public class LPAstar extends AStar {
 				path.add(closestNode);
 				return reconstructPath(closestNode, start, g);
 			}
-			else return null
+			else return null;
 		}
 	}
 
