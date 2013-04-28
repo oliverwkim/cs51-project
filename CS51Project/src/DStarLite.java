@@ -77,6 +77,26 @@ public class DStarLite extends LPAstar {
 		
 		while(!start.equals(goal))
 		{
+			Node smallest;
+			int min = 0;
+			int prevMin = 0;
+			
+			for(Node s : start.getConnections())
+			{
+				min = g.getEdgeLength(s, start) + s.getGScore();
+				
+				if (min < prevMin)
+				{
+					
+				}
+			}
+		}
+	}
+	
+	private static Node minimize (Node[] nodeList)
+	{
+		for(Node s : nodeList)
+		{
 			
 		}
 	}
