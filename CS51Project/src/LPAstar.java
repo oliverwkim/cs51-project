@@ -17,8 +17,8 @@ public class LPAstar extends AStar {
 	public static void initialize(Grid g, Node goal)
 	{
 		Comparator<Pair> pairComparator = new LPAPairComparator();
-		Comparator<ArrayList<Integer>> keyComparator = new KeyComparator();
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, pairComparator); 
+		
 		for (Node s : g.getVision(goal, lineOfSight)) 
 		{
 			s.setGScore(1000); 
@@ -39,7 +39,7 @@ public class LPAstar extends AStar {
 			open_set.remove(u);
 		
 		if (u.getGScore() != u.getRhsScore())
-			open_set.add(u,calculateKey(u, goal));
+			open_set.add(new Pair(u,calculateKey(u, goal)));
 	}
 
 	public static void computeShortestPath(PriorityQueue<Pair> open_set, Node goal, Grid g)
@@ -90,7 +90,7 @@ public class LPAstar extends AStar {
 			reconstructPath(goal, minval, g);
 		}
 	}
-// hello
+
 	public static int findRhs(Node u, Node start, Grid g)
 	{
 		if(u.equals(start))

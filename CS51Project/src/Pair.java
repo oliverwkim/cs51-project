@@ -4,8 +4,8 @@ public class Pair {
 	
 	private Node s;
 	private ArrayList<Integer> k;
-	
-	public void pair(Node sInput, ArrayList<Integer> kInput)
+
+	public Pair(Node sInput, ArrayList<Integer> kInput)
 	{
 		s = sInput;
 		k = kInput;
