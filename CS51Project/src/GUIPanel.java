@@ -169,8 +169,8 @@ public class GUIPanel extends JPanel {
 		g.turnOnFog(start, 2);
 		Node current = start;
 		g.getVision(current, 2);
-		Node[] path = AStar.algorithm(g, start, end);
-		//Node[] path = LPAstar.algorithm(g, end, current);
+		//Node[] path = AStar.algorithm(g, start, end);
+		Node[] path = LPAstar.algorithm(g, end, current);
 		GUIPanel map = new GUIPanel(g,path,diameter,padding,margin);
 		f.setContentPane(map);
 		f.setVisible(true);
@@ -180,8 +180,8 @@ public class GUIPanel extends JPanel {
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
 		while(!current.equals(end)){
 
-			path = AStar.algorithm(g, current, end);
-			//path = LPAstar.algorithm(g, end, current);
+			//path = AStar.algorithm(g, current, end);
+			path = LPAstar.algorithm(g, end, current);
 			map.setPath(path);
 			map.repaint();
 			current = path[path.length-2];
