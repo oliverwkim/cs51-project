@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class LPAstar extends AStar { 
 
 	final static int lineOfSight = 2;
-	
+	final static Comparator<Pair> pairComparator = new LPAPairComparator();
+
 	public static ArrayList<Integer> calculateKey(Node s, Node goal) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
@@ -16,7 +17,6 @@ public class LPAstar extends AStar {
 
 	public static void initialize(Grid g, Node goal)
 	{
-		Comparator<Pair> pairComparator = new LPAPairComparator();
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, pairComparator); 
 		
 		for (Node s : g.getVision(goal, lineOfSight)) 
@@ -65,7 +65,7 @@ public class LPAstar extends AStar {
 		}	
 	}
 
-	public void algorithm(Grid g, Node goal, Node start)
+	 public void algorithm(Grid g, Node goal, Node start)
 	{
 		initialize(g, start);
 		computeShortestPath(open_set, goal, g);

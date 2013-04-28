@@ -95,7 +95,7 @@ public class Grid implements GridInterface {
 	}
 	
 	// Returns the adjacent nodes, regardless of whether a connection actually exists
-	private Node[] getAdjacent(Node n){
+	public Node[] getAdjacent(Node n){
 		int x = (int) n.getPosition().getX();
 		int y = (int) n.getPosition().getY();
 		int size;
