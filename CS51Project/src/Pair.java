@@ -1,12 +1,12 @@
 public class Pair {
 	
 	private Node s;
-	private int n;
+	private ArrayList<integer> k;
 	
-	public void pair(Node sInput, int nInput)
+	public void pair(Node sInput, ArrayList<integer> kInput)
 	{
 		s = sInput;
-		n = nInput;
+		k = kInput;
 	}
 
 	public Node getNode()
@@ -14,8 +14,8 @@ public class Pair {
 		return s;
 	}
 
-	public int getInt()
+	public ArrayList<integer> getKey()
 	{
-		return n;
+		return k;
 	}
 }
