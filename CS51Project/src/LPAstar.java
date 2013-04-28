@@ -23,8 +23,8 @@ public class LPAStar extends AStar {
 		
 		for (Node s : g.getVision(goal, lineOfSight)) 
 		{
-			s.setGScore(1000); 
-			s.setRhsScore(1000);
+			s.setGScore(-1); 
+			s.setRhsScore(-1);
 		}
 		goal.setRhsScore(0);
 		goal.setKScore(null);
@@ -69,7 +69,7 @@ public class LPAStar extends AStar {
 				goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
-			if (u.getGScore() > u.getRhsScore())
+			if ((u.getGScore() > u.getRhsScore()) || (u.getGScore() < 0))
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
@@ -85,7 +85,7 @@ public class LPAStar extends AStar {
 		}	
 	}
 
-	 public Node[] algorithm(Grid g, Node goal, Node start)
+	 public static Node[] algorithm(Grid g, Node goal, Node start)
 	{
 		initialize(g, start);
 		computeShortestPath(open_set, goal, g, start);

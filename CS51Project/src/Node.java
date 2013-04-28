@@ -63,7 +63,7 @@ public abstract class Node {
 	// These two methods return only the connections to passable nodes
 	public Node[] getConnections(){
 		ArrayList<Node> result = new ArrayList<Node>();
-		for(Node n: connections){
+		for(Node n: connections.toArray(new Node[connections.size()])){
 			if(n.isPassable())
 				result.add(n);
 		}
@@ -73,7 +73,7 @@ public abstract class Node {
 
 	public Edge[] getEdges(){
 		ArrayList<Edge> result = new ArrayList<Edge>();
-		for(Edge e: edges){
+		for(Edge e: edges.toArray(new Edge[edges.size()])){
 			if(e.getEnd(this).isPassable())
 				result.add(e);
 		}
