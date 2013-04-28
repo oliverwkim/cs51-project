@@ -40,6 +40,13 @@ public class SquareNode extends Node {
 	}
 	
 	public boolean connectionExists(Node n){
+		if(!visible){
+			for (Node t: shadowConnections){
+				if(t != null && t.equals(n))
+					return true;
+			}
+			return false;
+		}
 		for (Node t: connections){
 			if(t != null && t.equals(n))
 				return true;
