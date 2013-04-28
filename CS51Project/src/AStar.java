@@ -54,7 +54,7 @@ public class AStar {
 	}
 
 	// calculates the h score based on the diagonal shortcut heuristic
-	private static int hScore (Node neighbor, Node goal)
+	protected static int hScore (Node neighbor, Node goal)
 	{
 		int xDiff = (int) Math.abs(neighbor.getPosition().getX() - goal.getPosition().getX());
 		int yDiff = (int) Math.abs(neighbor.getPosition().getY() - goal.getPosition().getY());

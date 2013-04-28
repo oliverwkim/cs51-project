@@ -26,7 +26,7 @@ public class LPAstar extends AStar {
 		open_set.add(new Pair(goal,calculateKey(goal,goal)));
 	}
 
-	public static void updateVertex(Node u, Grid g, PriorityQueue open_set, Mode start, Node goal)
+	public static void updateVertex(Node u, Grid g, PriorityQueue<Pair> open_set, Node start, Node goal)
 	{
 		if(!u.equals(start))
 		{
@@ -40,11 +40,11 @@ public class LPAstar extends AStar {
 			open_set.add(u,calculateKey(u, goal));
 	}
 
-	public static void computeShortestPath(PriorityQueue open_set, Node goal, Grid g)
+	public static void computeShortestPath(PriorityQueue<Pair> open_set, Node goal, Grid g)
 	{
-		@SuppressWarnings("rawtypes")
-		Comparator keyComparator = new KeyComparator();
-		while(keyComparator.compare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || (goal.getRhsScore() != goal.getGScore()))
+		Comparator<ArrayList<Integer>> keyComparator = new KeyComparator();
+		while(keyComparator.compare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || 
+				(goal.getRhsScore() != goal.getGScore()))
 		{
 			Node u = open_set.pop();
 			if (u.getGScore() > u.getRhsScore())
