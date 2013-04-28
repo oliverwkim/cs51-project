@@ -83,10 +83,14 @@ public class DStarLite extends LPAstar {
 		
 		while(!start.equals(goal))
 		{
-			if (start.getGScore() == 10000) return null;
+			if (start.getGScore() == 10000) 
+				return null;
 			start = minimize(start.getConnections());
 			g.setPos(start);
 			
+			for(Node n: g.getVision(start, 2)){
+				
+			}
 			/* 
 			 * Scan for changed edge costs
 			 * If any edge costs changed

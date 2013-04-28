@@ -23,6 +23,7 @@ public class LPAstar extends AStar {
 
 	public static void initialize()
 	{
+		path.clear();
 		open_set = new PriorityQueue<Node>(11, kNodeComparator); 
 		start.setRhsScore(0);
 		start.setKScore(null);
