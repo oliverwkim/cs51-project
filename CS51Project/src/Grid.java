@@ -90,6 +90,7 @@ public class Grid implements GridInterface {
 		int x = (int) n.getPosition().getX();
 		int y = (int) n.getPosition().getY();
 		ArrayList<Node> visible = new ArrayList<Node>();
+		// Gets all the nodes within sight range of the current position
 		for(int addX = -1 * sight; addX <= sight; addX++){
 			for(int addY = -1 * sight; addY <= sight; addY++){
 				Node temp = getNode(x + addX, y + addY);
@@ -97,12 +98,13 @@ public class Grid implements GridInterface {
 					visible.add(temp);
 				}
 			}
-		}
+		}		
 		Node[] update = visible.toArray(new Node[visible.size()]);
+		
 		for(Node i: update){
 			i.setVisibility(true);
 			// If new vision uncovers that some connections do not exist,
-			// Change the nonvisible boundary nodes to reflect this, so there are no inconsistencies
+			// change the nonvisible boundary nodes to reflect this, so there are no inconsistencies
 			for(Node j: getAdjacent(i))
 				if(!i.connectionExists(j))
 					j.removeShadow(i);

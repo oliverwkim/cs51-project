@@ -78,17 +78,19 @@ public class DStarLite extends LPAstar {
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
-		Node last = null;
-		initialize();
 		computeShortestPath();
 		initialize(gInput, goalInput, startInput);
 		
 		while(!start.equals(goal))
 		{
-			if (start.getGScore() == 10000) return null;
+			if (start.getGScore() == 10000) 
+				return null;
 			start = minimize(start.getConnections());
 			g.setPos(start);
 			
+			for(Node n: g.getVision(start, 2)){
+				
+			}
 			/* 
 			 * Scan for changed edge costs
 			 * If any edge costs changed
