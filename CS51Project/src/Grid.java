@@ -160,48 +160,6 @@ public class Grid implements GridInterface {
 			}
 		}
 	}
-
-	// Generates a random path between the nodes
-	private void generateRandomPath(Node start, Node end){
-		double posXprob;
-		double posYprob;
-		Node current = start;
-		while(!current.equals(end)){
-			int x = (int) (end.getPosition().getX() - current.getPosition().getX());
-			int y = (int) (end.getPosition().getY() - current.getPosition().getY());
-			if(x > 0)
-				posXprob = .65;
-			else
-				posXprob = .55;
-			if(y > 0)
-				posYprob = .65;
-			else
-				posYprob = .55;
-			int newY;
-			int newX;
-			double temp = Math.random();
-			if (temp < 0.2)
-				newX = (int) current.getPosition().getX();
-			else if (temp < posXprob)
-				newX = (int) (current.getPosition().getX() + 1);				
-			else
-				newX = (int) (current.getPosition().getX() - 1);
-			temp = Math.random();
-			if (temp < 0.2)
-				newY = (int) current.getPosition().getY();
-			else if (temp < posYprob)
-				newY = (int) (current.getPosition().getY() + 1);
-			else
-				newY = (int) (current.getPosition().getY() - 1);
-			if(newX < 0 || newX >= xLength || newY < 0 || newY >= yLength || grid[newX][newY] == null)
-				continue;
-			else if(newX == 0 || newY == 0)
-				linkNodes(current, grid[newX][newY], cardinal);
-			else
-				linkNodes(current, grid[newX][newY], diagonal);
-			current = grid[newX][newY];
-		}
-	}
 	
 	public void createRandom(Point start, Point end) {
 		double linkProb = 0.3;
