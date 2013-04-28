@@ -17,18 +17,12 @@ static int counter = 0;
 		return key;
 	}
 
-	public static void initialize(Grid g, Node goal)
+	public static void initialize(Grid g, Node start)
 	{
 		open_set = new PriorityQueue<Node>(11, kNodeComparator); 
-		
-		for (Node s : g.getVision(goal, lineOfSight)) 
-		{
-			s.setGScore(1000); 
-			s.setRhsScore(1000);
-		}
-		goal.setRhsScore(0);
-		goal.setKScore(null);
-		open_set.add(goal);
+		start.setRhsScore(0);
+		start.setKScore(null);
+		open_set.add(start);
 	}
 
 	public static void updateVertex(Node u, Grid g, PriorityQueue<Node> open_set, Node start, Node goal)
@@ -41,10 +35,10 @@ static int counter = 0;
 		if (open_set.contains(u))
 			open_set.remove(u);
 		
-		if ((u.getGScore() != u.getRhsScore()) && !(open_set.contains(u)))
+		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u, goal));
-			if(!open_set.contains(u))
+			if(!(open_set.contains(u)))
 				open_set.add(u);
 		}
 	}
@@ -54,7 +48,7 @@ static int counter = 0;
 		if (one.get(0) < two.get(0))
 			return true;
 		else if (one.get(0) > two.get(0))
-			return true;
+			return false;
 		else
 			if (one.get(1) < two.get(1))
 				return true;
@@ -66,8 +60,7 @@ static int counter = 0;
 	public static void computeShortestPath(PriorityQueue<Node> open_set, Node goal, Grid g, Node start)
 	{
 		//System.out.println(open_set.toString());
-		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || 
-				goal.getRhsScore() != goal.getGScore())
+		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)))
 		{
 			System.out.println(counter++);
 			Node u = open_set.poll();
@@ -89,7 +82,7 @@ static int counter = 0;
 
 	public static Node[] algorithm(Grid g, Node goal, Node start)
 	{
-		initialize(g, goal);
+		initialize(g, start);
 		computeShortestPath(open_set, goal, g, start);
 		return reconstructPath(goal, start, g);
 	}
