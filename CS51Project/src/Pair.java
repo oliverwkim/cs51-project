@@ -1,19 +1,21 @@
-public class Pair<Node,int> {
-	public final Node s;
-	public final int n;
-	public pair(Node s, int n)
+public class Pair {
+	
+	private Node s;
+	private int n;
+	
+	public void pair(Node sInput, int nInput)
 	{
-		this.s = s;
-		this.n = n;
+		s = sInput;
+		n = nInput;
 	}
 
-	public static Node getNode(Pair pair)
+	public Node getNode()
 	{
-		return pair.s;
+		return s;
 	}
 
-	public static int getInt(Pair pair)
+	public int getInt()
 	{
-		return pair.n;
+		return n;
 	}
 }

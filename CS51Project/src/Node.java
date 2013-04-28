@@ -18,6 +18,7 @@ public abstract class Node {
 	protected int fScore = 0;
 	protected int gScore = 0;
 	protected int kScore = 0;
+	protected int rhsScore = 0;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
@@ -131,6 +132,14 @@ public abstract class Node {
 	
 	void setKScore(int score){
 		kScore = score;
+	}
+	
+	int getRhsScore(){
+		return rhsScore;
+	}
+	
+	void setRhsScore(int score){
+		rhsScore = score;
 	}
 	
 	boolean getVisibility(){

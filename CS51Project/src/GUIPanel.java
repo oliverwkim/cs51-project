@@ -116,13 +116,12 @@ public class GUIPanel extends JPanel {
 		int margin = diameter + 20;
 		
 		JFrame f = new JFrame();
-		Grid g = new Grid(15,15);
+		Grid g = new Grid(10,10);
 		
 		while(true){
-		g.createRandom(new Point(0,0), new Point(14,14));
-		g.createRandom(new Point(0,0), new Point(13,13));
+		g.createRandom(new Point(0,0), new Point(9,9));
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY());
-		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(13,13));
+		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(9,9));
 		f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 		f.setVisible(true);
 		Thread.sleep(500);

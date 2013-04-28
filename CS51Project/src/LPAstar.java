@@ -2,7 +2,7 @@ import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.ArrayList;
 
-public class LPAStar extends Astar { 
+public class LPAstar extends AStar { 
 
 	public static Key calculateKey(Node s, Node goal) 
 	{
@@ -14,7 +14,7 @@ public class LPAStar extends Astar {
 		Comparator<Pair> pairComparator = new LPAPairComparator();
 		Comparator<Key> keyComparator = new KeyComparator();
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, pairComparator); 
-		for (Node s : goal.getAllVisible()) 
+		for (Node s : g.getVision(goal, /* line of sight here*/)) 
 		{
 			s.setGScore(1000); 
 			s.setRhsScore(1000);
@@ -31,7 +31,7 @@ public class LPAStar extends Astar {
 		}
 
 		if (open_set.contains(u))
-			open_set.remove(u));
+			open_set.remove(u);
 		
 		if (u.getG() <> u.getRhs())
 			open_set.add(u,calculateKey(u, goal));
@@ -42,9 +42,9 @@ public class LPAStar extends Astar {
 		while(keyComparator.compare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || (goal.getRhs() <> goal.getG()))
 		{
 			Node u = open_set.pop();
-			if (u.getG() > u.getRhs())
+			if (u.getGScore() > u.getRhsScore())
 			{
-				u.setGScore(u.getRhs());
+				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
 					updateVertex(s, g, open_set, goal);
 			}
@@ -75,8 +75,8 @@ public class LPAStar extends Astar {
 		}
 		else
 		{
-			PriorityQueue<int> values = new PriorityQueue<int>;
-			for (Node s : goal.getConnections))
+			PriorityQueue<int> values = new PriorityQueue<int>();
+			for (Node s : goal.getConnections())
 				values.add(s.getG() + g.edgelength);
 			minval =values.peek();
 			path.add(minval);
@@ -92,8 +92,8 @@ public class LPAStar extends Astar {
 		}
 		else
 		{
-			PriorityQueue<int> values = new PriorityQueue<int>;
-			for (Node s : u.getConnections())) 
+			PriorityQueue<int> values = new PriorityQueue<int>(11);
+			for (Node s : u.getConnections())
 				values.add(s.getG() + g.edgelength(s,u));
 			s.setRhsScore(values.peek());
 		}
