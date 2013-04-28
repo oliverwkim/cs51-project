@@ -84,7 +84,7 @@ public class LPAstar extends AStar {
 		{
 			PriorityQueue<Integer> values = new PriorityQueue<Integer>();
 			for (Node s : goal.getConnections())
-				values.add(s.getGScore() + g.edgelength);
+				values.add(s.getGScore() + g.getEdgeLength());
 			int minval = values.peek();
 			path.add(minval);
 			reconstructPath(goal, minval, g);
@@ -92,19 +92,16 @@ public class LPAstar extends AStar {
 	}
 
 	public static int findRhs(Node u, Node start, Grid g)
-	{
-		if(u.equals(start))
-		{
-			return 0;
-		}
-		else
+	{		
+		if(!u.equals(start))
 		{
 			PriorityQueue<Integer> values = new PriorityQueue<Integer>(11);
 			for (Node s : u.getConnections())
 			{
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
 			}
-			return values.peek();
+			return values.peek();			
 		}
+		return 0;
 	}
 }
