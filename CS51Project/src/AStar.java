@@ -25,11 +25,14 @@ public class AStar {
 			openSet.remove(current);
 			closedSet.add(current);
 			
+			// checks each of the current Node's neighbors
 			for (Node neighbor: current.getConnections())
 			{
+				// special case if there is no connection
 				if (neighbor == null)
 					continue;
 				
+				// calculate and compare GScores
 				int tentativeGScore = current.getGScore() + g.getEdgeLength(current,neighbor);
 
 				if (closedSet.contains(neighbor) && tentativeGScore >= neighbor.getGScore())
@@ -62,6 +65,7 @@ public class AStar {
 			return 14 * xDiff + 10 * (yDiff - xDiff);
 	}
 
+	// traverses the list of Nodes and returns a path
 	private static Node[] reconstructPath(Node start, Node current)
 	{
 		ArrayList<Node> path = new ArrayList<Node> ();
