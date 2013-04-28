@@ -173,10 +173,10 @@ public class GUIPanel extends JPanel {
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
 
 		while(!current.equals(end)){
-			g.getVision(current, 2);
-			current = path[path.length-1];
+			g.getVision(current, 2);			
 			path = LPAstar.algorithm(g, end, current);
 			map.repaint();
+			current = path[path.length-2];
 			Thread.sleep(500);
 		}
 		

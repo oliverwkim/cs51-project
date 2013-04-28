@@ -84,6 +84,7 @@ public class LPAstar extends AStar {
 
 	public static Node[] algorithm(Grid newG, Node newGoal, Node newStart)
 	{
+		System.out.println("Once");
 		g = newG;
 		goal = newGoal;
 		start = newStart;
