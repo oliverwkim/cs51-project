@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 
-public class DStarLite extends LPAStar {
+public class DStarLite extends LPAstar {
 
 	private static int k;
 	private static PriorityQueue<Node> open_set = null;
@@ -35,7 +35,7 @@ public class DStarLite extends LPAStar {
 	{
 		if (!u.equals(goal))
 		{
-			u.setRhsScore(findRhs((u, start, g))); 
+			u.setRhsScore(findRhs(u, start, g)); 
 		}
 
 		if (open_set.contains(u))
@@ -43,7 +43,7 @@ public class DStarLite extends LPAStar {
 		
 		if (u.getGScore() != u.getRhsScore())
 		{
-			u.setKScore(calculateKey(u, goal));
+			u.setKScore(calculateKey(u));
 			if(!(open_set.contains(u)))
 				open_set.add(u);
 		}
@@ -59,8 +59,14 @@ public class DStarLite extends LPAStar {
 	
 	public static Node[] algorithm()
 	{
+		Node last = null;
 		initialize();
+		computeShortestPath();
 		
+		while(!start.equals(goal))
+		{
+			
+		}
 	}
 
 	
