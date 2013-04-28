@@ -104,14 +104,18 @@ public class LPAstar extends AStar {
 		else
 		{
 			PriorityQueue<Node> values = new PriorityQueue<Node>(11, kNodeComparator);
-			for (Node s : goal.getConnections())
+			if(goal.getConnections() != null)
 			{
-				s.setKScore(calculateKey(s));
-				values.add(s);
+				for (Node s : goal.getConnections())
+				{
+					s.setKScore(calculateKey(s));
+					values.add(s);
+				}
+				Node closestNode = values.peek();
+				path.add(closestNode);
+				return reconstructPath(closestNode, start, g);
 			}
-			Node closestNode = values.peek();
-			path.add(closestNode);
-			return reconstructPath(closestNode, start, g);
+			else return null
 		}
 	}
 
