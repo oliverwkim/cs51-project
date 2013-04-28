@@ -19,6 +19,14 @@ public abstract class Node {
 	protected int gScore = 10000;
 	protected ArrayList<Integer> kScore = null;
 	protected int rhsScore = 10000;
+	
+	/* These variables will contain connections to all neighbors.
+	 * They will be returned in the event that the node is not visible
+	 * In other words, when a nonvisible node is asked for information, it will
+	 * state that it is connected to all of its neighbors, and that it is passable.
+	 */
+	protected Node[] shadowConnections;
+	protected Edge[] shadowEdges;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
@@ -49,6 +57,9 @@ public abstract class Node {
 	
 	// Deletes the connection to the given node. Returns the edge that has been deleted, or null if it did not exist
 	abstract Edge deleteConnection(Node n);
+	
+	// Pass in all neighbors, so that connections can be established for the shadow variables
+	abstract void setShadows(Node[] neighbors);
 
 	// These methods return all of the connections and edges
 	Node[] getAllConnections(){
@@ -62,6 +73,8 @@ public abstract class Node {
 	
 	// These two methods return only the connections to passable nodes
 	public Node[] getConnections(){
+		if(!visible)
+			return shadowConnections;
 		ArrayList<Node> result = new ArrayList<Node>();
 		for(Node n: connections.toArray(new Node[connections.size()])){
 			if(n.isPassable() && n != null)
@@ -71,6 +84,8 @@ public abstract class Node {
 	}
 
 	public Edge[] getEdges(){
+		if(!visible)
+			return shadowEdges;
 		ArrayList<Edge> result = new ArrayList<Edge>();
 		for(Edge e: edges.toArray(new Edge[edges.size()])){
 			if(e.getEnd(this).isPassable() && e != null)

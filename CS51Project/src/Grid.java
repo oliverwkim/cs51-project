@@ -135,6 +135,7 @@ public class Grid implements GridInterface {
 					else
 						linkNodes(current, n, diagonal);
 				}
+				current.setShadows(neighbors);
 			}
 		}
 	}
@@ -183,6 +184,7 @@ public class Grid implements GridInterface {
 							linkNodes(current, n, diagonal);
 					}
 				}
+				current.setShadows(neighbors);
 			}
 		}
 	}

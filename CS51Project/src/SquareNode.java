@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class SquareNode extends Node {
 
 	// Maximum number of nodes this can be connected to
@@ -53,5 +55,21 @@ public class SquareNode extends Node {
 			}
 		}
 		return null;
+	}
+	
+	public void setShadows(Node[] neighbors){
+		ArrayList<Node> tempConnections = new ArrayList<Node>();
+		ArrayList<Edge> tempEdges = new ArrayList<Edge>();
+		int length;
+		for(Node n: neighbors){
+			if(n.getPosition().getX() == position.getX() || n.getPosition().getY() == position.getY())
+				length = 10;
+			else
+				length = 14;
+			tempConnections.add(n);
+			tempEdges.add(new Edge(this, n, length));
+		}
+		shadowConnections = tempConnections.toArray(new Node[tempConnections.size()]);
+		shadowEdges = tempEdges.toArray(new Edge[tempEdges.size()]);
 	}
 }
