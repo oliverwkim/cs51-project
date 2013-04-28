@@ -64,17 +64,16 @@ public abstract class Node {
 	public Node[] getConnections(){
 		ArrayList<Node> result = new ArrayList<Node>();
 		for(Node n: connections.toArray(new Node[connections.size()])){
-			if(n.isPassable())
+			if(n.isPassable() && n != null)
 				result.add(n);
 		}
-		Node[] actualResult = result.toArray(new Node[result.size()]);
-		return actualResult;
+		return result.toArray(new Node[result.size()]);
 	}
 
 	public Edge[] getEdges(){
 		ArrayList<Edge> result = new ArrayList<Edge>();
 		for(Edge e: edges.toArray(new Edge[edges.size()])){
-			if(e.getEnd(this).isPassable())
+			if(e.getEnd(this).isPassable() && e != null)
 				result.add(e);
 		}
 		Edge[] actualResult = result.toArray(new Edge[result.size()]);
@@ -154,7 +153,8 @@ public abstract class Node {
 	boolean equals(Node n){
 		if(n == null)
 			return false;
-		return (position.equals(n.getPosition())) && (passable == n.isPassable())
+		else
+			return (position.equals(n.getPosition())) && (passable == n.isPassable())
 				&& (cost == n.getCost());
 	}
 
