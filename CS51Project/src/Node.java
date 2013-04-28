@@ -17,7 +17,7 @@ public abstract class Node {
 	
 	protected int fScore = 0;
 	protected int gScore = 0;
-	protected int kScore = 0;
+	protected ArrayList<Integer> kScore = null;
 	protected int rhsScore = 0;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
@@ -126,11 +126,11 @@ public abstract class Node {
 		parent = n;
 	}
 	
-	int getKScore(){
+	ArrayList<Integer> getKScore(){
 		return kScore;
 	}
 	
-	void setKScore(int score){
+	void setKScore(ArrayList<Integer> score){
 		kScore = score;
 	}
 	
