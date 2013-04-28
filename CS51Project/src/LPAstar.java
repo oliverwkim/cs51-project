@@ -45,7 +45,7 @@ public class LPAstar extends AStar {
 	public static void computeShortestPath(PriorityQueue<Pair> open_set, Node goal, Grid g)
 	{
 		Comparator<ArrayList<Integer>> keyComparator = new KeyComparator();
-		while(keyComparator.compare(calculateKey(open_set.peek().getNode(), goal), calculateKey(goal, goal)) || 
+		while(keyComparator.compare(calculateKey(open_set.peek().getNode(), goal), calculateKey(goal, goal)) < 0 || 
 				goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll().getNode();
