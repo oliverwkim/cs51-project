@@ -25,8 +25,8 @@ public abstract class Node {
 	 * In other words, when a nonvisible node is asked for information, it will
 	 * state that it is connected to all of its neighbors, and that it is passable.
 	 */
-	protected Node[] shadowConnections;
-	protected Edge[] shadowEdges;
+	protected ArrayList<Node> shadowConnections;
+	protected ArrayList<Edge> shadowEdges;
 
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
@@ -35,6 +35,8 @@ public abstract class Node {
 		connections = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		visible = true;
+		shadowConnections = new ArrayList<Node>();
+		shadowEdges = new ArrayList<Edge>();
 	}
 
 	public Node(int x, int y, int c, boolean pass, int maxConnections){
@@ -44,6 +46,8 @@ public abstract class Node {
 		connections = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		visible = true;
+		shadowConnections = new ArrayList<Node>();
+		shadowEdges = new ArrayList<Edge>();
 	}
 
 	/* Links this node to another node, with path length of length between them. 
@@ -60,6 +64,10 @@ public abstract class Node {
 	
 	// Pass in all neighbors, so that connections can be established for the shadow variables
 	abstract void setShadows(Node[] neighbors);
+	
+	// Removes given node from the shadow connections
+	// This is used to eliminate inconsistencies in information when visible and nonvisible nodes adjacent
+	abstract void removeShadow(Node n);
 
 	// These methods return all of the connections and edges
 	Node[] getAllConnections(){
@@ -74,7 +82,7 @@ public abstract class Node {
 	// These two methods return only the connections to passable nodes
 	public Node[] getConnections(){
 		if(!visible)
-			return shadowConnections;
+			return shadowConnections.toArray(new Node[shadowConnections.size()]);
 		ArrayList<Node> result = new ArrayList<Node>();
 		for(Node n: connections.toArray(new Node[connections.size()])){
 			if(n.isPassable() && n != null)
@@ -85,7 +93,7 @@ public abstract class Node {
 
 	public Edge[] getEdges(){
 		if(!visible)
-			return shadowEdges;
+			return shadowEdges.toArray(new Edge[shadowEdges.size()]);
 		ArrayList<Edge> result = new ArrayList<Edge>();
 		for(Edge e: edges.toArray(new Edge[edges.size()])){
 			if(e.getEnd(this).isPassable() && e != null)

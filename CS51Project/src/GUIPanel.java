@@ -186,7 +186,7 @@ public class GUIPanel extends JPanel {
 			map.repaint();
 			current = path[path.length-2];
 			g.getVision(current, 2);
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		}
 		
 	}
