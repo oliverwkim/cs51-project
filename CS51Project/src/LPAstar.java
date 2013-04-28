@@ -38,7 +38,7 @@ public class LPAStar extends AStar {
 			u.setRhsScore(findRhs(u, start, g));
 		}
 
-		if (open_set.contains(u))
+		if (!open_set.contains(u))
 			open_set.remove(u);
 		
 		if (u.getGScore() != u.getRhsScore())
