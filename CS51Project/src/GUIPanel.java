@@ -126,6 +126,10 @@ public class GUIPanel extends JPanel {
 		JFrame f = new JFrame();
 		Grid g = new Grid(10,10);
 		
+		// generate new random grid
+		// set starting point
+		// set ending point
+		
 		while(true){
 		g.createRandom(new Point(0,0), new Point(9,9));
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY());

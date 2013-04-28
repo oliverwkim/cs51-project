@@ -42,7 +42,7 @@ public class LPAstar extends AStar {
 			open_set.add(new Pair(u,calculateKey(u, goal)));
 	}
 
-	public static void computeShortestPath(PriorityQueue<Pair> open_set, Node goal, Grid g)
+	public static void computeShortestPath(PriorityQueue<Pair> open_set, Node goal, Grid g, Node start)
 	{
 		Comparator<ArrayList<Integer>> keyComparator = new KeyComparator();
 		while(keyComparator.compare(calculateKey(open_set.peek().getNode(), goal), calculateKey(goal, goal)) < 0 || 
@@ -53,14 +53,14 @@ public class LPAstar extends AStar {
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
-					updateVertex(s, g, open_set, goal);
+					updateVertex(s, g, open_set, start, goal);
 			}
 			else
 			{
 				u.setGScore(1000);
 				for (Node s : g.getAdjacent(u)) 
-					updateVertex(s, g, open_set, goal);
-				updateVertex(u, g, open_set, goal);
+					updateVertex(s, g, open_set, start, goal);
+				updateVertex(u, g, open_set, start, goal);
 			}
 		}	
 	}
