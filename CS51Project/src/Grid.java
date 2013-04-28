@@ -168,7 +168,7 @@ public class Grid implements GridInterface {
 				grid[x][y] = new SquareNode(x, y, true);
 			}
 		}
-		//generateRandomPath(getNode(start), getNode(end));
+
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
 				Node current = grid[x][y];
