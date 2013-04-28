@@ -58,18 +58,27 @@ public class SquareNode extends Node {
 	}
 	
 	public void setShadows(Node[] neighbors){
-		ArrayList<Node> tempConnections = new ArrayList<Node>();
-		ArrayList<Edge> tempEdges = new ArrayList<Edge>();
 		int length;
 		for(Node n: neighbors){
 			if(n.getPosition().getX() == position.getX() || n.getPosition().getY() == position.getY())
 				length = 10;
 			else
 				length = 14;
-			tempConnections.add(n);
-			tempEdges.add(new Edge(this, n, length));
+			shadowConnections.add(n);
+			shadowEdges.add(new Edge(this, n, length));
 		}
-		shadowConnections = tempConnections.toArray(new Node[tempConnections.size()]);
-		shadowEdges = tempEdges.toArray(new Edge[tempEdges.size()]);
+	}
+	
+	public void removeShadow(Node n){
+		ArrayList<Node> tempNodes = new ArrayList<Node>();
+		ArrayList<Edge> tempEdge = new ArrayList<Edge>();
+		for(int i = 0; i < shadowConnections.size(); i++){
+			if(!n.equals(shadowConnections.get(i))){
+				tempNodes.add(shadowConnections.get(i));
+				tempEdge.add(shadowEdges.get(i));
+			}
+		}
+		shadowConnections = tempNodes;
+		shadowEdges = tempEdge;
 	}
 }

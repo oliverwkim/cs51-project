@@ -93,10 +93,10 @@ public class LPAstar extends AStar {
 		return reconstructPath(goal, start, g);
 	}
 
-	public static Node[] reconstructPath(Node goal, Node start, Grid g)
+	public static Node[] reconstructPath(Node pathGoal, Node pathStart, Grid g)
 	{
 
-		if(goal.equals(start))
+		if(pathGoal.equals(pathStart))
 		{
 			Node[] result = path.toArray(new Node[path.size()]);
 			return result;
@@ -104,18 +104,25 @@ public class LPAstar extends AStar {
 		else
 		{
 			PriorityQueue<Node> values = new PriorityQueue<Node>(11, kNodeComparator);
-			if(goal.getConnections() != null)
+			if(pathGoal.getConnections() != null)
 			{
-				for (Node s : goal.getConnections())
+				for (Node s : pathGoal.getConnections())
 				{
 					s.setKScore(calculateKey(s));
 					values.add(s);
 				}
-				Node closestNode = values.peek();
+				Node closestNode = values.peek();			
+				if(closestNode == null)
+					return path.toArray(new Node[path.size()]);
 				path.add(closestNode);
-				return reconstructPath(closestNode, start, g);
+				return reconstructPath(closestNode, pathStart, g);
 			}
+<<<<<<< HEAD
+			else 
+				return null;
+=======
 			else return null;
+>>>>>>> e070489a6aa8100fc1f7c31850284b970bd5436e
 		}
 	}
 
