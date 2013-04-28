@@ -49,6 +49,11 @@ public class GUIPanel extends JPanel {
 		padding = p;
 	}
 	
+	private void setPath (Node[] inputPath)
+	{
+		path = inputPath;
+	}
+	
 	public void paintComponent(Graphics p)
 	{
 		super.paintComponent(p);
@@ -175,6 +180,7 @@ public class GUIPanel extends JPanel {
 		while(!current.equals(end)){
 			g.getVision(current, 2);			
 			path = LPAstar.algorithm(g, end, current);
+			map.setPath(path);
 			map.repaint();
 			current = path[path.length-2];
 			Thread.sleep(500);

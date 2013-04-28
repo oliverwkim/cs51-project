@@ -80,6 +80,7 @@ public class DStarLite extends LPAstar {
 		{
 			start = minimize(start.getConnections());
 			g.setPos(start);
+			
 		}
 		return null;
 	}
