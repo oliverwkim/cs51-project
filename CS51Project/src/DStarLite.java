@@ -24,6 +24,7 @@ public class DStarLite extends LPAstar {
 		start = sInput;
 		goal = gInput;
 		k = 0;
+		g.setPos(start);
 		
 		open_set = new PriorityQueue<Node>(11, kNodeComparator);
 		goal.setKScore(calculateKey(goal));
@@ -47,7 +48,7 @@ public class DStarLite extends LPAstar {
 		}
 	}
 	
-	public static void computeShortestPath(PriorityQueue<Node> open_set)
+	public static void computeShortestPath()
 	{
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
 		{
@@ -77,12 +78,10 @@ public class DStarLite extends LPAstar {
 		
 		while(!start.equals(goal))
 		{
-			Node smallest;
-			int min = 0;
-			int prevMin = 0;
-			
 			start = minimize(start.getConnections());
+			g.setPos(start);
 		}
+		return null;
 	}
 	
 	private static Node minimize (Node[] nodeList)
