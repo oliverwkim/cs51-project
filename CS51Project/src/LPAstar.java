@@ -4,15 +4,18 @@ import java.util.ArrayList;
 
 public class LPAstar extends AStar { 
 
-	public static Key calculateKey(Node s, Node goal) 
+	public static ArrayList<Integer> calculateKey(Node s, Node goal) 
 	{
-		return [min(s.getG(), s.getRhs() + hScore(s,goal)); min(s.getG(), s.getRhs())];
+		ArrayList<Integer> key = new ArrayList<Integer>();
+		key.add(Math.min(s.getGScore(), s.getRhsScore() + hScore(s,goal)));
+		key.add(Math.min(s.getGScore(), s.getRhsScore()));
+		return key;
 	}
 
 	public static void initialize(Grid g, Node goal)
 	{
 		Comparator<Pair> pairComparator = new LPAPairComparator();
-		Comparator<Key> keyComparator = new KeyComparator();
+		Comparator<ArrayList<Integer>> keyComparator = new KeyComparator();
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, pairComparator); 
 		for (Node s : g.getVision(goal, /* line of sight here*/)) 
 		{
@@ -20,7 +23,7 @@ public class LPAstar extends AStar {
 			s.setRhsScore(1000);
 		}
 		goal.setRhsScore(0);
-		open_set.add(goal,calculateKey(goal,goal));
+		open_set.add(new Pair(goal,calculateKey(goal,goal)));
 	}
 
 	public static void updateVertex(Node u, Grid g, PriorityQueue open_set, Mode start, Node goal)
@@ -39,8 +42,9 @@ public class LPAstar extends AStar {
 
 	public static void computeShortestPath(PriorityQueue open_set, Node goal, Grid g)
 	{
-		Comparator<Key> keyComparator = new KeyComparator();
-		while(keyComparator.compare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || (goal.getRhs() != goal.getG()))
+		@SuppressWarnings("rawtypes")
+		Comparator keyComparator = new KeyComparator();
+		while(keyComparator.compare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || (goal.getRhsScore() != goal.getGScore()))
 		{
 			Node u = open_set.pop();
 			if (u.getGScore() > u.getRhsScore())
@@ -59,7 +63,7 @@ public class LPAstar extends AStar {
 		}	
 	}
 
-	public static void algorithm(Grid g, Node goal, Node start)
+	public void algorithm(Grid g, Node goal, Node start)
 	{
 		initialize(g, start);
 		computeShortestPath(open_set, goal, g);
@@ -76,10 +80,10 @@ public class LPAstar extends AStar {
 		}
 		else
 		{
-			PriorityQueue<int> values = new PriorityQueue<int>();
+			PriorityQueue<Integer> values = new PriorityQueue<Integer>();
 			for (Node s : goal.getConnections())
-				values.add(s.getG() + g.edgelength);
-			minval =values.peek();
+				values.add(s.getGScore() + g.edgelength);
+			int minval = values.peek();
 			path.add(minval);
 			reconstructPath(goal, minval, g);
 		}
