@@ -71,7 +71,8 @@ public class LPAstar extends AStar {
 	 public Node[] algorithm(Grid g, Node goal, Node start)
 	{
 		initialize(g, start);
-		return computeShortestPath(open_set, goal, g);
+		computeShortestPath(open_set, goal, g, start);
+		return reconstructPath(goal, start, g);
 	}
 
 	public static Node[] reconstructPath(Node goal, Node start, Grid g)
