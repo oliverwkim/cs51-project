@@ -1,8 +1,16 @@
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.Arrays;
 import java.awt.Color;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -125,19 +133,32 @@ public class GUIPanel extends JPanel {
 		
 		JFrame f = new JFrame();
 		Grid g = new Grid(10,10);
-		
+		JPanel container = new JPanel(new BorderLayout());
+		JButton generateButton = new JButton("Generate a new random map");
+		JButton start = new JButton("filler");
+		JButton end = new JButton("filler");
+		JPanel buttonContainer = new JPanel(new GridLayout(1,3));
 		// generate new random grid
 		// set starting point
 		// set ending point
 		
-		while(true){
+		buttonContainer.add(generateButton);
+		buttonContainer.add(start);
+		buttonContainer.add(end);
+		
 		g.createRandom(new Point(0,0), new Point(9,9));
-		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY());
 		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(9,9));
-		f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
+		GUIPanel self = new GUIPanel(g,path,diameter,padding,margin);
+		
+		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
+		container.add(self, BorderLayout.CENTER);
+		container.add(self, BorderLayout.PAGE_END);
+		
+
+		f.setContentPane(container);
 		f.setVisible(true);
-		Thread.sleep(500);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		}
+		
+		
 	}
 }
