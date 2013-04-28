@@ -8,7 +8,8 @@ public class LPAStar extends AStar {
 	final static Comparator<Node> kNodeComparator = new KNodeComparator();
 	static ArrayList<Node> path = new ArrayList<Node> ();
 	private static PriorityQueue<Node> open_set = null;
-static int counter = 0;
+	static int counter = 0;
+	
 	public static ArrayList<Integer> calculateKey(Node s, Node goal) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
