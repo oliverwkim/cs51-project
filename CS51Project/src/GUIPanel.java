@@ -135,27 +135,20 @@ public class GUIPanel extends JPanel {
 		Grid g = new Grid(10,10);
 		JPanel container = new JPanel(new BorderLayout());
 		JButton generateButton = new JButton("Generate a new random map");
-		JButton start = new JButton("filler");
-		JButton end = new JButton("filler");
-		JPanel buttonContainer = new JPanel(new GridLayout(1,3));
+		JPanel buttonContainer = new JPanel();
 		// generate new random grid
 		// set starting point
 		// set ending point
-		
+		/*
 		buttonContainer.add(generateButton);
 		buttonContainer.add(start);
 		buttonContainer.add(end);
-		
+		*/
 		g.createRandom(new Point(0,0), new Point(9,9));
 		Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(9,9));
-		GUIPanel self = new GUIPanel(g,path,diameter,padding,margin);
-		
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
-		container.add(self, BorderLayout.CENTER);
-		container.add(self, BorderLayout.PAGE_END);
-		
 
-		f.setContentPane(container);
+		f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
