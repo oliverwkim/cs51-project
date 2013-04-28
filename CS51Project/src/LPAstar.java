@@ -8,6 +8,7 @@ public class LPAstar extends AStar {
 	final static Comparator<Node> kNodeComparator = new KNodeComparator();
 	static ArrayList<Node> path = new ArrayList<Node> ();
 	private static PriorityQueue<Node> open_set = null;
+<<<<<<< HEAD
 	
 	static Node start;
 	static Node goal;
@@ -15,6 +16,11 @@ public class LPAstar extends AStar {
 	
 	
 	public static ArrayList<Integer> calculateKey(Node s) 
+=======
+	static int counter = 0;
+	
+	public static ArrayList<Integer> calculateKey(Node s, Node goal) 
+>>>>>>> 94f1a722934da423c5aaaca642098c845e582697
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
 		key.add(Math.min(s.getGScore(), s.getRhsScore() + hScore(s,goal)));
