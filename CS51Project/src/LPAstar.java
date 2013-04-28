@@ -83,7 +83,7 @@ public class LPAstar extends AStar {
 			reconstructPath(goal, minval, g);
 		}
 	}
-
+// hello
 	public static int findRhs(Node u, Node start, Grid g)
 	{
 		if(u.equals(start))
