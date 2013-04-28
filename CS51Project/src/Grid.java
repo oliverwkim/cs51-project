@@ -6,6 +6,7 @@ public class Grid implements GridInterface {
 	protected Node[][] grid;
 	protected int xLength;
 	protected int yLength;
+	protected Node pos;
 	
 	private final int cardinal = 10;
 	private final int diagonal = 14;
@@ -23,6 +24,15 @@ public class Grid implements GridInterface {
 	public int getY(){
 		return yLength;
 	}
+	
+	public Node getPos(){
+		return pos;
+	}
+	
+	public void setPos(Node s){
+		pos = s;
+	}
+	
 	
 	public Node getNode(Point c) {
 		int tempX = (int) c.getX();
