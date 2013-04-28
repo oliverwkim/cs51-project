@@ -48,8 +48,10 @@ public class GUIPanel extends JPanel {
 		{
 			for(int j = 0; j < gridX; j++)
 			{
+				// draws Nodes
 				p.drawOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				
+				// draws horizontal connections between Nodes
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i+1, j)))
 				{
 					int x1 = padding + margin * i + diameter;
@@ -59,6 +61,7 @@ public class GUIPanel extends JPanel {
 					p.drawLine(x1, y1, x2, y2);
 				}
 				
+				// draws vertical connections between Nodes
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i,j+1))){
 					int x1 = padding + margin * i + (diameter / 2);
 					int y1 = padding + margin * j + diameter;
@@ -67,6 +70,7 @@ public class GUIPanel extends JPanel {
 					p.drawLine(x1, y1, x2, y2);
 				}
 				
+				// draws north-eastern connections
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i+1,j+1))){
 					int edge = (int) ((float) (diameter / 2) / Math.sqrt(2.0));
 					int dist = (margin - 2 * edge);
@@ -77,6 +81,7 @@ public class GUIPanel extends JPanel {
 					p.drawLine(x1, y1, x2, y2);
 				} 
 				
+				// draws north-western connections
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i-1,j+1))){
 					int edge = (int) ((float) (diameter / 2) / Math.sqrt(2.0));
 					int dist = (margin - 2 * edge);
@@ -87,18 +92,21 @@ public class GUIPanel extends JPanel {
 					p.drawLine(x1, y1, x2, y2);
 				}
 				
+				// colors start of path green
 				if (path != null && path[0].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.green);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 					p.setColor(Color.black);
 				} 
+				// colors goal red
 				else if (path != null && path[path.length - 1].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.red);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 					p.setColor(Color.black);
 				} 
+				// colors path blue
 				else if (path != null && Arrays.asList(path).contains(grid.getNode(i,j)))
 				{
 					p.setColor(Color.blue);
