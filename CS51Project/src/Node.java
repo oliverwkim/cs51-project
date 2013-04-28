@@ -126,7 +126,7 @@ public abstract class Node {
 	}
 	
 	ArrayList<Integer> getKScore(){
-		return kScore;
+		return kScore;	
 	}
 	
 	void setKScore(ArrayList<Integer> score){
