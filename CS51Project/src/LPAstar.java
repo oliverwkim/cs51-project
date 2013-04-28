@@ -84,7 +84,7 @@ public class LPAstar extends AStar {
 		{
 			PriorityQueue<Pair> values = new PriorityQueue<Pair>(11, pairComparator);
 			for (Node s : goal.getConnections())
-				values.add(new Pair(s, s.getGScore() + g.getEdgeLength());
+				values.add(new Pair(s, s.getGScore() + g.getEdgeLength(s, goal));
 			Node closestNode = values.peek().getNode();
 			path.add(closestNode);
 			reconstructPath(goal, closestNode, g);
