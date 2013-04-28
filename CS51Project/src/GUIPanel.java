@@ -179,14 +179,10 @@ public class GUIPanel extends JPanel {
 		// Node[] path = AStar.algorithm(g, g.getNode(0,0), g.getNode(9,9));
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
 		while(!current.equals(end)){
-<<<<<<< HEAD
+
 			path = AStar.algorithm(g, current, end);
 			//path = LPAstar.algorithm(g, end, current);
-=======
-			g.getVision(current, 2);			
-			path = LPAstar.algorithm(g, end, current);
 			map.setPath(path);
->>>>>>> dbf33e804400c08d7caa14a4f9ea245b5dc1e7e1
 			map.repaint();
 			current = path[path.length-2];
 			g.getVision(current, 2);
