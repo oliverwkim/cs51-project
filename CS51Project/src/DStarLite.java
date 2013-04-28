@@ -78,8 +78,6 @@ public class DStarLite extends LPAstar {
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
-		Node last = null;
-		initialize();
 		computeShortestPath();
 		initialize(gInput, goalInput, startInput);
 		
@@ -101,6 +99,7 @@ public class DStarLite extends LPAstar {
 			 */
 			
 		}
+
 		return null;
 	}
 	

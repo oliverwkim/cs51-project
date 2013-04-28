@@ -109,7 +109,7 @@ public class GUIPanel extends JPanel {
 				}
 				
 				// colors in based on visibility
-				if(grid.getNode(i,j).getVisibility())
+				if(grid.getNode(i,j).getVisibility() && !Arrays.asList(path).contains(grid.getNode(i,j)))
 				{
 					p.setColor(Color.white);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
