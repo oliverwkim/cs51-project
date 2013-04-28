@@ -16,6 +16,7 @@ public class LPAstar extends AStar {
 	}
 
 	public static void initialize(Grid g, Node goal)
+
 	{
 		PriorityQueue<Pair> open_set = new PriorityQueue<Pair>(11, KNodeComparator); 
 		
@@ -25,7 +26,8 @@ public class LPAstar extends AStar {
 			s.setRhsScore(1000);
 		}
 		goal.setRhsScore(0);
-		open_set.add(new Pair(goal,calculateKey(goal,goal)));
+		goal.setKscore(0);
+		open_set.add(goal);
 	}
 
 	public static void updateVertex(Node u, Grid g, PriorityQueue<Pair> open_set, Node start, Node goal)
@@ -84,7 +86,9 @@ public class LPAstar extends AStar {
 		{
 			PriorityQueue<Pair> values = new PriorityQueue<Pair>(11, pairComparator);
 			for (Node s : goal.getConnections())
+			{
 				values.add(new Pair(s, s.getGScore() + g.getEdgeLength(s, goal));
+			}
 			Node closestNode = values.peek().getNode();
 			path.add(closestNode);
 			reconstructPath(goal, closestNode, g);
