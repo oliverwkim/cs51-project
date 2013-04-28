@@ -95,7 +95,7 @@ public class LPAstar extends AStar {
 	{
 		if(u.equals(start))
 		{
-			u.setRhsScore(0);
+			return 0;
 		}
 		else
 		{
@@ -103,7 +103,7 @@ public class LPAstar extends AStar {
 			for (Node s : u.getConnections())
 			{
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
-				s.setRhsScore(values.peek());	
+				return values.peek();
 			}
 		}
 	}
