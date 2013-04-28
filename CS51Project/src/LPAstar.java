@@ -66,7 +66,7 @@ public class LPAstar extends AStar {
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
 		{
 			Node u = open_set.poll();
-			if ((u.getGScore() > u.getRhsScore()) || u.getGScore() < 0)
+			if ((u.getGScore() > u.getRhsScore()))
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
