@@ -56,6 +56,9 @@ public class GUIPanel extends JPanel {
 		{
 			for(int j = 0; j < gridX; j++)
 			{
+
+				p.setColor(Color.black);
+				
 				// draws Nodes
 				p.drawOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				
@@ -100,26 +103,35 @@ public class GUIPanel extends JPanel {
 					p.drawLine(x1, y1, x2, y2);
 				}
 				
+				// colors in based on visibility
+				if(grid.getNode(i,j).getVisibility())
+				{
+					p.setColor(Color.white);
+					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
+				}
+				else
+				{
+					p.setColor(Color.gray);
+					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
+				}
+				
 				// colors start of path green
 				if (path != null && path[0].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.green);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
-					p.setColor(Color.black);
 				} 
 				// colors goal red
 				else if (path != null && path[path.length - 1].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.red);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
-					p.setColor(Color.black);
 				} 
 				// colors path blue
 				else if (path != null && Arrays.asList(path).contains(grid.getNode(i,j)))
 				{
 					p.setColor(Color.blue);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
-					p.setColor(Color.black);
 				}
 			}
 		}

@@ -41,7 +41,7 @@ static int counter = 0;
 		if (open_set.contains(u))
 			open_set.remove(u);
 		
-		if (u.getGScore() != u.getRhsScore())
+		if ((u.getGScore() != u.getRhsScore()) && !(open_set.contains(u)))
 		{
 			u.setKScore(calculateKey(u, goal));
 			if(!open_set.contains(u))
