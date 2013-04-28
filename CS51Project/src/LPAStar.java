@@ -69,7 +69,7 @@ public class LPAStar extends AStar {
 				goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
-			if ((u.getGScore() > u.getRhsScore()) || )
+			if ((u.getGScore() > u.getRhsScore()) || u.getGScore < 0)
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
