@@ -83,8 +83,9 @@ public class Grid implements GridInterface {
 		for(int addX = -1 * sight; addX <= sight; addX++){
 			for(int addY = -1 * sight; addY <= sight; addY++){
 				Node temp = getNode(x + addX, y + addY);
-				if(temp != null && (temp.getDistance(n) <= sight))
+				if(temp != null && (temp.getDistance(n) <= sight)){
 					visible.add(temp);
+				}
 			}
 		}
 		Node[] update = visible.toArray(new Node[visible.size()]);

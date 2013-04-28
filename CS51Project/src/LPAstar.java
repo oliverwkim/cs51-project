@@ -64,7 +64,7 @@ public class LPAStar extends AStar {
 	
 	public static void computeShortestPath(PriorityQueue<Node> open_set, Node goal, Grid g, Node start)
 	{
-		
+		//System.out.println(open_set.toString());
 		while(keyCompare(calculateKey(open_set.peek(), goal), calculateKey(goal, goal)) || 
 				goal.getRhsScore() != goal.getGScore())
 		{
@@ -85,9 +85,9 @@ public class LPAStar extends AStar {
 		}	
 	}
 
-	 public static Node[] algorithm(Grid g, Node goal, Node start)
+	public static Node[] algorithm(Grid g, Node goal, Node start)
 	{
-		initialize(g, start);
+		initialize(g, goal);
 		computeShortestPath(open_set, goal, g, start);
 		return reconstructPath(goal, start, g);
 	}
@@ -106,10 +106,11 @@ public class LPAStar extends AStar {
 			for (Node s : goal.getConnections())
 			{
 				s.setKScore(calculateKey(s, goal));
+				values.add(s);
 			}
 			Node closestNode = values.peek();
 			path.add(closestNode);
-			return reconstructPath(goal, closestNode, g);
+			return reconstructPath(closestNode, start, g);
 		}
 	}
 
@@ -122,6 +123,7 @@ public class LPAStar extends AStar {
 			{
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
 			}
+			//System.out.print(values.toString());
 			return values.peek();			
 		}
 		return 0;

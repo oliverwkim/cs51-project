@@ -154,7 +154,8 @@ public abstract class Node {
 		if(n == null)
 			return false;
 		else
-			return (position.equals(n.getPosition())) && (passable == n.isPassable())
+			return (position.equals(
+					n.getPosition())) && (passable == n.isPassable())
 				&& (cost == n.getCost());
 	}
 

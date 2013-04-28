@@ -145,9 +145,9 @@ public class GUIPanel extends JPanel {
 		buttonContainer.add(end);
 		*/
 		
-		g.createRandom(new Point(0,0), new Point(14,13));
+		g.createRandom(new Point(0,0), new Point(12,13));
 		Node start = g.getNode(0,0);
-		Node end = g.getNode(14,13);
+		Node end = g.getNode(12,13);
 		g.turnOnFog(start, 2);
 		Node current = start;
 		
@@ -162,6 +162,7 @@ public class GUIPanel extends JPanel {
 			f.setContentPane(new GUIPanel(g,path,diameter,padding,margin));
 			f.setVisible(true);
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			Thread.sleep(500);
 		}
 		
 	}
