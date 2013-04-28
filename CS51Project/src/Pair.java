@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 public class Pair {
 	
 	private Node s;
-	private ArrayList<integer> k;
+	private ArrayList<Integer> k;
 	
-	public void pair(Node sInput, ArrayList<integer> kInput)
+	public void pair(Node sInput, ArrayList<Integer> kInput)
 	{
 		s = sInput;
 		k = kInput;
@@ -14,7 +16,7 @@ public class Pair {
 		return s;
 	}
 
-	public ArrayList<integer> getKey()
+	public ArrayList<Integer> getKey()
 	{
 		return k;
 	}
