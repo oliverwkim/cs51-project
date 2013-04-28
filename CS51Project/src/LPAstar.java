@@ -103,8 +103,8 @@ public class LPAstar extends AStar {
 			for (Node s : u.getConnections())
 			{
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
-				return values.peek();
 			}
+			return values.peek();
 		}
 	}
 }
