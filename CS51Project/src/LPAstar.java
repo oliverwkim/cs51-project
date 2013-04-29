@@ -113,7 +113,9 @@ public class LPAstar extends AStar {
 			
 			Node closestNode = values.peek();			
 			if(closestNode == null)
+			{
 				return path.toArray(new Node[path.size()]);
+			}
 			path.add(closestNode);
 			return reconstructPath(closestNode, pathStart, g);
 		}
