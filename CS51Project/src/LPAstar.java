@@ -16,7 +16,7 @@ public class LPAstar extends AStar {
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
-		key.add(Math.min(s.getGScore(), s.getRhsScore() + hScore(s,goal)));
+		key.add(Math.min(s.getGScore(), s.getRhsScore()) + hScore(s,goal));
 		key.add(Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
@@ -85,7 +85,6 @@ public class LPAstar extends AStar {
 
 	public static Node[] algorithm(Grid newG, Node newGoal, Node newStart)
 	{
-		System.out.println("Once");
 		g = newG;
 		goal = newGoal;
 		start = newStart;
@@ -99,6 +98,7 @@ public class LPAstar extends AStar {
 
 		if(pathGoal.equals(pathStart))
 		{
+			path.remove(path.size()-1);
 			Node[] result = path.toArray(new Node[path.size()]);
 			return result;
 		}

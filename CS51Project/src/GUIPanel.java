@@ -127,7 +127,7 @@ public class GUIPanel extends JPanel {
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				} 
 				// colors goal red
-				else if (path != null && path[path.length - 1].equals(grid.getNode(i,j)))
+				else if (path != null && grid.getPos().equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.red);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
@@ -168,6 +168,7 @@ public class GUIPanel extends JPanel {
 		Node end = g.getNode(12,13);
 		g.turnOnFog(start, 2);
 		Node current = start;
+		g.setPos(current);
 		g.getVision(current, 2);
 		Node[] thisPath = LPAstar.algorithm(g, end, current);
 		GUIPanel map = new GUIPanel(g,thisPath,diameter,padding,margin);
@@ -178,8 +179,9 @@ public class GUIPanel extends JPanel {
 		
 		while(!current.equals(end)){
 			thisPath = LPAstar.algorithm(g, end, current);
-			map.setPath(thisPath);			
-			current = thisPath[thisPath.length-2];
+			map.setPath(thisPath);
+			current = thisPath[thisPath.length-1];
+			g.setPos(current);
 			g.getVision(current, 2);
 			map.repaint();
 			Thread.sleep(500);
