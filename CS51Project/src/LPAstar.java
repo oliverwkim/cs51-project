@@ -16,7 +16,7 @@ public class LPAstar extends AStar {
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
-		key.add(Math.min(s.getGScore(), s.getRhsScore() + hScore(s,goal)));
+		key.add(Math.min(s.getGScore(), s.getRhsScore()) + hScore(s,goal));
 		key.add(Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
@@ -43,8 +43,7 @@ public class LPAstar extends AStar {
 		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u));
-			if(!(open_set.contains(u)))
-				open_set.add(u);
+			open_set.add(u);
 		}
 	}
 
