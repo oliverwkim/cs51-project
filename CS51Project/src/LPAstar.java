@@ -43,8 +43,7 @@ public class LPAstar extends AStar {
 		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u));
-			if(!(open_set.contains(u)))
-				open_set.add(u);
+			open_set.add(u);
 		}
 	}
 
@@ -110,9 +109,12 @@ public class LPAstar extends AStar {
 				s.setKScore(calculateKey(s));
 				values.add(s);
 			}
+			
 			Node closestNode = values.peek();			
 			if(closestNode == null)
+			{
 				return path.toArray(new Node[path.size()]);
+			}
 			path.add(closestNode);
 			return reconstructPath(closestNode, pathStart, g);
 		}

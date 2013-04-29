@@ -66,6 +66,8 @@ public class GUIPanel extends JPanel {
 				
 				// draws Nodes
 				p.drawOval(padding + margin * i, padding + margin * j, diameter, diameter);
+				p.setColor(Color.gray);
+				p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				
 				// draws horizontal connections between Nodes
 				if(grid.getNode(i,j).connectionExists(grid.getNode(i+1, j)))
@@ -107,16 +109,11 @@ public class GUIPanel extends JPanel {
 					int y2 = edge + padding + (diameter / 2) + margin * j + dist;
 					p.drawLine(x1, y1, x2, y2);
 				}
-				
+
 				// colors in based on visibility
 				if(grid.getNode(i,j).getVisibility())
 				{
 					p.setColor(Color.white);
-					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
-				}
-				else
-				{
-					p.setColor(Color.gray);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				}
 				
@@ -179,10 +176,17 @@ public class GUIPanel extends JPanel {
 		
 		while(!current.equals(end)){
 			thisPath = LPAstar.algorithm(g, end, current);
+<<<<<<< HEAD
 			map.setPath(thisPath);
 			current = thisPath[thisPath.length-1];
 			g.setPos(current);
 			g.getVision(current, 2);
+=======
+			map.setPath(thisPath);			
+			current = thisPath[thisPath.length-2];
+			g.getVision(current, 2);
+
+>>>>>>> c481745768eb68688a14a44b7942f1195ffee8e7
 			map.repaint();
 			Thread.sleep(500);
 		}
