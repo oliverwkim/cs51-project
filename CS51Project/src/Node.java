@@ -84,7 +84,8 @@ public abstract class Node {
 		if(!visible)
 			return shadowConnections.toArray(new Node[shadowConnections.size()]);
 		ArrayList<Node> result = new ArrayList<Node>();
-		for(Node n: connections.toArray(new Node[connections.size()])){
+		for(int i = 0; i < connections.size(); i++){
+			Node n = connections.get(i);
 			if(n.isPassable() && n != null)
 				result.add(n);
 		}

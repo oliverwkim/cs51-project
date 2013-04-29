@@ -118,23 +118,15 @@ public class Grid implements GridInterface {
 	public Node[] getAdjacent(Node n){
 		int x = (int) n.getPosition().getX();
 		int y = (int) n.getPosition().getY();
-		int size;
-		if((x==0 || x==xLength-1) && (y==0 || y==yLength-1))
-			size = 3;
-		else if ((x==0 || x==xLength-1) || (y==0 || y==yLength-1))
-			size = 5;
-		else
-			size = 8;
-		Node[] neighbors = new Node[size];
-		int place = 0;
+		ArrayList<Node> neighbors = new ArrayList<Node>();
 		for(int addX = -1; addX <= 1; addX++){
 			for(int addY = -1; addY <= 1; addY++){
 				Node temp = getNode(x + addX, y + addY);
 				if(temp != null && (addX != 0 || addY != 0))
-					neighbors[place++] = temp;
+					neighbors.add(temp);
 			}
 		}
-		return neighbors;
+		return neighbors.toArray(new Node[neighbors.size()]);
 	}
 
 	// Standard grid with all possible links present, and all nodes passable
@@ -160,18 +152,21 @@ public class Grid implements GridInterface {
 	}
 	
 	public void turnOnFog(Node current, int sight){
-		Node[] visibles = getVision(current, sight);
+		//Node[] visibles = getVision(current, sight);
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
+				grid[x][y].setVisibility(false);
+				/*
 				boolean canSee = false;
 				for(Node n: visibles){
 					if(n.equals(grid[x][y]))
 						canSee = true;
 				}
 				if(!canSee)
-					grid[x][y].setVisibility(false);
+					grid[x][y].setVisibility(false); */
 			}
 		}
+		getVision(current, sight);
 	}
 	
 	public void turnOffFog(){

@@ -161,9 +161,9 @@ public class GUIPanel extends JPanel {
 		
 		//g.createStandard();
 		
-		g.createRandom(new Point(0, 0), new Point(13, 13));
-		Node current = g.getNode(0,0);
-		Node end = g.getNode(13, 13);
+		g.createRandom(new Point(14, 0), new Point(1, 13));
+		Node current = g.getNode(14,0);
+		Node end = g.getNode(1, 13);
 		g.turnOnFog(current, 2);
 		g.setPos(current);
 		g.getVision(current, 2);
@@ -173,9 +173,8 @@ public class GUIPanel extends JPanel {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
-		map.repaint();
 		
-		while(!current.equals(end)){						
+		while(!current.equals(end)){			
 			thisPath = LPAstar.algorithm(g, end, current);
 			map.setPath(thisPath);
 			current = thisPath[thisPath.length-1];

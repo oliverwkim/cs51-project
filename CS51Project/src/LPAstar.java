@@ -31,7 +31,7 @@ public class LPAstar extends AStar {
 		open_set.add(start);
 	}
 
-	public static void updateVertex(Node u, PriorityQueue<Node> open_set)
+	public static void updateVertex(Node u)
 	{
 		if(!u.equals(start))
 		{
@@ -54,15 +54,14 @@ public class LPAstar extends AStar {
 			return true;
 		else if (one.get(0) > two.get(0))
 			return false;
-		else
-			if (one.get(1) < two.get(1))
-				return true;
-			else if (one.get(1) > two.get(1))
-				return false;
+		else if (one.get(1) < two.get(1))
+			return true;
+		else if (one.get(1) > two.get(1))
+			return false;
 		return false;
 	}
 	
-	public static void computeShortestPath(PriorityQueue<Node> open_set)
+	public static void computeShortestPath()
 	{
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
 		{
@@ -71,14 +70,14 @@ public class LPAstar extends AStar {
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
-					updateVertex(s, open_set);
+					updateVertex(s);
 			}
 			else
 			{
 				u.setGScore(10000);
 				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
-					updateVertex(s, open_set);
-				updateVertex(u, open_set);
+					updateVertex(s);
+				updateVertex(u);
 			}
 		}	
 	}
@@ -89,7 +88,7 @@ public class LPAstar extends AStar {
 		goal = newGoal;
 		start = newStart;
 		initialize();
-		computeShortestPath(open_set);
+		computeShortestPath();
 		return reconstructPath(goal, start, g);
 	}
 
@@ -116,6 +115,8 @@ public class LPAstar extends AStar {
 			while(path.contains(closestNode)){
 				closestNode = values.poll();
 			}
+			if(closestNode == null)
+				return path.toArray(new Node[path.size()]);
 			path.add(closestNode);
 			return reconstructPath(closestNode, pathStart, g);
 		}
