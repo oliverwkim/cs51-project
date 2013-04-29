@@ -128,6 +128,8 @@ public class LPAstar extends AStar {
 			PriorityQueue<Integer> values = new PriorityQueue<Integer>(11);
 			for (Node s : u.getConnections())
 			{
+				if (s == null)
+					System.out.println("NUUUUUUUUUUUUULL");
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
 			}
 			if (values.size() == 0)
