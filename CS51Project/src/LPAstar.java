@@ -74,7 +74,7 @@ public class LPAstar extends AStar {
 			}
 			else
 			{
-				u.setGScore(1000);
+				u.setGScore(10000);
 				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
 					updateVertex(s, open_set);
 				updateVertex(u, open_set);
@@ -98,6 +98,7 @@ public class LPAstar extends AStar {
 		if(pathGoal.equals(pathStart))
 		{
 			path.remove(path.size()-1);
+			path.add(0, goal);
 			Node[] result = path.toArray(new Node[path.size()]);
 			return result;
 		}
