@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class LPAstar extends AStar { 
 
 	final static int lineOfSight = 2;
-	final static Comparator<Node> kNodeComparator = new KNodeComparator();
-	static ArrayList<Node> path = new ArrayList<Node> ();
+	static Comparator<Node> kNodeComparator;
+	static ArrayList<Node> path;
 	private static PriorityQueue<Node> open_set = null;
 	static Node start;
 	static Node goal;
@@ -23,7 +23,8 @@ public class LPAstar extends AStar {
 
 	public static void initialize()
 	{
-		path.clear();
+		kNodeComparator = new KNodeComparator();
+		path = new ArrayList<Node>();
 		open_set = new PriorityQueue<Node>(11, kNodeComparator); 
 		start.setRhsScore(0);
 		start.setKScore(null);
@@ -111,10 +112,9 @@ public class LPAstar extends AStar {
 				values.add(s);
 			}
 			
-			Node closestNode = values.peek();			
-			if(closestNode == null)
-			{
-				return path.toArray(new Node[path.size()]);
+			Node closestNode = values.peek();
+			while(path.contains(closestNode)){
+				closestNode = values.peek();
 			}
 			path.add(closestNode);
 			return reconstructPath(closestNode, pathStart, g);
