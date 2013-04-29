@@ -63,7 +63,7 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath(PriorityQueue<Node> open_set)
 	{
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) || goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
@@ -74,7 +74,7 @@ public class LPAstar extends AStar {
 			}
 			else
 			{
-				u.setGScore(1000);
+				u.setGScore(10000);
 				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
 					updateVertex(s, open_set);
 				updateVertex(u, open_set);
