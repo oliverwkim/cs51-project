@@ -110,16 +110,12 @@ public class LPAstar extends AStar {
 				s.setKScore(calculateKey(s));
 				values.add(s);
 			}
-<<<<<<< HEAD
-			else 
-				return null;
-=======
+			
 			Node closestNode = values.peek();			
 			if(closestNode == null)
 				return path.toArray(new Node[path.size()]);
 			path.add(closestNode);
 			return reconstructPath(closestNode, pathStart, g);
->>>>>>> ba75d3405e11cacbb9aa8dbb5d1c62545cd9342f
 		}
 	}
 
