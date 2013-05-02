@@ -100,8 +100,7 @@ public abstract class Node {
 			if(e.getEnd(this).isPassable() && e != null)
 				result.add(e);
 		}
-		Edge[] actualResult = result.toArray(new Edge[result.size()]);
-		return actualResult;
+		return result.toArray(new Edge[result.size()]);
 	}
 	
 	double getDistance(Node n){

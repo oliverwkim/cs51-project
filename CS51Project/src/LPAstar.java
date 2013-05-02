@@ -7,7 +7,7 @@ public class LPAstar extends AStar {
 	final static int lineOfSight = 2;
 	static Comparator<Node> kNodeComparator;
 	static ArrayList<Node> path;
-	private static PriorityQueue<Node> open_set = null;
+	private static PriorityQueue<Node> open_set;
 	static Node start;
 	static Node goal;
 	static Grid g;
@@ -65,6 +65,7 @@ public class LPAstar extends AStar {
 	{
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
 		{
+			System.out.println("One");
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
 			{
