@@ -65,7 +65,6 @@ public class LPAstar extends AStar {
 	{
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
 		{
-			System.out.println("One");
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
 			{
@@ -90,15 +89,18 @@ public class LPAstar extends AStar {
 		start = newStart;
 		initialize();
 		computeShortestPath();
-		return reconstructPath(goal, start, g);
+		return reconstructPath(goal, start);
 	}
 
-	public static Node[] reconstructPath(Node pathGoal, Node pathStart, Grid g)
+	public static Node[] reconstructPath(Node pathGoal, Node pathStart)
 	{
 
 		if(pathGoal.equals(pathStart))
 		{
-			path.remove(path.size()-1);
+			//path.remove(path.size()-1);
+			//while(!pathStart.connectionExists(path.get(path.size() - 1))){
+			//	path.remove(path.size()-1);
+			//}
 			path.add(0, goal);
 			Node[] result = path.toArray(new Node[path.size()]);
 			return result;
@@ -112,14 +114,18 @@ public class LPAstar extends AStar {
 				values.add(s);
 			}
 			
+			Node def = values.peek();
 			Node closestNode = values.poll();
 			while(path.contains(closestNode)){
 				closestNode = values.poll();
 			}
-			if(closestNode == null)
-				return path.toArray(new Node[path.size()]);
+			if(closestNode == null){
+				System.out.println("It happened");
+				return reconstructPath(def, pathStart);
+				//return path.toArray(new Node[path.size()]);
+			}
 			path.add(closestNode);
-			return reconstructPath(closestNode, pathStart, g);
+			return reconstructPath(closestNode, pathStart);
 		}
 	}
 
