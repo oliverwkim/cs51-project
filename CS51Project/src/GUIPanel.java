@@ -173,15 +173,12 @@ public class GUIPanel extends JPanel {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
-		
 		while(!current.equals(end)){
-			current = thisPath[thisPath.length-2];			
+			current = thisPath[thisPath.length-2];
+			g.getVision(current, 2);
+			g.setPos(current);
 			thisPath = LPAstar.algorithm(g, end, current);
 			map.setPath(thisPath);
-			
-			g.setPos(current);
-			g.getVision(current, 2);
-
 			map.repaint();			
 			Thread.sleep(500);
 			if(thisPath.length == 1 && thisPath[0].equals(end)){
