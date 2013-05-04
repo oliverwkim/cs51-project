@@ -80,6 +80,7 @@ public abstract class Node {
 	}
 	
 	// These two methods return only the connections to passable nodes
+	// If the node is not visible, they will return the shadow values, which assume connections to all neighbors
 	public Node[] getConnections(){
 		if(!visible)
 			return shadowConnections.toArray(new Node[shadowConnections.size()]);
@@ -103,6 +104,39 @@ public abstract class Node {
 		return result.toArray(new Edge[result.size()]);
 	}
 	
+	/* Returns all the potential edge connections that this node doesn't actually have
+	 * i.e. all connections assumed to exist when node is not visible, but are seen to not exist when it is visible
+	 * This is all the elements in shadowConnections that are not in connections
+	 * NOTE: This will only return the newly discovered non-connections that have not already been discovered.
+	 *       If this is Node A, then seeing Node B first and seeing the A-B connection does not exist means that
+	 *       the A-B connection will be returned through Node B's method, but not Node A's.
+	 */
+	public Edge[] getNewEdges(){
+		ArrayList<Edge> result = new ArrayList<Edge>();
+		boolean shared;
+		for(int i = 0; i < shadowEdges.size(); i++){
+			shared = false;
+			for(int j = 0; j < edges.size(); j++){
+				if(edges.get(j).equals(shadowEdges.get(i)))
+					shared = true;
+			}
+			if(!shared)
+				result.add(shadowEdges.get(i));
+		}
+		if(result.size() == 0)
+			return null;
+		return result.toArray(new Edge[result.size()]);
+	}
+	
+	// Checks for equality of the nodes by checking their positions
+	boolean equals(Node n){
+		if(n == null)
+			return false;
+		else
+			return (position.equals(n.getPosition())) && (passable == n.isPassable());
+	}
+	
+	// Rest of these are functions for setting and getting values
 	double getDistance(Node n){
 		return Math.sqrt(Math.pow(position.getX() - n.getPosition().getX(), 2) + 
 				Math.pow(position.getY() - n.getPosition().getY(), 2));
@@ -172,12 +206,6 @@ public abstract class Node {
 		visible = value;
 	}
 	
-	// Checks for equality of the nodes by checking their positions
-	boolean equals(Node n){
-		if(n == null)
-			return false;
-		else
-			return (position.equals(n.getPosition())) && (passable == n.isPassable());
-	}
+	
 
 }

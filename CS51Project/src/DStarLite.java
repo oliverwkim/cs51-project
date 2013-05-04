@@ -89,7 +89,16 @@ public class DStarLite extends LPAstar {
 			g.setPos(start);
 			
 			for(Node n: g.getVision(start, 2)){
-				
+				Edge[] changedEdges = n.getNewEdges();
+				if(changedEdges != null){
+					/*
+					 * changedEdges contains all of the Edges that were presumed to exist (when the Node's not visible),
+					 * but actually do not exist.
+					 * Do the rest of the stuff here.
+					 * Also note getVision now returns only the nodes that are newly visible
+					 * (i.e. does not return Nodes around the current position that were already visible)
+					 */
+				}
 			}
 			/* 
 			 * Scan for changed edge costs

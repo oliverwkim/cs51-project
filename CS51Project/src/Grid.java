@@ -102,16 +102,20 @@ public class Grid implements GridInterface {
 		}
 
 		Node[] update = visible.toArray(new Node[visible.size()]);
+		visible.clear();
 				
 		for(Node i: update){
+			if(i.getVisibility())
+				continue;
 			i.setVisibility(true);
 			// If new vision uncovers that some connections do not exist,
 			// change the nonvisible boundary nodes to reflect this, so there are no inconsistencies
 			for(Node j: getAdjacent(i))
 				if(!i.connectionExists(j))
 					j.removeShadow(i);
+			visible.add(i);
 		}
-		return update;
+		return visible.toArray(new Node[visible.size()]);
 	}
 	
 	// Returns the adjacent nodes, regardless of whether a connection actually exists
