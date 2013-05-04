@@ -89,7 +89,7 @@ public class DStarLite extends LPAstar{
 			//if (start.getGScore() == 10000) 
 			//	return null;			
 			System.out.println(start.getPosition().getX() + ", " + start.getPosition().getY());
-			start = minimize(start.getConnections());
+			start = minimize(start.getConnections()); 
 			//g.setPos(start);
 			
 			for(Node n: g.getVision(startInput, 2)){
@@ -101,8 +101,6 @@ public class DStarLite extends LPAstar{
 					{
 						Node begin = e.getBegin();
 						updateVertex(begin);
-						//Node end = e.getEnd();
-						//updateVertex(end);
 					}
 				}
 				computeShortestPath();
