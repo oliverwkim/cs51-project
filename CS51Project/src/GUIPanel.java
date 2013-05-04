@@ -167,7 +167,8 @@ public class GUIPanel extends JPanel {
 		g.turnOnFog(current, 2);
 		g.setPos(current);
 		g.getVision(current, 2);
-		Node[] thisPath = LPAstar.algorithm(g, end, current);
+		//Node[] thisPath = LPAstar.algorithm(g, end, current);
+		Node[] thisPath= DStarLite.algorithm(g, end, current);
 		GUIPanel map = new GUIPanel(g,thisPath,diameter,padding,margin);
 		f.setContentPane(map);
 		f.setVisible(true);
@@ -177,6 +178,7 @@ public class GUIPanel extends JPanel {
 			current = thisPath[thisPath.length-2];
 			g.getVision(current, 2);
 			g.setPos(current);
+			//thisPath = LPAstar.algorithm(g, end, current);
 			thisPath = LPAstar.algorithm(g, end, current);
 			map.setPath(thisPath);
 			map.repaint();			

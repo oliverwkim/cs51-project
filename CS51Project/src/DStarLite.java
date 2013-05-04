@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 
-public class DStarLite extends Astar {
+public class DStarLite extends LPAstar {
 
 	private static int k;
 	private static PriorityQueue<Node> open_set = null;
@@ -78,9 +78,9 @@ public class DStarLite extends Astar {
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
-		Node last = startInput;
-		computeShortestPath();
+		Node last = startInput;		
 		initialize(gInput, goalInput, startInput);
+		computeShortestPath();
 		
 		while(!start.equals(goal))
 		{
