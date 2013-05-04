@@ -8,6 +8,7 @@ public class Grid implements GridInterface {
 	protected int yLength;
 	protected Node pos;
 	
+	// Path lengths for moving in cardinal and diagonal directions
 	private final int cardinal = 10;
 	private final int diagonal = 14;
 	
@@ -29,6 +30,7 @@ public class Grid implements GridInterface {
 		return pos;
 	}
 	
+	// Sets the position of the current marker. Used only for graphical display purposes
 	public void setPos(Node s){
 		pos = s;
 	}
@@ -41,11 +43,6 @@ public class Grid implements GridInterface {
 			return grid[tempX][tempY];
 		}
 		return null;
-		/*for(Node n: grid){
-			if(n.getPosition().equals(c))
-				return n;
-		}
-		return null; */
 	}
 
 	public Node getNode(int x, int y){
@@ -133,6 +130,31 @@ public class Grid implements GridInterface {
 		return neighbors.toArray(new Node[neighbors.size()]);
 	}
 
+	
+	
+	/* Turns on the visibility fog for the entire grid
+	 * Returns the nodes that are visible from the current position. All other nodes are now not visible
+	 */
+	public Node[] turnOnFog(Node current, int sight){
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				grid[x][y].setVisibility(false);
+			}
+		}
+		return getVision(current, sight);
+	}
+	
+	/* Turns off the visibility fog for the entire grid
+	 * All nodes are made visible
+	 */
+	public void turnOffFog(){
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				grid[x][y].setVisibility(true);
+			}
+		}
+	}
+	
 	// Standard grid with all possible links present, and all nodes passable
 	public void createStandard() {
 		for(int x = 0; x < xLength; x++){
@@ -155,34 +177,8 @@ public class Grid implements GridInterface {
 		}
 	}
 	
-	public void turnOnFog(Node current, int sight){
-		//Node[] visibles = getVision(current, sight);
-		for(int x = 0; x < xLength; x++){
-			for(int y = 0; y < yLength; y++){
-				grid[x][y].setVisibility(false);
-				/*
-				boolean canSee = false;
-				for(Node n: visibles){
-					if(n.equals(grid[x][y]))
-						canSee = true;
-				}
-				if(!canSee)
-					grid[x][y].setVisibility(false); */
-			}
-		}
-		getVision(current, sight);
-	}
-	
-	public void turnOffFog(){
-		for(int x = 0; x < xLength; x++){
-			for(int y = 0; y < yLength; y++){
-				grid[x][y].setVisibility(true);
-			}
-		}
-	}
-	
 	public void createRandom(Point start, Point end) {
-		double linkProb = 0.3;
+		double linkProb = 0.3; // Probability of a link being formed between two nodes
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
 				grid[x][y] = new SquareNode(x, y, true);
@@ -202,6 +198,7 @@ public class Grid implements GridInterface {
 							linkNodes(current, n, diagonal);
 					}
 				}
+				// Set the shadow connections to all neighbors for each node
 				current.setShadows(neighbors);
 			}
 		}

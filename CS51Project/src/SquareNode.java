@@ -8,10 +8,6 @@ public class SquareNode extends Node {
 	public SquareNode(int x, int y, boolean pass){
 		super(x, y, pass, maxConnections);
 	}
-
-	public SquareNode(int x, int y, int cost, boolean pass){
-		super(x, y, cost, pass, maxConnections);
-	}
 	
 	public int getMaxConnections(){
 		return maxConnections;
@@ -29,6 +25,7 @@ public class SquareNode extends Node {
 				return true;
 			}
 		}
+		
 		// If there were no empty spots and the array is at max size, cannot add any more
 		if (connections.size() >= maxConnections){
 			return false;
