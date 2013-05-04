@@ -105,7 +105,7 @@ public class DStarLite extends LPAstar {
 				computeShortestPath();
 			}
 		}
-		return null;
+		return reconstructPath(start, goal);
 	}
 	/* 
 	 * 	km = km + h(slast, sstart)
@@ -121,6 +121,7 @@ public class DStarLite extends LPAstar {
 	 * Also note getVision now returns only the nodes that are newly visible
 	 * (i.e. does not return Nodes around the current position that were already visible)
 	 */
+	
 	private static Node minimize (Node[] nodeList)
 	{
 		Node min = nodeList[0];
