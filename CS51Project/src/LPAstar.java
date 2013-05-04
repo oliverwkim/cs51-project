@@ -63,7 +63,7 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath()
 	{
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)))
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) || goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
@@ -74,7 +74,7 @@ public class LPAstar extends AStar {
 			}
 			else
 			{
-				u.setGScore(10000);
+				u.setGScore(2000000);
 				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
 					updateVertex(s);
 				updateVertex(u);
@@ -89,10 +89,10 @@ public class LPAstar extends AStar {
 		start = newStart;
 		initialize();
 		computeShortestPath();
-		return reconstructPath(goal, start);
+		return reconstructPath(goal, start, new ArrayList<Node>());
 	}
 
-	public static Node[] reconstructPath(Node pathGoal, Node pathStart)
+	public static Node[] reconstructPath(Node pathGoal, Node pathStart, ArrayList<Node> deadends)
 	{
 
 		if(pathGoal.equals(pathStart))
@@ -118,14 +118,17 @@ public class LPAstar extends AStar {
 			Node closestNode = values.poll();
 			while(path.contains(closestNode)){
 				closestNode = values.poll();
+				if(deadends.contains(def))
+					def = closestNode;
 			}
 			if(closestNode == null){
 				System.out.println("It happened");
-				return reconstructPath(def, pathStart);
+				deadends.add(pathGoal);
+				return reconstructPath(def, pathStart, deadends);
 				//return path.toArray(new Node[path.size()]);
 			}
 			path.add(closestNode);
-			return reconstructPath(closestNode, pathStart);
+			return reconstructPath(closestNode, pathStart, deadends);
 		}
 	}
 

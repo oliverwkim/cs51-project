@@ -170,6 +170,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 		g.createRandom(new Point(0, 0), new Point(5, 5));
 		Node current = g.getNode(5, 0);
 		Node end = g.getNode(0, 0);
+		g.createRandom(new Point(14, 0), new Point(2, 12));
 		g.turnOnFog(current, 2);
 		g.setPos(current);
 		g.getVision(current, 2);
@@ -184,6 +185,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
+		Thread.sleep(250);
 		while(!current.equals(end)){
 			current = thisPath[thisPath.length-2];
 			g.getVision(current, 2);
@@ -192,7 +194,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 			//thisPath = DStarLite.algorithm(g, end, current);
 			map.setPath(thisPath);
 			map.repaint();			
-			Thread.sleep(500);
+			Thread.sleep(250);
 			if(thisPath.length == 1 && thisPath[0].equals(end)){
 				current = end;
 				g.setPos(current);
