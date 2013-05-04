@@ -9,10 +9,16 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.Arrays;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /*
  * The main thread will look like this:
@@ -27,7 +33,7 @@ import javax.swing.JPanel;
  * 	}
  */
 
-public class GUIPanel extends JPanel {
+public class GUIPanel extends JPanel implements KeyListener {
 	
 	private int gridX;
 	private int gridY;
@@ -146,10 +152,10 @@ public class GUIPanel extends JPanel {
 		int margin = diameter + 20;
 		
 		JFrame f = new JFrame();
-		Grid g = new Grid(15,15);
+		Grid g = new Grid(6,6);
 		JPanel container = new JPanel(new BorderLayout());
 		JButton generateButton = new JButton("Generate a new random map");
-		JPanel buttonContainer = new JPanel();
+		
 		// generate new random grid
 		// set starting point
 		// set ending point
@@ -161,25 +167,29 @@ public class GUIPanel extends JPanel {
 		
 		//g.createStandard();
 		
-		g.createRandom(new Point(14, 0), new Point(1, 13));
-		Node current = g.getNode(14,0);
-		Node end = g.getNode(1, 13);
+		g.createRandom(new Point(0, 0), new Point(5, 5));
+		Node current = g.getNode(5, 0);
+		Node end = g.getNode(0, 0);
 		g.turnOnFog(current, 2);
 		g.setPos(current);
-		//g.getVision(current, 2);
-		//Node[] thisPath = LPAstar.algorithm(g, end, current);
-		Node[] thisPath= DStarLite.algorithm(g, end, current);
+		g.getVision(current, 2);
+		Node[] thisPath = LPAstar.algorithm(g, end, current);
+		//Node[] thisPath= DStarLite.algorithm(g, end, current);
 		GUIPanel map = new GUIPanel(g,thisPath,diameter,padding,margin);
-		f.setContentPane(map);
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+
+		
+		container.add(map);
+		f.setContentPane(container);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
 		while(!current.equals(end)){
 			current = thisPath[thisPath.length-2];
-			//g.getVision(current, 2);
+			g.getVision(current, 2);
 			g.setPos(current);
-			//thisPath = LPAstar.algorithm(g, end, current);
-			thisPath = DStarLite.algorithm(g, end, current);
+			thisPath = LPAstar.algorithm(g, end, current);
+			//thisPath = DStarLite.algorithm(g, end, current);
 			map.setPath(thisPath);
 			map.repaint();			
 			Thread.sleep(500);
@@ -191,6 +201,21 @@ public class GUIPanel extends JPanel {
 				break;
 			}
 		}
+		
+	}
+
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
