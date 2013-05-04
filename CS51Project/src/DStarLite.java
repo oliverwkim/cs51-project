@@ -108,7 +108,7 @@ public class DStarLite extends LPAstar{
 				computeShortestPath();
 			}
 		}
-		return reconstructPath(startInput, goal);
+		return reconstructPath(startInput, goal, new ArrayList<Node>());
 	}
 	/* 
 	 * 	km = km + h(slast, sstart)
