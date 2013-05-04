@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 
-public class DStarLite extends LPAstar {
+public class DStarLite extends Astar {
 
 	private static int k;
 	private static PriorityQueue<Node> open_set = null;
@@ -78,6 +78,7 @@ public class DStarLite extends LPAstar {
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
+		Node last = startInput;
 		computeShortestPath();
 		initialize(gInput, goalInput, startInput);
 		
@@ -91,31 +92,35 @@ public class DStarLite extends LPAstar {
 			for(Node n: g.getVision(start, 2)){
 				Edge[] changedEdges = n.getNewEdges();
 				if(changedEdges != null){
-					/*
-					 * changedEdges contains all of the Edges that were presumed to exist (when the Node's not visible),
-					 * but actually do not exist.
-					 * Do the rest of the stuff here.
-					 * Also note getVision now returns only the nodes that are newly visible
-					 * (i.e. does not return Nodes around the current position that were already visible)
-					 */
+					k = k + hScore(last, start);  
+					last = start;
+					for (Edge e : changedEdges)
+					{
+						Node begin = e.getBegin();
+						updateVertex(begin);
+						//Node end = e.getEnd();
+						//updateVertex(end);
+					}
 				}
+				computeShortestPath();
 			}
-			/* 
-			 * Scan for changed edge costs
-			 * If any edge costs changed
-			 * 	km = km + h(slast, sstart)
-			 * 	slast = sstart
-			 * 	for all directed edges (u, v) with changed edge costs
-			 * 		update the edge cost c(u,v)
-			 * 		update vertex (u)
-			 * 	compute shortestpath()
-			 */
-			
 		}
-
 		return null;
 	}
-	
+	/* 
+	 * 	km = km + h(slast, sstart)
+	 * 	slast = sstart
+	 * 	for all directed edges (u, v) with changed edge costs
+	 * 		update the edge cost c(u,v)
+	 * 		update vertex (u)
+	 * 
+	 * 	compute shortestpath()
+	 * changedEdges contains all of the Edges that were presumed to exist (when the Node's not visible),
+	 * but actually do not exist.
+	 * Do the rest of the stuff here.
+	 * Also note getVision now returns only the nodes that are newly visible
+	 * (i.e. does not return Nodes around the current position that were already visible)
+	 */
 	private static Node minimize (Node[] nodeList)
 	{
 		Node min = nodeList[0];

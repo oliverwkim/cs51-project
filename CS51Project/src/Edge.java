@@ -30,4 +30,12 @@ public class Edge {
 		else
 			return null;
 	}
+	
+	public Node getBegin(){
+		return begin;
+	}
+	
+	public Node getEnd(){
+		return end;
+	}
 }
