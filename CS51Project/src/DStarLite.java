@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class DStarLite extends LPAstar{
 
-	private static int k;
+	private static int costToCurrent;
 	private static PriorityQueue<Node> open_set;
 	private static Node start;
 	private static Node goal;
@@ -13,7 +13,7 @@ public class DStarLite extends LPAstar{
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
 		ArrayList<Integer> key = new ArrayList<Integer>();
-		key.add(Math.min(s.getGScore(), s.getRhsScore()) + hScore(start,s) + k);
+		key.add(Math.min(s.getGScore(), s.getRhsScore()) + hScore(start,s) + costToCurrent);
 		key.add(Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
@@ -23,7 +23,7 @@ public class DStarLite extends LPAstar{
 		g = gridInput;
 		start = sInput;
 		goal = gInput;
-		k = 0;
+		costToCurrent = 0;
 		g.setPos(start);
 		
 		kNodeComparator = new KNodeComparator();
@@ -36,8 +36,7 @@ public class DStarLite extends LPAstar{
 	public static void updateVertex(Node u)
 	{
 		if (!u.equals(goal)){
-			Node temp = minimize(u.getConnections());
-			u.setRhsScore(g.getEdgeLength(temp, u) + temp.getGScore()); 
+			u.setRhsScore(findRhsDstar(u)); 
 		}
 
 		if (open_set.contains(u))
@@ -46,20 +45,20 @@ public class DStarLite extends LPAstar{
 		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u));
-			if(!(open_set.contains(u)))
-				open_set.add(u);
+			open_set.add(u);
 		}
 	}
 	
 	public static void computeShortestPath()
 	{
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) || start.getRhsScore() != start.getGScore())
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) 
+					|| start.getRhsScore() != start.getGScore()) 
 		{
-			ArrayList<Integer> kOld = open_set.peek().getKScore();
+			ArrayList<Integer> oldKey = open_set.peek().getKScore();
 			Node u = open_set.poll();
 			u.setRhsScore(findRhsDstar(u));
 			
-			if(keyCompare(kOld, calculateKey(u)))
+			if(keyCompare(oldKey, calculateKey(u)))
 			{
 				u.setKScore(calculateKey(u));
 				open_set.add(u);
@@ -96,7 +95,7 @@ public class DStarLite extends LPAstar{
 			for(Node n: g.getVision(startInput, 2)){
 				Edge[] changedEdges = n.getNewEdges();
 				if(changedEdges != null){
-					k = k + hScore(last, start);  
+					costToCurrent = costToCurrent + hScore(last, start);  
 					last = start;
 					for (Edge e : changedEdges)
 					{
