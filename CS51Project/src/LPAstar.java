@@ -74,7 +74,7 @@ public class LPAstar extends AStar {
 			}
 			else
 			{
-				u.setGScore(10000);
+				u.setGScore(2000000);
 				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
 					updateVertex(s);
 				updateVertex(u);
