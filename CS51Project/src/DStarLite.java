@@ -57,6 +57,7 @@ public class DStarLite extends LPAstar{
 		{
 			ArrayList<Integer> kOld = open_set.peek().getKScore();
 			Node u = open_set.poll();
+			u.setRhsScore(findRhsDstar(u));
 			
 			if(keyCompare(kOld, calculateKey(u)))
 			{
@@ -135,5 +136,23 @@ public class DStarLite extends LPAstar{
 				min = s;
 		}
 		return min;
+	}
+	
+	public static int findRhsDstar(Node u)
+	{		
+		if(!u.equals(goal))
+		{
+			PriorityQueue<Integer> values = new PriorityQueue<Integer>(11);
+			for (Node s : u.getConnections())
+			{
+				if (s == null)
+					System.out.println("NULL");
+				values.add(s.getGScore() + g.getEdgeLength(s,u));
+			}
+			if (values.size() == 0)
+				return -1;
+			return values.peek();			
+		}
+		return 0;
 	}
 }
