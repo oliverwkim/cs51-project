@@ -179,7 +179,7 @@ public class GUIPanel extends JPanel {
 			g.getVision(current, 2);
 			g.setPos(current);
 			//thisPath = LPAstar.algorithm(g, end, current);
-			thisPath = LPAstar.algorithm(g, end, current);
+			thisPath = DStarLite.algorithm(g, end, current);
 			map.setPath(thisPath);
 			map.repaint();			
 			Thread.sleep(500);

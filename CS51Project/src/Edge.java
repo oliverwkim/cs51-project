@@ -16,6 +16,9 @@ public class Edge {
 		length = s;
 	}
 	
+	public boolean equals(Edge e){
+		return (begin.equals(e.getBegin()) && end.equals(e.getEnd()) && length == e.getLength());
+	}
 	public int getLength(){
 		return length;
 	}

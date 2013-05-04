@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 
-public class DStarLite extends LPAstar {
+public class DStarLite extends LPAstar{
 
 	private static int k;
-	private static PriorityQueue<Node> open_set = null;
+	private static PriorityQueue<Node> open_set;
 	private static Node start;
 	private static Node goal;
 	private static Grid g;
@@ -34,8 +34,10 @@ public class DStarLite extends LPAstar {
 	
 	public static void updateVertex(Node u)
 	{
-		if (!u.equals(goal))
-			u.setRhsScore(minimize(u.getConnections()).getRhsScore()); 
+		if (!u.equals(goal)){
+			Node temp = minimize(u.getConnections());
+			u.setRhsScore(g.getEdgeLength(temp, u) + temp.getGScore()); 
+		}
 
 		if (open_set.contains(u))
 			open_set.remove(u);
@@ -68,8 +70,8 @@ public class DStarLite extends LPAstar {
 			}
 			else
 			{
-				u.setGScore(1000);
-				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
+				u.setGScore(10000);
+				for (Node s : u.getConnections())
 					updateVertex(s);
 				updateVertex(u);
 			}
@@ -81,13 +83,14 @@ public class DStarLite extends LPAstar {
 		Node last = startInput;		
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
-		
+		int counter = 0;
 		while(!start.equals(goal))
 		{
-			if (start.getGScore() == 10000) 
-				return null;
+			System.out.println(counter++);
+			//if (start.getGScore() == 10000) 
+			//	return null;
 			start = minimize(start.getConnections());
-			g.setPos(start);
+			//g.setPos(start);
 			
 			for(Node n: g.getVision(start, 2)){
 				Edge[] changedEdges = n.getNewEdges();
@@ -105,7 +108,7 @@ public class DStarLite extends LPAstar {
 				computeShortestPath();
 			}
 		}
-		return reconstructPath(start, goal);
+		return reconstructPath(startInput, goal);
 	}
 	/* 
 	 * 	km = km + h(slast, sstart)

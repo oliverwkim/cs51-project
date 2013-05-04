@@ -117,7 +117,7 @@ public abstract class Node {
 		for(int i = 0; i < shadowEdges.size(); i++){
 			shared = false;
 			for(int j = 0; j < edges.size(); j++){
-				if(edges.get(j).equals(shadowEdges.get(i)))
+				if((edges.get(j)).equals(shadowEdges.get(i)))
 					shared = true;
 			}
 			if(!shared)
