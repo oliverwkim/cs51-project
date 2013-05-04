@@ -54,7 +54,7 @@ public class DStarLite extends LPAstar{
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) 
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			ArrayList<Integer> oldKey = open_set.peek().getKScore();
+			ArrayList<Integer> oldKey = calculateKey(open_set.peek());
 			Node u = open_set.poll();
 			u.setRhsScore(findRhsDstar(u));
 			
@@ -71,7 +71,7 @@ public class DStarLite extends LPAstar{
 			}
 			else
 			{
-				u.setGScore(10000);
+				u.setGScore(2000000);
 				for (Node s : u.getConnections())
 					updateVertex(s);
 				updateVertex(u);
