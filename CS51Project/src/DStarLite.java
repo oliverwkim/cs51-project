@@ -26,6 +26,7 @@ public class DStarLite extends LPAstar{
 		k = 0;
 		g.setPos(start);
 		
+		kNodeComparator = new KNodeComparator();
 		open_set = new PriorityQueue<Node>(11, kNodeComparator);
 		goal.setKScore(calculateKey(goal));
 		goal.setRhsScore(0);
@@ -83,16 +84,15 @@ public class DStarLite extends LPAstar{
 		Node last = startInput;		
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
-		int counter = 0;
 		while(!start.equals(goal))
 		{
-			System.out.println(counter++);
 			//if (start.getGScore() == 10000) 
-			//	return null;
+			//	return null;			
+			System.out.println(start.getPosition().getX() + ", " + start.getPosition().getY());
 			start = minimize(start.getConnections());
 			//g.setPos(start);
 			
-			for(Node n: g.getVision(start, 2)){
+			for(Node n: g.getVision(startInput, 2)){
 				Edge[] changedEdges = n.getNewEdges();
 				if(changedEdges != null){
 					k = k + hScore(last, start);  
