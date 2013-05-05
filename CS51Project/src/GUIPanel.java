@@ -122,6 +122,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 			current = path[path.length-2];
 			grid.setPos(current);
 			path = AStar.algorithm(grid, end, current);
+			grid.getVision(current, 2);
 		}
 		
 		this.setPath(path);
