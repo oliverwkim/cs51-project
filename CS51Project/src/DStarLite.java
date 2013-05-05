@@ -81,16 +81,15 @@ public class DStarLite extends LPAstar{
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
-		Node last = startInput;		
+		Node last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
 		while(!start.equals(goal))
 		{
-			//if (start.getGScore() == 10000) 
-			//	return null;			
+			if (start.getGScore() == 2000000)//i.e. path does not exist 
+				return null;
 			System.out.println(start.getPosition().getX() + ", " + start.getPosition().getY());
 			start = minimize(start.getConnections()); 
-			//g.setPos(start);
 			
 			for(Node n: g.getVision(startInput, 2)){
 				Edge[] changedEdges = n.getNewEdges();
@@ -129,7 +128,7 @@ public class DStarLite extends LPAstar{
 		
 		for(Node s : nodeList)
 		{
-			if (g.getEdgeLength(s, start) + s.getGScore() < g.getEdgeLength(min, start) + min.getGScore())
+			if (g.getEdgeLength(s, goal) + s.getGScore() < g.getEdgeLength(min, goal) + min.getGScore())
 				min = s;
 		}
 		return min;
