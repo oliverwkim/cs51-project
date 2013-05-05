@@ -9,7 +9,6 @@ public class DStarLite extends LPAstar{
 	private static Node start;
 	private static Node goal;
 	private static Grid g;
-	private static boolean noPath;
 	
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
@@ -54,11 +53,11 @@ public class DStarLite extends LPAstar{
 	
 	public static void computeShortestPath()
 	{
-		
-		while(keyCompare((open_set.peek().getKScore()), calculateKey(start)) < 0
+		start.setKScore(calculateKey(start));
+		while(keyCompare(open_set.peek().getKScore(), start.getKScore()) < 0
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			ArrayList<Integer> oldKey = open_set.peek().getKScore();//calculateKey(open_set.peek());
+			ArrayList<Integer> oldKey = open_set.peek().getKScore();
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
 			
@@ -92,49 +91,33 @@ public class DStarLite extends LPAstar{
 		Node last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
-		ArrayList<Node> result = new ArrayList<Node>();
 		while(!start.equals(goal))
 		{
-			result.add(0, start);
-			if (start.getGScore() == 2000000 || noPath) //i.e. path does not exist 
-				return result.toArray(new Node[result.size()]);
-			start = minimize(start.getConnections(), start); 
+			System.out.print(start.getGScore() + " ");
+			path.add(0, start);
+			if (start.getGScore() == 2000000 || noPath) // path does not exist 
+				return path.toArray(new Node[path.size()]);
+			start = minimize(start.getConnections(), start);
 			Node[] newVisible = g.getVision(start, 2);
+
 			if(newVisible != null){
 				costToCurrent = costToCurrent + g.getEdgeLength(last, start);  
 				last = start;
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
 					if(changedEdges != null){
-						updateVertex(n);
+						
 						for (Edge e : changedEdges)
-						{
 							updateVertex(e.getEnd(n));
-						}
-					}
-					
+						updateVertex(n);
+					}					
 				}
 				computeShortestPath();
 			}
 		}
-		result.add(0, goal);
-		return result.toArray(new Node[result.size()]);
-		//return reconstructPath(startInput, goal, new ArrayList<Node>());
+		path.add(0, goal);
+		return path.toArray(new Node[path.size()]);
 	}
-	/* 
-	 * 	km = km + h(slast, sstart)
-	 * 	slast = sstart
-	 * 	for all directed edges (u, v) with changed edge costs
-	 * 		update the edge cost c(u,v)
-	 * 		update vertex (u)
-	 * 
-	 * 	compute shortestpath()
-	 * changedEdges contains all of the Edges that were presumed to exist (when the Node's not visible),
-	 * but actually do not exist.
-	 * Do the rest of the stuff here.
-	 * Also note getVision now returns only the nodes that are newly visible
-	 * (i.e. does not return Nodes around the current position that were already visible)
-	 */
 	
 	private static Node minimize (Node[] nodeList, Node u)
 	{

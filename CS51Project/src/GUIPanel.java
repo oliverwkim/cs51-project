@@ -145,8 +145,6 @@ public class GUIPanel extends JPanel {
             			grid.getVision(current, 2);
             			repaint();
             			timer.stop();
-            			if(!path[0].equals(end))
-            				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
             		}
                 	
                 }
@@ -154,7 +152,8 @@ public class GUIPanel extends JPanel {
         };
         
 		timer = new Timer(500, action);
-		timer.start();
+		if(path != null)
+			timer.start();
 	}
 	
 	int totalCost = 0;
