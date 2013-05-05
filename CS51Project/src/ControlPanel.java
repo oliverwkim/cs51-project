@@ -49,9 +49,9 @@ public class ControlPanel extends JPanel {
 		startYField = new JTextField("0");
 		
 		JLabel endXLabel = new JLabel("Ending X");
-		endXField = new JTextField("5");
+		endXField = new JTextField("9");
 		JLabel endYLabel = new JLabel("Ending Y");
-		endYField = new JTextField("5");
+		endYField = new JTextField("9");
 		
 		JLabel algLabel = new JLabel("Algorithms");
 		String[] algorithms = {"D*Lite", "LPA*", "A*"};
