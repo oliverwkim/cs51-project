@@ -26,33 +26,32 @@ public class GUIPanel extends JPanel implements KeyListener {
 	private int margin;
 	private int padding;
 	
-	public GUIPanel (int d, int p, int m) 	
+	public GUIPanel (int d, int p, int m, int h, int w, int startX, int startY, int endX, int endY) 	
 	{
 		diameter = d;
 		margin = m;
 		padding = p;
 		
 		JFrame f = new JFrame();
-		grid = new Grid(6,6);
+		grid = new Grid(h,w);
 		gridX = grid.getX();
 		gridY = grid.getY();
 		
 		JPanel container = new JPanel();
 		
-		grid.createRandom(new Point(14, 0), new Point(2, 12));
-		current = grid.getNode(5, 0);
-		end = grid.getNode(0, 0);
+		grid.createRandom(new Point(0,0), new Point(1, 1));
+		current = grid.getNode(startX, startY);
+		end = grid.getNode(endX, endY);
 
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
-		grid.getVision(current, 2);
-		path = LPAstar.algorithm(grid, end, current);
+		path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.add(this);
 		f.setContentPane(container);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		f.setSize(padding * 2 + margin * gridX, padding * 2 + margin * gridY + 100);
+		f.setSize(10 + padding + margin * gridX, padding * 2 + margin * gridY);
 		
 		ActionListener action = new ActionListener()
         {   
