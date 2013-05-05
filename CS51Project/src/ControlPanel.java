@@ -19,9 +19,10 @@ public class ControlPanel extends JPanel {
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
-					GUIPanel.main(null);
+					GUIPanel bob = new GUIPanel(20,30,40);
 				} catch (InterruptedException e1) {
-					System.out.println("oopsies");
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
