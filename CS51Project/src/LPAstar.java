@@ -34,9 +34,7 @@ public class LPAstar extends AStar {
 	public static void updateVertex(Node u)
 	{
 		if(!u.equals(start))
-		{
 			u.setRhsScore(findRhs(u));
-		}
 
 		if (open_set.contains(u))
 			open_set.remove(u);

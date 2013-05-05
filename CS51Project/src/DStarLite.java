@@ -36,9 +36,8 @@ public class DStarLite extends LPAstar{
 	
 	public static void updateVertex(Node u)
 	{
-		if (!u.equals(goal)){
+		if (!u.equals(goal))
 			u.setRhsScore(findRhs(u)); 
-		}
 
 		if (open_set.contains(u))
 			open_set.remove(u);
@@ -89,7 +88,7 @@ public class DStarLite extends LPAstar{
 		computeShortestPath();
 		while(!start.equals(goal))
 		{
-			if (start.getGScore() == 2000000)//i.e. path does not exist 
+			if (start.getGScore() == 2000000) //i.e. path does not exist 
 				return null;
 			start = minimize(start.getConnections()); 
 			

@@ -33,7 +33,8 @@ public class ControlPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 				
 		JButton generateButton = new JButton("Generate Random Grid");
-		JButton prevButton = new JButton("Use Previous Grid");
+		final JButton prevButton = new JButton("Use Previous Grid");
+		prevButton.setEnabled(false);
 
 		JLabel heightLabel = new JLabel("Grid height");
 		heightField = new JTextField("10");
@@ -75,6 +76,7 @@ public class ControlPanel extends JPanel {
 				int endY = Integer.parseInt(endYField.getText());
 				GUIPanel panel = new GUIPanel(20,30,40, height, width, startX, startY, endX, endY, null, choice);
 				grid = panel.getGrid();
+				prevButton.setEnabled(true);
 				
 				oldHeight = height;
 				oldWidth = width;
