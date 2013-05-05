@@ -74,6 +74,7 @@ public class GUIPanel extends JPanel {
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
+
 			costThusFarAlt = current.getGScore();
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
@@ -90,9 +91,11 @@ public class GUIPanel extends JPanel {
 		}
 		
 		int costThusFar = 0;
-		for (int i = 1; i <= path.length - 1; i++)
+		for (int i = 1; i <= path.length -1; i++)
 		{
 			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
+			System.out.print(grid.getEdgeLength(path[i], path[i-1]));
+			System.out.print(" ");
 		}
 		System.out.print(costThusFar);
 		
@@ -123,7 +126,8 @@ public class GUIPanel extends JPanel {
             		if(path.length == 1 && path[0].equals(end)){
             			current = end;
             			grid.setPos(current);
-            			grid.getVision(current,  2);
+            			grid.getVision(current, 2);
+            			repaint();
             			timer.stop();
             		}
                 	
