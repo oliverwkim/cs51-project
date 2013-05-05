@@ -5,16 +5,15 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
-public class GUIPanel extends JPanel implements KeyListener {
+public class GUIPanel extends JPanel {
 	
 	private int gridX;
 	private int gridY;
@@ -64,6 +63,12 @@ public class GUIPanel extends JPanel implements KeyListener {
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+			
+			if (path == null)
+			{
+				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
+			}
+
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
 		}
@@ -86,7 +91,6 @@ public class GUIPanel extends JPanel implements KeyListener {
 		
 		f.add(jsp);
 		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		f.setSize(600,600);
 		
 		ActionListener action = new ActionListener()
@@ -242,22 +246,5 @@ public class GUIPanel extends JPanel implements KeyListener {
 				}
 			}
 		}
-	}
-
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_KP_LEFT)
-		{
-			System.out.println("Left!");
-		}
-	}
-
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 }
