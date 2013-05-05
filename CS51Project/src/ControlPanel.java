@@ -18,12 +18,8 @@ public class ControlPanel extends JPanel {
 		generateButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				try {
-					GUIPanel bob = new GUIPanel(20,30,40);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					new GUIPanel(20,30,40);
+
 			}
 		});
 		p.add(generateButton);
