@@ -7,7 +7,7 @@ public class Edge {
 	public Edge(Node first, Node last){
 		begin = first;
 		end = last;
-		length = 1;
+		length = 10;
 	}
 	
 	public Edge(Node first, Node last, int s){
@@ -16,9 +16,11 @@ public class Edge {
 		length = s;
 	}
 	
+	// Checks equality by looking at endpoints and length. Order of endpoints matters
 	public boolean equals(Edge e){
 		return (begin.equals(e.getBegin()) && end.equals(e.getEnd()) && length == e.getLength());
 	}
+	
 	public int getLength(){
 		return length;
 	}

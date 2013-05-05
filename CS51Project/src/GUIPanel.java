@@ -36,10 +36,15 @@ public class GUIPanel extends JPanel implements KeyListener {
 		if (g == null)
 		{
 			grid = new Grid(h,w);
-			grid.createRandom(new Point(0,0), new Point(1, 1));			
+			grid.createRandom();			
 		}
 		else
 			grid = g;
+<<<<<<< HEAD
+=======
+			grid.setAllShadows();
+		}
+>>>>>>> 743759121408ce28495cda8f5504148b8c4964af
 		
 		gridX = grid.getX();
 		gridY = grid.getY();
@@ -52,8 +57,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
-		grid.getVision(current, 2);
-		path = LPAstar.algorithm(grid, end, current);
+		path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.add(this);
 		f.setContentPane(container);
@@ -89,10 +93,9 @@ public class GUIPanel extends JPanel implements KeyListener {
 	}
 	
 	private void loop () {
-		current = path[path.length-2];
-		grid.getVision(current, 2);
+		current = path[path.length - 2];
 		grid.setPos(current);
-		path = LPAstar.algorithm(grid, end, current);
+		path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 		this.setPath(path);
 		this.repaint();			
 

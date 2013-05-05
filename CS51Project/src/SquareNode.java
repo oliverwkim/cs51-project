@@ -8,10 +8,6 @@ public class SquareNode extends Node {
 	public SquareNode(int x, int y, boolean pass){
 		super(x, y, pass, maxConnections);
 	}
-
-	public SquareNode(int x, int y, int cost, boolean pass){
-		super(x, y, cost, pass, maxConnections);
-	}
 	
 	public int getMaxConnections(){
 		return maxConnections;
@@ -29,6 +25,7 @@ public class SquareNode extends Node {
 				return true;
 			}
 		}
+		
 		// If there were no empty spots and the array is at max size, cannot add any more
 		if (connections.size() >= maxConnections){
 			return false;
@@ -65,6 +62,8 @@ public class SquareNode extends Node {
 	}
 	
 	public void setShadows(Node[] neighbors){
+		shadowConnections.clear();
+		shadowEdges.clear();
 		int length;
 		for(Node n: neighbors){
 			if(n.getPosition().getX() == position.getX() || n.getPosition().getY() == position.getY())
@@ -77,7 +76,9 @@ public class SquareNode extends Node {
 	}
 	
 	public void removeShadow(Node n){
-		ArrayList<Node> tempNodes = new ArrayList<Node>();
+		shadowConnections.remove(n);
+		shadowEdges.remove(n);
+		/*ArrayList<Node> tempNodes = new ArrayList<Node>();
 		ArrayList<Edge> tempEdge = new ArrayList<Edge>();
 		for(int i = 0; i < shadowConnections.size(); i++){
 			if(!n.equals(shadowConnections.get(i))){
@@ -86,6 +87,6 @@ public class SquareNode extends Node {
 			}
 		}
 		shadowConnections = tempNodes;
-		shadowEdges = tempEdge;
+		shadowEdges = tempEdge;*/
 	}
 }

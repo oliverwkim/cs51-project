@@ -2,23 +2,25 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public abstract class Node {
+	
 	protected Point position;
 	protected boolean passable;
-	protected int cost;
 	protected boolean visible;
 
-	// Array of all Nodes this Node is connected to
+	/* Arrays to store all Nodes this Node is connected to, as well as all the corresponding edges
+	 * Note that connections and edges should always be the same size, and accessing the same index i
+	 * in either of them will yield a Node n and the edge connecting this node to Node n.
+	 * Consequentially, all methods modifying them must modify them together, never separately.
+	 */
 	protected ArrayList<Node> connections;
-	
-	// Array of all this Node's edges
 	protected ArrayList<Edge> edges;
 	
 	protected Node parent;
 	
 	protected int fScore = 0;
-	protected int gScore = 10000;
+	protected int gScore = 2000000;
 	protected ArrayList<Integer> kScore = null;
-	protected int rhsScore = 10000;
+	protected int rhsScore = 2000000;
 	
 	/* These variables will contain connections to all neighbors.
 	 * They will be returned in the event that the node is not visible
@@ -31,18 +33,6 @@ public abstract class Node {
 	public Node(int x, int y, boolean pass, int maxConnections){
 		position = new Point(x, y);
 		passable = pass;
-		cost = 0;
-		connections = new ArrayList<Node>();
-		edges = new ArrayList<Edge>();
-		visible = true;
-		shadowConnections = new ArrayList<Node>();
-		shadowEdges = new ArrayList<Edge>();
-	}
-
-	public Node(int x, int y, int c, boolean pass, int maxConnections){
-		position = new Point(x, y);
-		passable = pass;
-		cost = c;
 		connections = new ArrayList<Node>();
 		edges = new ArrayList<Edge>();
 		visible = true;
@@ -51,9 +41,10 @@ public abstract class Node {
 	}
 
 	/* Links this node to another node, with path length of length between them. 
-	   Returns true if successful, false otherwise 
-	   Linking of nodes should be done through the grid method linkNodes,
-	   since it requires the connection is added to both nodes */
+	 * Returns true if successful, false otherwise 
+	 * Linking of nodes should be done through the grid method linkNodes,
+	 * since it requires the connection is added to both nodes 
+	 */
 	abstract boolean addConnection(Node n, int length);
 	
 	// Checks if there is a connection to given node
@@ -71,12 +62,10 @@ public abstract class Node {
 
 	// These methods return all of the connections and edges
 	Node[] getAllConnections(){
-		Node[] result = connections.toArray(new Node[connections.size()]);
-		return result;
+		return connections.toArray(new Node[connections.size()]);
 	}
 	Edge[] getAllEdges(){
-		Edge[] result = edges.toArray(new Edge[edges.size()]);
-		return result;
+		return edges.toArray(new Edge[edges.size()]);
 	}
 	
 	// These two methods return only the connections to passable nodes
@@ -128,7 +117,7 @@ public abstract class Node {
 		return result.toArray(new Edge[result.size()]);
 	}
 	
-	// Checks for equality of the nodes by checking their positions
+	// Checks for equality of the nodes by checking their positions and passability
 	boolean equals(Node n){
 		if(n == null)
 			return false;
@@ -152,10 +141,6 @@ public abstract class Node {
 	}
 	boolean isPassable(){
 		return passable;
-	}
-	
-	int getCost(){
-		return cost;
 	}
 	
 	int getFScore(){
@@ -205,7 +190,4 @@ public abstract class Node {
 	void setVisibility(boolean value){
 		visible = value;
 	}
-	
-	
-
 }
