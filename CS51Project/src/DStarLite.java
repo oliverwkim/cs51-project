@@ -88,8 +88,17 @@ public class DStarLite extends LPAstar{
 		ArrayList<Node> result = new ArrayList<Node>();
 		while(!start.equals(goal))
 		{
+<<<<<<< HEAD
+
+			if (start.getGScore() == 2000000) //i.e. path does not exist 
+
 			result.add(start);
 			if (start.getGScore() == 2000000)//i.e. path does not exist 
+
+=======
+			result.add(start);
+			if (start.getGScore() == 2000000)//i.e. path does not exist 
+>>>>>>> 17d55befba1c793c1d92589763ee01b863dfbc91
 				return null;
 			start = minimize(start.getConnections()); 
 			Node[] newVisible = g.getVision(start, 2);
