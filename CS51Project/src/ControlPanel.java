@@ -47,6 +47,7 @@ public class ControlPanel extends JPanel {
 		JLabel endYLabel = new JLabel("Ending Y");
 		endYField = new JTextField("5");
 		
+		// generates new, random grid if generateButton is pressed
 		generateButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -64,11 +65,10 @@ public class ControlPanel extends JPanel {
 			}
 		});
 		
+		// re-generates the most recently generated random grid
 		prevButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				int height = Integer.parseInt(heightField.getText());
-				int width = Integer.parseInt(widthField.getText());
 				int startX = Integer.parseInt(startXField.getText());
 				int startY = Integer.parseInt(startYField.getText());
 				int endX = Integer.parseInt(endXField.getText());
@@ -76,7 +76,6 @@ public class ControlPanel extends JPanel {
 				new GUIPanel(20,30,40, oldHeight, oldWidth, startX, startY, endX, endY, grid);
 			}
 		});
-		
 		
 		p.add(generateButton);
 		p.add(prevButton);
@@ -100,6 +99,5 @@ public class ControlPanel extends JPanel {
 		f.pack();
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	}
 }

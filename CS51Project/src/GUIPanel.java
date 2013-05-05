@@ -1,6 +1,7 @@
+import java.util.Arrays;
+
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Arrays;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,20 +33,18 @@ public class GUIPanel extends JPanel implements KeyListener {
 		margin = m;
 		padding = p;
 		
-		JFrame f = new JFrame();
 		if (g == null)
 		{
 			grid = new Grid(h,w);
 			grid.createRandom(new Point(0,0), new Point(1, 1));			
 		}
 		else
-		{
 			grid = g;
-		}
 		
 		gridX = grid.getX();
 		gridY = grid.getY();
 		
+		JFrame f = new JFrame();
 		JPanel container = new JPanel();
 		
 		current = grid.getNode(startX, startY);
@@ -64,7 +63,6 @@ public class GUIPanel extends JPanel implements KeyListener {
 		
 		ActionListener action = new ActionListener()
         {   
-            @Override
             public void actionPerformed(ActionEvent event)
             {
                 if(current.equals(end))
