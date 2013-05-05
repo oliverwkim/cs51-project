@@ -185,8 +185,9 @@ public class GUIPanel extends JPanel {
 			traversed.add(path[path.length - 1]);
 			current = path[path.length-2];
 			grid.setPos(current);
-			path = AStar.algorithm(grid, end, current);
 			grid.getVision(current, 2);
+			path = AStar.algorithm(grid, end, current);
+			
 		}
 		
 		this.setPath(path);
