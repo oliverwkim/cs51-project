@@ -1,7 +1,6 @@
 import java.util.Arrays;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,13 +25,16 @@ public class GUIPanel extends JPanel implements KeyListener {
 	private int diameter;
 	private int margin;
 	private int padding;
+	private String choice;
 	
-	public GUIPanel (int d, int p, int m, int h, int w, int startX, int startY, int endX, int endY, Grid g) 	
+	public GUIPanel (int d, int p, int m, int h, int w, int startX, int startY, int endX, int endY, Grid g, String c) 	
 	{
 		diameter = d;
 		margin = m;
 		padding = p;
+		choice = c;
 		
+		// checks to see if it received a pre-defined grid as input
 		if (g == null)
 		{
 			grid = new Grid(h,w);
@@ -54,7 +56,20 @@ public class GUIPanel extends JPanel implements KeyListener {
 
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
-		path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+		
+		if(choice.equals("D*Lite"))
+		{
+			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+		}
+		else if (choice.equals("LPA*"))
+		{
+			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+		}
+		else
+		{
+			path = AStar.algorithm(grid, end, current);
+		}
+		
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.add(this);
 		f.setContentPane(container);
@@ -92,7 +107,20 @@ public class GUIPanel extends JPanel implements KeyListener {
 	private void loop () {
 		current = path[1];
 		grid.setPos(current);
-		path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+	
+		if(choice.equals("D*Lite"))
+		{
+			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+		}
+		else if (choice.equals("LPA*"))
+		{
+			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+		}
+		else
+		{
+			path = AStar.algorithm(grid, end, current);
+		}
+		
 		this.setPath(path);
 		this.repaint();			
 

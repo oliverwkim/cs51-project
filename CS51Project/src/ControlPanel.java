@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,12 +24,14 @@ public class ControlPanel extends JPanel {
 	private static int oldHeight;
 	private static int oldWidth;
 	
+	private static String choice = "D*Lite";
+	
 	public static void main(String args[])
 	{
 		JFrame f = new JFrame();
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-		
+				
 		JButton generateButton = new JButton("Generate Random Grid");
 		JButton prevButton = new JButton("Use Previous Grid");
 
@@ -47,6 +50,19 @@ public class ControlPanel extends JPanel {
 		JLabel endYLabel = new JLabel("Ending Y");
 		endYField = new JTextField("5");
 		
+		JLabel algLabel = new JLabel("Algorithms");
+		String[] algorithms = {"D*Lite", "LPA*", "A*"};
+		JComboBox algList = new JComboBox<String>(algorithms);
+		
+		// determines user's choice of algorithm
+		algList.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				JComboBox cb = (JComboBox)e.getSource();
+				choice = (String)cb.getSelectedItem();
+			}
+		});
+		
 		// generates new, random grid if generateButton is pressed
 		generateButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
@@ -57,7 +73,7 @@ public class ControlPanel extends JPanel {
 				int startY = Integer.parseInt(startYField.getText());
 				int endX = Integer.parseInt(endXField.getText());
 				int endY = Integer.parseInt(endYField.getText());
-				GUIPanel panel = new GUIPanel(20,30,40, height, width, startX, startY, endX, endY, null);
+				GUIPanel panel = new GUIPanel(20,30,40, height, width, startX, startY, endX, endY, null, choice);
 				grid = panel.getGrid();
 				
 				oldHeight = height;
@@ -73,7 +89,7 @@ public class ControlPanel extends JPanel {
 				int startY = Integer.parseInt(startYField.getText());
 				int endX = Integer.parseInt(endXField.getText());
 				int endY = Integer.parseInt(endYField.getText());
-				new GUIPanel(20,30,40, oldHeight, oldWidth, startX, startY, endX, endY, grid);
+				new GUIPanel(20,30,40, oldHeight, oldWidth, startX, startY, endX, endY, grid, choice);
 
 			}
 		});
@@ -94,6 +110,9 @@ public class ControlPanel extends JPanel {
 		p.add(endXField);
 		p.add(endYLabel);
 		p.add(endYField);
+		
+		p.add(algLabel);
+		p.add(algList);
 		
 		f.setTitle("Pathfinding Control Panel");
 		f.setContentPane(p);
