@@ -215,5 +215,4 @@ public class Grid implements GridInterface {
 			}
 		}
 	}
-
 }

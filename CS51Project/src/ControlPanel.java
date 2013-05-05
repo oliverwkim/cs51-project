@@ -74,6 +74,7 @@ public class ControlPanel extends JPanel {
 				int endX = Integer.parseInt(endXField.getText());
 				int endY = Integer.parseInt(endYField.getText());
 				new GUIPanel(20,30,40, oldHeight, oldWidth, startX, startY, endX, endY, grid);
+
 			}
 		});
 		

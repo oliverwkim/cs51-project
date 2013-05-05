@@ -38,13 +38,10 @@ public class GUIPanel extends JPanel implements KeyListener {
 			grid = new Grid(h,w);
 			grid.createRandom();			
 		}
-		else
+		else {
 			grid = g;
-<<<<<<< HEAD
-=======
 			grid.setAllShadows();
 		}
->>>>>>> 743759121408ce28495cda8f5504148b8c4964af
 		
 		gridX = grid.getX();
 		gridY = grid.getY();
