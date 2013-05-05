@@ -154,7 +154,6 @@ public class LPAstar extends AStar {
 				if(deadends.contains(def))
 					def = closestNode;
 			}
-			System.out.println();
 			if(closestNode == null){
 				deadends.add(pathGoal);
 				return reconstructPath(def, pathStart, deadends);
