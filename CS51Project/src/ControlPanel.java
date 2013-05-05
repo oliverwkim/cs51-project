@@ -120,6 +120,7 @@ public class ControlPanel extends JPanel {
 		f.setTitle("Pathfinding Control Panel");
 		f.setContentPane(p);
 		f.pack();
+		f.setResizable(false);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

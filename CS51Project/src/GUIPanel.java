@@ -79,9 +79,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 		
 		JScrollPane jsp = new JScrollPane();
 		jsp.setViewportView(container);
-		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+		
 		f.add(jsp);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		

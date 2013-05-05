@@ -38,13 +38,10 @@ public class DStarLite extends LPAstar{
 	{
 		if (!u.equals(goal))
 			u.setRhsScore(findRhs(u)); 
-<<<<<<< HEAD
 
-=======
-		}		
->>>>>>> 08cde48cab5815244aed57f82cba8e5e77f43d31
 		if (open_set.contains(u))
 			open_set.remove(u);
+		
 		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u));
