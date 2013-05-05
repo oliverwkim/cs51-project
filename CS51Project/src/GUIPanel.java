@@ -57,18 +57,30 @@ public class GUIPanel extends JPanel implements KeyListener {
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
 		
+		int costThusFarAlt = 0;
+		
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+			costThusFarAlt = current.getGScore();
 		}
 		else if (choice.equals("LPA*"))
 		{
 			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+			costThusFarAlt = end.getGScore();
 		}
 		else
 		{
 			path = AStar.algorithm(grid, end, current);
+			costThusFarAlt = end.getGScore();
 		}
+		
+		int costThusFar = 0;
+		for (int i = 1; i <= path.length - 1; i++)
+		{
+			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
+		}
+		System.out.print(costThusFar);
 		
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.add(this);
@@ -124,13 +136,6 @@ public class GUIPanel extends JPanel implements KeyListener {
 			path = AStar.algorithm(grid, end, current);
 			grid.getVision(current, 2);
 		}
-		
-		int costThusFar = 0;
-		for (int i = 1; i <= path.length - 1; i++)
-		{
-			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
-		}
-		System.out.print(costThusFar);
 		this.setPath(path);
 		this.repaint();			
 
