@@ -78,12 +78,7 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath()
 	{
-<<<<<<< HEAD
-		
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal))|| goal.getRhsScore() != goal.getGScore())
-=======
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) < 0|| goal.getRhsScore() != goal.getGScore())
->>>>>>> f13bf9802c6afeb7a2da5f79dab9311aed9fc93e
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
