@@ -55,11 +55,9 @@ public class DStarLite extends LPAstar{
 	public static void computeShortestPath()
 	{
 		
-		int counter = 0;
 		while(keyCompare((open_set.peek().getKScore()), calculateKey(start)) < 0
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			System.out.println(counter++);
 			ArrayList<Integer> oldKey = open_set.peek().getKScore();//calculateKey(open_set.peek());
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
