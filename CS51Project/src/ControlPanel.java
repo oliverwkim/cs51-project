@@ -13,11 +13,15 @@ public class ControlPanel extends JPanel {
 	
 	private static JTextField heightField;
 	private static JTextField widthField;
-
 	private static JTextField startXField;
 	private static JTextField startYField;
 	private static JTextField endXField;
 	private static JTextField endYField;
+	
+	private static Grid grid = null;
+	
+	private static int oldHeight;
+	private static int oldWidth;
 	
 	public static void main(String args[])
 	{
@@ -26,6 +30,8 @@ public class ControlPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 		
 		JButton generateButton = new JButton("Generate Random Grid");
+		JButton prevButton = new JButton("Use Previous Grid");
+
 		JLabel heightLabel = new JLabel("Grid height");
 		heightField = new JTextField("10");
 		JLabel widthLabel = new JLabel("Grid width");
@@ -50,11 +56,30 @@ public class ControlPanel extends JPanel {
 				int startY = Integer.parseInt(startYField.getText());
 				int endX = Integer.parseInt(endXField.getText());
 				int endY = Integer.parseInt(endYField.getText());
-				new GUIPanel(20,30,40, height, width, startX, startY, endX, endY);
+				GUIPanel panel = new GUIPanel(20,30,40, height, width, startX, startY, endX, endY, null);
+				grid = panel.getGrid();
+				
+				oldHeight = height;
+				oldWidth = width;
 			}
 		});
 		
+		prevButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				int height = Integer.parseInt(heightField.getText());
+				int width = Integer.parseInt(widthField.getText());
+				int startX = Integer.parseInt(startXField.getText());
+				int startY = Integer.parseInt(startYField.getText());
+				int endX = Integer.parseInt(endXField.getText());
+				int endY = Integer.parseInt(endYField.getText());
+				new GUIPanel(20,30,40, oldHeight, oldWidth, startX, startY, endX, endY, grid);
+			}
+		});
+		
+		
 		p.add(generateButton);
+		p.add(prevButton);
 		p.add(heightLabel);
 		p.add(heightField);
 		p.add(widthLabel);
