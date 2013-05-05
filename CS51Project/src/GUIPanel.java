@@ -105,22 +105,32 @@ public class GUIPanel extends JPanel implements KeyListener {
 	}
 	
 	private void loop () {
-		current = path[1];
-		grid.setPos(current);
-	
 		if(choice.equals("D*Lite"))
 		{
+			current = path[1];
+			grid.setPos(current);
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
 		}
 		else if (choice.equals("LPA*"))
 		{
+			current = path[path.length-2];
+			grid.setPos(current);
 			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 		}
 		else
 		{
+			current = path[path.length-2];
+			grid.setPos(current);
 			path = AStar.algorithm(grid, end, current);
+			grid.getVision(current, 2);
 		}
 		
+		int costThusFar = 0;
+		for (int i = 1; i <= path.length - 1; i++)
+		{
+			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
+		}
+		System.out.print(costThusFar);
 		this.setPath(path);
 		this.repaint();			
 

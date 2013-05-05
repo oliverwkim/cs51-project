@@ -74,6 +74,7 @@ public class AStar {
 			path.add(n);
 			n = n.getParent();
 		}
+		path.add(start);
 		Node[] result = path.toArray(new Node[path.size()]);
 		return result;
 	}
