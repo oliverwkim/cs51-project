@@ -24,12 +24,13 @@ public class DStarLite extends LPAstar{
 		start = sInput;
 		goal = gInput;
 		costToCurrent = 0;
-		g.setPos(start);
+		
+		path = new ArrayList<Node>();
 		
 		kNodeComparator = new KNodeComparator();
 		open_set = new PriorityQueue<Node>(11, kNodeComparator);
-		goal.setKScore(calculateKey(goal));
 		goal.setRhsScore(0);
+		goal.setKScore(calculateKey(goal));
 		open_set.add(goal);
 	}
 	
@@ -51,7 +52,7 @@ public class DStarLite extends LPAstar{
 	
 	public static void computeShortestPath()
 	{
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) 
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(start)) 
 					|| start.getRhsScore() != start.getGScore()) 
 		{
 			ArrayList<Integer> oldKey = calculateKey(open_set.peek());
@@ -79,20 +80,18 @@ public class DStarLite extends LPAstar{
 		}	
 	}
 	
-	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
+	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput, Node[] newVisible)
 	{
-		Node last = startInput;		
+		Node last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
 		while(!start.equals(goal))
 		{
-			if (start.getGScore() == 2000000) 
-				return null;			
-			System.out.println(start.getPosition().getX() + ", " + start.getPosition().getY());
+			if (start.getGScore() == 2000000)//i.e. path does not exist 
+				return null;
 			start = minimize(start.getConnections()); 
-			//g.setPos(start);
 			
-			for(Node n: g.getVision(startInput, 2)){
+			for(Node n: newVisible){
 				Edge[] changedEdges = n.getNewEdges();
 				if(changedEdges != null){
 					costToCurrent = costToCurrent + hScore(last, start);  
@@ -129,7 +128,7 @@ public class DStarLite extends LPAstar{
 		
 		for(Node s : nodeList)
 		{
-			if (g.getEdgeLength(s, start) + s.getGScore() < g.getEdgeLength(min, start) + min.getGScore())
+			if (g.getEdgeLength(s, goal) + s.getGScore() < g.getEdgeLength(min, goal) + min.getGScore())
 				min = s;
 		}
 		return min;
@@ -151,5 +150,46 @@ public class DStarLite extends LPAstar{
 			return values.peek();			
 		}
 		return 0;
+	}
+	
+	public static Node[] reconstructPath(Node pathGoal, Node pathStart, ArrayList<Node> deadends)
+	{
+
+		if(pathGoal.equals(pathStart))
+		{
+			//path.remove(path.size()-1);
+			//while(!pathStart.connectionExists(path.get(path.size() - 1))){
+			//	path.remove(path.size()-1);
+			//}
+			path.add(0, goal);
+			Node[] result = path.toArray(new Node[path.size()]);
+			return result;
+		}
+		else
+		{
+			PriorityQueue<Node> values = new PriorityQueue<Node>(11, kNodeComparator);
+			for (Node s : pathGoal.getConnections())
+			{
+				s.setKScore(calculateKey(s));
+				values.add(s);
+			}
+			
+			Node def = values.peek();
+			Node closestNode = values.poll();
+			while(path.contains(closestNode)){
+				closestNode = values.poll();
+				if(deadends.contains(def))
+					def = closestNode;
+			}
+			System.out.println();
+			if(closestNode == null){
+				System.out.println("It happened");
+				deadends.add(pathGoal);
+				return reconstructPath(def, pathStart, deadends);
+				//return path.toArray(new Node[path.size()]);
+			}
+			path.add(closestNode);
+			return reconstructPath(closestNode, pathStart, deadends);
+		}
 	}
 }
