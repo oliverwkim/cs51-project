@@ -11,7 +11,7 @@ public class LPAstar extends AStar {
 	static Node start;
 	static Node goal;
 	static Grid g;
-	static boolean noPath = true;
+	static boolean noPath;
 	
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
@@ -25,6 +25,7 @@ public class LPAstar extends AStar {
 	{
 		kNodeComparator = new KNodeComparator();
 		path = new ArrayList<Node>();
+		noPath = false;
 		open_set = new PriorityQueue<Node>(11, kNodeComparator); 
 		start.setRhsScore(0);
 		start.setKScore(null);
@@ -78,7 +79,11 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath()
 	{
+
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) < 0|| goal.getRhsScore() != goal.getGScore())
+
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) < 0
+				|| goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
@@ -99,8 +104,8 @@ public class LPAstar extends AStar {
 			if(open_set.size() == 0)
 			{
 				System.out.println("Priority Queue is Empty!");
-				noPath = false;
-				return;
+				noPath = true;
+				break;
 			}
 		}	
 	}
@@ -117,16 +122,15 @@ public class LPAstar extends AStar {
 				Edge[] changedEdges = n.getNewEdges();
 				if(changedEdges != null){
 					updateVertex(n);
-					for(Edge e: changedEdges){
+					for(Edge e: changedEdges)
 						updateVertex(e.getEnd(n));
-					}
 				}
 			}
 		}
 		if(noPath)
-			return reconstructPath(goal, start, new ArrayList<Node>());
+			return null;
+		return reconstructPath(goal, start, new ArrayList<Node>());		
 		
-		return null;
 	}
 
 	public static Node[] reconstructPath(Node pathGoal, Node pathStart, ArrayList<Node> deadends)
