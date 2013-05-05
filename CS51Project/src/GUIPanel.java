@@ -120,7 +120,8 @@ public class GUIPanel extends JPanel {
             		if(path.length == 1 && path[0].equals(end)){
             			current = end;
             			grid.setPos(current);
-            			grid.getVision(current,  2);
+            			grid.getVision(current, 2);
+            			repaint();
             			timer.stop();
             		}
                 	
