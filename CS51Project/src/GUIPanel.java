@@ -121,6 +121,12 @@ public class GUIPanel extends JPanel {
             	// if it reaches the end of the path, stop repeating
                 if(current.equals(end))
                 {
+                	int totalCost = 0;
+                	for(int i = 1; i < traversed.size(); i++)
+                	{
+                		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
+                	}
+                	System.out.print(totalCost);
                     timer.stop();
                 }
                 else
