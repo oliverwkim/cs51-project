@@ -69,12 +69,11 @@ public class GUIPanel extends JPanel {
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
-			counter = path.length - 2;
 			if (path == null)
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
-
+			counter = path.length - 2;
 			costThusFarAlt = current.getGScore();
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
@@ -83,12 +82,20 @@ public class GUIPanel extends JPanel {
 		else if (choice.equals("LPA*"))
 		{
 			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+			if (path == null)
+			{
+				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
+			}
 			costThusFarAlt = end.getGScore();
 			f.setTitle("LPA*");
 		}
 		else
 		{
 			path = AStar.algorithm(grid, end, current);
+			if (path == null)
+			{
+				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
+			}
 			costThusFarAlt = end.getGScore();
 			f.setTitle("A*");
 		}
@@ -112,6 +119,12 @@ public class GUIPanel extends JPanel {
             	// if it reaches the end of the path, stop repeating
                 if(current.equals(end))
                 {
+                	int totalCost = 0;
+                	for(int i = 1; i < traversed.size(); i++)
+                	{
+                		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
+                	}
+                	System.out.print(totalCost);
                     timer.stop();
                 }
                 else
@@ -133,6 +146,8 @@ public class GUIPanel extends JPanel {
 		timer = new Timer(500, action);
 		timer.start();
 	}
+	
+	int totalCost = 0;
 	
 	private void loop () {
 		if(choice.equals("D*Lite"))
@@ -158,6 +173,7 @@ public class GUIPanel extends JPanel {
 			path = AStar.algorithm(grid, end, current);
 			grid.getVision(current, 2);
 		}
+		
 		this.setPath(path);
 		this.repaint();			
 
