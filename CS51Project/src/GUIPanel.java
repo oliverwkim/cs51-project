@@ -78,16 +78,19 @@ public class GUIPanel extends JPanel {
 			costThusFarAlt = current.getGScore();
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
+			f.setTitle("D*Lite");
 		}
 		else if (choice.equals("LPA*"))
 		{
 			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 			costThusFarAlt = end.getGScore();
+			f.setTitle("LPA*");
 		}
 		else
 		{
 			path = AStar.algorithm(grid, end, current);
 			costThusFarAlt = end.getGScore();
+			f.setTitle("A*");
 		}
 		
 		int costThusFar = 0;
@@ -115,6 +118,7 @@ public class GUIPanel extends JPanel {
         {   
             public void actionPerformed(ActionEvent event)
             {
+            	// if it reaches the end of the path, stop repeating
                 if(current.equals(end))
                 {
                     timer.stop();
