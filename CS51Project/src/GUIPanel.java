@@ -94,11 +94,14 @@ public class GUIPanel extends JPanel {
 		}
 		
 		int costThusFar = 0;
+		
 		for (int i = 1; i <= path.length -1; i++)
 		{
-			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
-			System.out.print(grid.getEdgeLength(path[i], path[i-1]));
+			int n = path.length - i;
+			costThusFar += grid.getEdgeLength(path[n], path[n-1]);
+			System.out.print(grid.getEdgeLength(path[n], path[n-1]));
 			System.out.print(" ");
+			System.out.print("(" + path[n].getPosition().getX() + ", " + path[n].getPosition().getY() + " )" );
 		}
 		System.out.print(costThusFar);
 		
