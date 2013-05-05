@@ -26,20 +26,28 @@ public class GUIPanel extends JPanel implements KeyListener {
 	private int margin;
 	private int padding;
 	
-	public GUIPanel (int d, int p, int m, int h, int w, int startX, int startY, int endX, int endY) 	
+	public GUIPanel (int d, int p, int m, int h, int w, int startX, int startY, int endX, int endY, Grid g) 	
 	{
 		diameter = d;
 		margin = m;
 		padding = p;
 		
 		JFrame f = new JFrame();
-		grid = new Grid(h,w);
+		if (g == null)
+		{
+			grid = new Grid(h,w);
+			grid.createRandom(new Point(0,0), new Point(1, 1));			
+		}
+		else
+		{
+			grid = g;
+		}
+		
 		gridX = grid.getX();
 		gridY = grid.getY();
 		
 		JPanel container = new JPanel();
 		
-		grid.createRandom(new Point(0,0), new Point(1, 1));
 		current = grid.getNode(startX, startY);
 		end = grid.getNode(endX, endY);
 
@@ -89,6 +97,11 @@ public class GUIPanel extends JPanel implements KeyListener {
 		this.setPath(path);
 		this.repaint();			
 
+	}
+	
+	public Grid getGrid ()
+	{
+		return grid;
 	}
 	
 	private void setPath (Node[] inputPath)
