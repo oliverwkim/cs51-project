@@ -75,20 +75,28 @@ public class LPAstar extends AStar {
 			else
 			{
 				u.setGScore(2000000);
-				for (Node s : u.getConnections()) // This was g.getAdjacent(u) before
+				for (Node s : u.getConnections())
 					updateVertex(s);
 				updateVertex(u);
 			}
 		}	
 	}
 
-	public static Node[] algorithm(Grid newG, Node newGoal, Node newStart)
+	public static Node[] algorithm(Grid newG, Node newGoal, Node newStart, Node[] changedEdgeVertices)
 	{
 		g = newG;
 		goal = newGoal;
 		start = newStart;
 		initialize();
 		computeShortestPath();
+		for(Node n: changedEdgeVertices){
+			Edge[] changedEdges = n.getNewEdges();
+			if(changedEdges != null){
+				for(Edge e: changedEdges){
+					updateVertex(e.getEnd());
+				}
+			}
+		}
 		return reconstructPath(goal, start, new ArrayList<Node>());
 	}
 
@@ -121,6 +129,7 @@ public class LPAstar extends AStar {
 				if(deadends.contains(def))
 					def = closestNode;
 			}
+			System.out.println();
 			if(closestNode == null){
 				System.out.println("It happened");
 				deadends.add(pathGoal);

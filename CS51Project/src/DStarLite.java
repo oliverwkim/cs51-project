@@ -36,7 +36,7 @@ public class DStarLite extends LPAstar{
 	public static void updateVertex(Node u)
 	{
 		if (!u.equals(goal)){
-			u.setRhsScore(findRhsDstar(u)); 
+			u.setRhsScore(findRhs(u)); 
 		}
 
 		if (open_set.contains(u))
@@ -56,7 +56,7 @@ public class DStarLite extends LPAstar{
 		{
 			ArrayList<Integer> oldKey = calculateKey(open_set.peek());
 			Node u = open_set.poll();
-			u.setRhsScore(findRhsDstar(u));
+			u.setRhsScore(findRhs(u));
 			
 			if(keyCompare(oldKey, calculateKey(u)))
 			{
@@ -86,8 +86,8 @@ public class DStarLite extends LPAstar{
 		computeShortestPath();
 		while(!start.equals(goal))
 		{
-			//if (start.getGScore() == 10000) 
-			//	return null;			
+			if (start.getGScore() == 2000000) 
+				return null;			
 			System.out.println(start.getPosition().getX() + ", " + start.getPosition().getY());
 			start = minimize(start.getConnections()); 
 			//g.setPos(start);
@@ -135,7 +135,7 @@ public class DStarLite extends LPAstar{
 		return min;
 	}
 	
-	public static int findRhsDstar(Node u)
+	public static int findRhs(Node u)
 	{		
 		if(!u.equals(goal))
 		{
