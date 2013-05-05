@@ -146,9 +146,7 @@ public class Grid implements GridInterface {
 		return getVision(current, sight);
 	}
 	
-	/* Turns off the visibility fog for the entire grid
-	 * All nodes are made visible
-	 */
+	// Turns off the visibility fog for the entire grid by making everything visible
 	public void turnOffFog(){
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
