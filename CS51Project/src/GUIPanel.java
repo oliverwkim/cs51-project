@@ -24,7 +24,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 	private Node end;
 	Timer timer;
 	
-	int counter = 1;
+	int counter;
 	
 	private int diameter;
 	private int margin;
@@ -64,6 +64,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+			counter = path.length - 2;
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
 		}
@@ -119,7 +120,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 	private void loop () {
 		if(choice.equals("D*Lite"))
 		{
-			current = path[counter++];
+			current = path[counter--];
 			grid.getVision(current, 2);
 			grid.setPos(current);
 			//path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
