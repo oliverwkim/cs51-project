@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -33,7 +34,8 @@ public class ControlPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 				
 		JButton generateButton = new JButton("Generate Random Grid");
-		JButton prevButton = new JButton("Use Previous Grid");
+		final JButton prevButton = new JButton("Use Previous Grid");
+		prevButton.setEnabled(false);
 
 		JLabel heightLabel = new JLabel("Grid height");
 		heightField = new JTextField("10");
@@ -75,6 +77,7 @@ public class ControlPanel extends JPanel {
 				int endY = Integer.parseInt(endYField.getText());
 				GUIPanel panel = new GUIPanel(20,30,40, height, width, startX, startY, endX, endY, null, choice);
 				grid = panel.getGrid();
+				prevButton.setEnabled(true);
 				
 				oldHeight = height;
 				oldWidth = width;
@@ -113,10 +116,11 @@ public class ControlPanel extends JPanel {
 		
 		p.add(algLabel);
 		p.add(algList);
-		
+				
 		f.setTitle("Pathfinding Control Panel");
 		f.setContentPane(p);
 		f.pack();
+		f.setResizable(false);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
