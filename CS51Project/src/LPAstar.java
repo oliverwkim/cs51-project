@@ -11,7 +11,7 @@ public class LPAstar extends AStar {
 	static Node start;
 	static Node goal;
 	static Grid g;
-	
+	static boolean noPath = true;
 	
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
@@ -78,6 +78,7 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath()
 	{
+		
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal))|| goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
@@ -93,6 +94,14 @@ public class LPAstar extends AStar {
 				for (Node s : u.getConnections())
 					updateVertex(s);
 				updateVertex(u);
+			}
+			
+
+			if(open_set.size() == 0)
+			{
+				System.out.println("Priority Queue is Empty!");
+				noPath = false;
+				return;
 			}
 		}	
 	}
@@ -114,7 +123,10 @@ public class LPAstar extends AStar {
 				}
 			}
 		}
-		return reconstructPath(goal, start, new ArrayList<Node>());
+		if(noPath)
+			return reconstructPath(goal, start, new ArrayList<Node>());
+		
+		return null;
 	}
 
 	public static Node[] reconstructPath(Node pathGoal, Node pathStart, ArrayList<Node> deadends)
@@ -122,10 +134,6 @@ public class LPAstar extends AStar {
 
 		if(pathGoal.equals(pathStart))
 		{
-			//path.remove(path.size()-1);
-			//while(!pathStart.connectionExists(path.get(path.size() - 1))){
-			//	path.remove(path.size()-1);
-			//}
 			path.add(0, goal);
 			Node[] result = path.toArray(new Node[path.size()]);
 			return result;
@@ -148,7 +156,6 @@ public class LPAstar extends AStar {
 			}
 			System.out.println();
 			if(closestNode == null){
-				System.out.println("It happened");
 				deadends.add(pathGoal);
 				return reconstructPath(def, pathStart, deadends);
 				//return path.toArray(new Node[path.size()]);
@@ -165,8 +172,6 @@ public class LPAstar extends AStar {
 			PriorityQueue<Integer> values = new PriorityQueue<Integer>(11);
 			for (Node s : u.getConnections())
 			{
-				if (s == null)
-					System.out.println("NUUUUUUUUUUUUULL");
 				values.add(s.getGScore() + g.getEdgeLength(s,u));
 			}
 			if (values.size() == 0)

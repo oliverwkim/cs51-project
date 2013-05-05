@@ -6,9 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -55,13 +53,13 @@ public class ControlPanel extends JPanel {
 		
 		JLabel algLabel = new JLabel("Algorithms");
 		String[] algorithms = {"D*Lite", "LPA*", "A*"};
-		JComboBox algList = new JComboBox<String>(algorithms);
+		JComboBox<String> algList = new JComboBox<String>(algorithms);
 		
 		// determines user's choice of algorithm
 		algList.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				JComboBox cb = (JComboBox)e.getSource();
+				JComboBox cb = (JComboBox<String>)e.getSource();
 				choice = (String)cb.getSelectedItem();
 			}
 		});
