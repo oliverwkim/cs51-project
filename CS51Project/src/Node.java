@@ -62,12 +62,10 @@ public abstract class Node {
 
 	// These methods return all of the connections and edges
 	Node[] getAllConnections(){
-		Node[] result = connections.toArray(new Node[connections.size()]);
-		return result;
+		return connections.toArray(new Node[connections.size()]);
 	}
 	Edge[] getAllEdges(){
-		Edge[] result = edges.toArray(new Edge[edges.size()]);
-		return result;
+		return edges.toArray(new Edge[edges.size()]);
 	}
 	
 	// These two methods return only the connections to passable nodes

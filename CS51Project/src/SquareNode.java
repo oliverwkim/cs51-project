@@ -62,6 +62,8 @@ public class SquareNode extends Node {
 	}
 	
 	public void setShadows(Node[] neighbors){
+		shadowConnections.clear();
+		shadowEdges.clear();
 		int length;
 		for(Node n: neighbors){
 			if(n.getPosition().getX() == position.getX() || n.getPosition().getY() == position.getY())
@@ -74,7 +76,9 @@ public class SquareNode extends Node {
 	}
 	
 	public void removeShadow(Node n){
-		ArrayList<Node> tempNodes = new ArrayList<Node>();
+		shadowConnections.remove(n);
+		shadowEdges.remove(n);
+		/*ArrayList<Node> tempNodes = new ArrayList<Node>();
 		ArrayList<Edge> tempEdge = new ArrayList<Edge>();
 		for(int i = 0; i < shadowConnections.size(); i++){
 			if(!n.equals(shadowConnections.get(i))){
@@ -83,6 +87,6 @@ public class SquareNode extends Node {
 			}
 		}
 		shadowConnections = tempNodes;
-		shadowEdges = tempEdge;
+		shadowEdges = tempEdge;*/
 	}
 }

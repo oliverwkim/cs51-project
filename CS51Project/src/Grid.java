@@ -112,6 +112,8 @@ public class Grid implements GridInterface {
 					j.removeShadow(i);
 			visible.add(i);
 		}
+		if(visible.size() == 0)
+			return null;
 		return visible.toArray(new Node[visible.size()]);
 	}
 	
@@ -155,6 +157,16 @@ public class Grid implements GridInterface {
 		}
 	}
 	
+	// Set all of the shadow connections for a fresh grid
+	public void setAllShadows(){
+		for(int x = 0; x < xLength; x++){
+			for(int y = 0; y < yLength; y++){
+				Node current = grid[x][y];
+				current.setShadows(getAdjacent(current));
+			}
+		}
+	}
+	
 	// Standard grid with all possible links present, and all nodes passable
 	public void createStandard() {
 		for(int x = 0; x < xLength; x++){
@@ -177,7 +189,7 @@ public class Grid implements GridInterface {
 		}
 	}
 	
-	public void createRandom(Point start, Point end) {
+	public void createRandom() {
 		double linkProb = 0.3; // Probability of a link being formed between two nodes
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){

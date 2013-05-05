@@ -36,11 +36,12 @@ public class GUIPanel extends JPanel implements KeyListener {
 		if (g == null)
 		{
 			grid = new Grid(h,w);
-			grid.createRandom(new Point(0,0), new Point(1, 1));			
+			grid.createRandom();			
 		}
 		else
 		{
 			grid = g;
+			grid.setAllShadows();
 		}
 		
 		gridX = grid.getX();
@@ -63,7 +64,6 @@ public class GUIPanel extends JPanel implements KeyListener {
 		
 		ActionListener action = new ActionListener()
         {   
-            @Override
             public void actionPerformed(ActionEvent event)
             {
                 if(current.equals(end))
@@ -90,10 +90,9 @@ public class GUIPanel extends JPanel implements KeyListener {
 	}
 	
 	private void loop () {
-		current = path[path.length-2];
-		grid.getVision(current, 2);
+		current = path[path.length - 2];
 		grid.setPos(current);
-		path = LPAstar.algorithm(grid, end, current);
+		path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 		this.setPath(path);
 		this.repaint();			
 

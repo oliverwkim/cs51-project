@@ -89,11 +89,13 @@ public class LPAstar extends AStar {
 		start = newStart;
 		initialize();
 		computeShortestPath();
-		for(Node n: changedEdgeVertices){
-			Edge[] changedEdges = n.getNewEdges();
-			if(changedEdges != null){
-				for(Edge e: changedEdges){
-					updateVertex(e.getEnd());
+		if(changedEdgeVertices != null){
+			for(Node n: changedEdgeVertices){
+				Edge[] changedEdges = n.getNewEdges();
+				if(changedEdges != null){
+					for(Edge e: changedEdges){
+						updateVertex(e.getEnd());
+					}
 				}
 			}
 		}

@@ -31,5 +31,5 @@ public interface GridInterface{
 	 * A standard grid has equal x and y lengths, and has all nodes connected to all neighbors
 	 */
 	void createStandard();
-	void createRandom(Point start, Point end);
+	void createRandom();
 }
