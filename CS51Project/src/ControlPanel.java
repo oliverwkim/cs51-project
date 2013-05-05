@@ -15,14 +15,13 @@ public class ControlPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 		
 		JButton generateButton = new JButton("Generate Random Grid");
-		generateButton .addActionListener(new ActionListener(){
+		generateButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
 					GUIPanel.main(null);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println("oopsies");
 				}
 			}
 		});

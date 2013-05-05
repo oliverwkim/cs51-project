@@ -53,6 +53,45 @@ public class GUIPanel extends JPanel implements KeyListener {
 		diameter = d;
 		margin = m;
 		padding = p;
+		
+		JFrame f = new JFrame();
+		grid = new Grid(6,6);
+		JPanel container = new JPanel();
+		
+		grid.createRandom(new Point(0, 0), new Point(5, 5));
+		Node current = grid.getNode(5, 0);
+		Node end = grid.getNode(0, 0);
+		grid.createRandom(new Point(14, 0), new Point(2, 12));
+		grid.turnOnFog(current, 2);
+		grid.setPos(current);
+		grid.getVision(current, 2);
+		path = LPAstar.algorithm(grid, end, current);
+		GUIPanel map = new GUIPanel(grid,path,diameter,padding,margin);
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+		container.add(map);
+		f.setContentPane(container);
+		f.setVisible(true);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
+		// Thread.sleep(250);
+		while(!current.equals(end)){
+			current = path[path.length-2];
+			g.getVision(current, 2);
+			g.setPos(current);
+			path = LPAstar.algorithm(g, end, current);
+			//thisPath = DStarLite.algorithm(g, end, current);
+			map.setPath(path);
+			map.repaint();			
+			// Thread.sleep(250);
+			if(path.length == 1 && path[0].equals(end)){
+				current = end;
+				g.setPos(current);
+				g.getVision(current,  2);
+				map.repaint();
+				break;
+			}
+		}
+		
 	}
 	
 	private void setPath (Node[] inputPath)
@@ -147,62 +186,13 @@ public class GUIPanel extends JPanel implements KeyListener {
 	
 	public static void main(String[] args) throws InterruptedException
 	{
-		int padding = 10;
-		int diameter = 30;
-		int margin = diameter + 20;
-		
-		JFrame f = new JFrame();
-		Grid g = new Grid(6,6);
-		JPanel container = new JPanel(new BorderLayout());
-		JButton generateButton = new JButton("Generate a new random map");
-		
-		// generate new random grid
-		// set starting point
-		// set ending point
-		/*
-		buttonContainer.add(generateButton);
-		buttonContainer.add(start);
-		buttonContainer.add(end);
-		*/
-		
-		//g.createStandard();
-		
+		Grid g = new Grid(10,10);
 		g.createRandom(new Point(0, 0), new Point(5, 5));
 		Node current = g.getNode(5, 0);
 		Node end = g.getNode(0, 0);
-		g.createRandom(new Point(14, 0), new Point(2, 12));
-		g.turnOnFog(current, 2);
-		g.setPos(current);
-		g.getVision(current, 2);
-		Node[] thisPath = LPAstar.algorithm(g, end, current);
-		//Node[] thisPath= DStarLite.algorithm(g, end, current);
-		GUIPanel map = new GUIPanel(g,thisPath,diameter,padding,margin);
-		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 
-		
-		container.add(map);
-		f.setContentPane(container);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		f.setSize(padding * 2 + margin * g.getX(), padding * 3 + margin * g.getY() + 100);
-		Thread.sleep(250);
-		while(!current.equals(end)){
-			current = thisPath[thisPath.length-2];
-			g.getVision(current, 2);
-			g.setPos(current);
-			thisPath = LPAstar.algorithm(g, end, current);
-			//thisPath = DStarLite.algorithm(g, end, current);
-			map.setPath(thisPath);
-			map.repaint();			
-			Thread.sleep(250);
-			if(thisPath.length == 1 && thisPath[0].equals(end)){
-				current = end;
-				g.setPos(current);
-				g.getVision(current,  2);
-				map.repaint();
-				break;
-			}
-		}
+		Node[] nodePath = LPAstar.algorithm(g, end, current);
+		new GUIPanel(g, nodePath, 20, 10, 10);
 		
 	}
 
