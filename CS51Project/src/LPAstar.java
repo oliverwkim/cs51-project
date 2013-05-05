@@ -46,10 +46,10 @@ public class LPAstar extends AStar {
 		}
 	}
 
-	public static boolean keyCompare(ArrayList<Integer> one, ArrayList<Integer> two)
+	public static int keyCompare(ArrayList<Integer> one, ArrayList<Integer> two)
 	{
 		//return (one.get(0) < two.get(0) || (one.get(0) == two.get(0) && one.get(1) <= two.get(1)));
-		if (one.get(0) < two.get(0))
+		/*if (one.get(0) < two.get(0))
 			return true;
 		else if (one.get(0) > two.get(0))
 			return false;
@@ -57,8 +57,8 @@ public class LPAstar extends AStar {
 			return true;
 		else if (one.get(1) > two.get(1))
 			return false;
-		return false;
-		/*if (one.get(0) == two.get(1))
+		return false;*/
+		if (one.get(0) == two.get(0))
 		{
 			if (one.get(1) > two.get(1))
 				return 1;
@@ -73,13 +73,17 @@ public class LPAstar extends AStar {
 			else if (one.get(0) < two.get(0))
 				return -1;
 			return 0;
-		}*/
+		}
 	}
 	
 	public static void computeShortestPath()
 	{
+<<<<<<< HEAD
 		
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal))|| goal.getRhsScore() != goal.getGScore())
+=======
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) < 0|| goal.getRhsScore() != goal.getGScore())
+>>>>>>> f13bf9802c6afeb7a2da5f79dab9311aed9fc93e
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
@@ -117,8 +121,9 @@ public class LPAstar extends AStar {
 			for(Node n: changedEdgeVertices){
 				Edge[] changedEdges = n.getNewEdges();
 				if(changedEdges != null){
+					updateVertex(n);
 					for(Edge e: changedEdges){
-						updateVertex(e.getEnd());
+						updateVertex(e.getEnd(n));
 					}
 				}
 			}

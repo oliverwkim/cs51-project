@@ -9,6 +9,7 @@ public class DStarLite extends LPAstar{
 	private static Node start;
 	private static Node goal;
 	private static Grid g;
+	private static boolean noPath;
 	
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
@@ -24,6 +25,7 @@ public class DStarLite extends LPAstar{
 		start = sInput;
 		goal = gInput;
 		costToCurrent = 0;
+		noPath = false;
 		
 		path = new ArrayList<Node>();
 		
@@ -52,14 +54,15 @@ public class DStarLite extends LPAstar{
 	
 	public static void computeShortestPath()
 	{
-		while(keyCompare((open_set.peek().getKScore()), calculateKey(start))
+		
+		while(keyCompare((open_set.peek().getKScore()), calculateKey(start)) < 0
 					|| start.getRhsScore() != start.getGScore()) 
 		{
 			ArrayList<Integer> oldKey = open_set.peek().getKScore();//calculateKey(open_set.peek());
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
 			
-			if(keyCompare(oldKey, calculateKey(u)))
+			if(keyCompare(oldKey, calculateKey(u)) < 0)
 			{
 				u.setKScore(calculateKey(u));
 				open_set.add(u);
@@ -77,10 +80,14 @@ public class DStarLite extends LPAstar{
 					updateVertex(s);
 				updateVertex(u);
 			}
+			if(open_set.size() == 0){
+				noPath = true;
+				break;
+			}
 		}	
 	}
 	
-	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput, Node[] newVisibles)
+	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
 		Node last = startInput;
 		initialize(gInput, goalInput, startInput);
@@ -89,22 +96,21 @@ public class DStarLite extends LPAstar{
 		while(!start.equals(goal))
 		{
 			result.add(0, start);
-			if (start.getGScore() == 2000000) //i.e. path does not exist 
-				return null;
-			start = minimize(start.getConnections()); 
+			if (start.getGScore() == 2000000 || noPath) //i.e. path does not exist 
+				return result.toArray(new Node[result.size()]);
+			start = minimize(start.getConnections(), start); 
 			Node[] newVisible = g.getVision(start, 2);
 			if(newVisible != null){
-				costToCurrent = costToCurrent + hScore(last, start);  
+				costToCurrent = costToCurrent + g.getEdgeLength(last, start);  
 				last = start;
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
 					if(changedEdges != null){
 						updateVertex(n);
-						/*for (Edge e : changedEdges)
+						for (Edge e : changedEdges)
 						{
-							Node begin = e.getBegin();
-							updateVertex(begin);
-						}*/
+							updateVertex(e.getEnd(n));
+						}
 					}
 					
 				}
@@ -130,13 +136,13 @@ public class DStarLite extends LPAstar{
 	 * (i.e. does not return Nodes around the current position that were already visible)
 	 */
 	
-	private static Node minimize (Node[] nodeList)
+	private static Node minimize (Node[] nodeList, Node u)
 	{
 		Node min = nodeList[0];
 		
 		for(Node s : nodeList)
 		{
-			if (g.getEdgeLength(s, goal) + s.getGScore() < g.getEdgeLength(min, goal) + min.getGScore())
+			if (g.getEdgeLength(s, u) + s.getGScore() < g.getEdgeLength(min, u) + min.getGScore())
 				min = s;
 		}
 		return min;
@@ -158,46 +164,5 @@ public class DStarLite extends LPAstar{
 			return values.peek();			
 		}
 		return 0;
-	}
-	
-	public static Node[] reconstructPath(Node pathGoal, Node pathStart, ArrayList<Node> deadends)
-	{
-
-		if(pathGoal.equals(pathStart))
-		{
-			//path.remove(path.size()-1);
-			//while(!pathStart.connectionExists(path.get(path.size() - 1))){
-			//	path.remove(path.size()-1);
-			//}
-			path.add(0, goal);
-			Node[] result = path.toArray(new Node[path.size()]);
-			return result;
-		}
-		else
-		{
-			PriorityQueue<Node> values = new PriorityQueue<Node>(11, kNodeComparator);
-			for (Node s : pathGoal.getConnections())
-			{
-				s.setKScore(calculateKey(s));
-				values.add(s);
-			}
-			
-			Node def = values.peek();
-			Node closestNode = values.poll();
-			while(path.contains(closestNode)){
-				closestNode = values.poll();
-				if(deadends.contains(def))
-					def = closestNode;
-			}
-			System.out.println();
-			if(closestNode == null){
-				System.out.println("It happened");
-				deadends.add(pathGoal);
-				return reconstructPath(def, pathStart, deadends);
-				//return path.toArray(new Node[path.size()]);
-			}
-			path.add(closestNode);
-			return reconstructPath(closestNode, pathStart, deadends);
-		}
 	}
 }

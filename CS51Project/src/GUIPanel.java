@@ -32,6 +32,8 @@ public class GUIPanel extends JPanel {
 	private int padding;
 	private String choice;
 	
+	JFrame f;
+	
 	public GUIPanel (int d, int p, int m, int h, int w, int startX, int startY, int endX, int endY, Grid g, String c) 	
 	{
 		diameter = d;
@@ -55,7 +57,7 @@ public class GUIPanel extends JPanel {
 		gridX = grid.getX();
 		gridY = grid.getY();
 		
-		JFrame f = new JFrame();
+		f = new JFrame();
 		JPanel container = new JPanel();
 		
 		current = grid.getNode(startX, startY);
@@ -68,7 +70,7 @@ public class GUIPanel extends JPanel {
 		
 		if(choice.equals("D*Lite"))
 		{
-			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+			path = DStarLite.algorithm(grid, end, current);
 			if (path == null)
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
@@ -124,7 +126,7 @@ public class GUIPanel extends JPanel {
                 else
                 {
                 	loop();
-                	
+        
             		if(path.length == 1 && path[0].equals(end)){
             			int totalCost = 0;
                     	for(int i = 1; i < traversed.size(); i++)
@@ -137,6 +139,8 @@ public class GUIPanel extends JPanel {
             			grid.getVision(current, 2);
             			repaint();
             			timer.stop();
+            			if(!path[0].equals(end))
+            				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
             		}
                 	
                 }
@@ -152,10 +156,21 @@ public class GUIPanel extends JPanel {
 	private void loop () {
 		if(choice.equals("D*Lite"))
 		{
-			traversed.add(path[counter + 1]);
-			current = path[counter--];
-			grid.getVision(current, 2);
-			grid.setPos(current);
+			if(counter <= 0 && !path[0].equals(end)){
+    			current = path[0];
+    			grid.setPos(current);
+    			grid.getVision(current, 2);
+    			repaint();
+    			timer.stop();
+    			JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
+    		}
+			else{
+				traversed.add(path[counter + 1]);
+				current = path[counter--];
+				grid.getVision(current, 2);
+				grid.setPos(current);
+			}
+			
 			//path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
 		}
 		else if (choice.equals("LPA*"))
