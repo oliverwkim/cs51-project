@@ -93,18 +93,6 @@ public class GUIPanel extends JPanel {
 			f.setTitle("A*");
 		}
 		
-		int costThusFar = 0;
-		
-		for (int i = 1; i <= path.length -1; i++)
-		{
-			int n = path.length - i;
-			costThusFar += grid.getEdgeLength(path[n], path[n-1]);
-			System.out.print(grid.getEdgeLength(path[n], path[n-1]));
-			System.out.print(" ");
-			System.out.print("(" + path[n].getPosition().getX() + ", " + path[n].getPosition().getY() + " )" );
-		}
-		System.out.print(costThusFar);
-		
 		this.setPreferredSize(new Dimension(10 + padding + margin * gridX, padding * 2 + margin * gridY));
 		
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
