@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -75,6 +76,14 @@ public class ControlPanel extends JPanel {
 				int startY = Integer.parseInt(startYField.getText());
 				int endX = Integer.parseInt(endXField.getText());
 				int endY = Integer.parseInt(endYField.getText());
+				
+				// checks if start and end coordinates are out of bounds
+				if(width <= startX || startX < 0 || width <= endX || endX < 0 || 
+						height <= startY || startY < 0 || height <= endY || endY < 0)
+				{
+					return;
+				}
+				
 				GUIPanel panel = new GUIPanel(20,30,40, height, width, startX, startY, endX, endY, null, choice);
 				grid = panel.getGrid();
 				prevButton.setEnabled(true);
@@ -92,6 +101,14 @@ public class ControlPanel extends JPanel {
 				int startY = Integer.parseInt(startYField.getText());
 				int endX = Integer.parseInt(endXField.getText());
 				int endY = Integer.parseInt(endYField.getText());
+				
+				// checks if start and end coordinates are out of bounds
+				if(oldWidth <= startX || startX < 0 || oldWidth <= endX || endX < 0 || 
+						oldHeight <= startY || startY < 0 || oldHeight <= endY || endY < 0)
+				{
+					return;
+				}
+				
 				new GUIPanel(20,30,40, oldHeight, oldWidth, startX, startY, endX, endY, grid, choice);
 
 			}

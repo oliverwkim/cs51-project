@@ -65,17 +65,13 @@ public class GUIPanel extends JPanel {
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
-<<<<<<< HEAD
 			
 			if (path == null)
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
 
-=======
-
 			costThusFarAlt = current.getGScore();
->>>>>>> 3358349acf4e82f27072c09c2ce79e1ab1d2d7b9
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
 		}
