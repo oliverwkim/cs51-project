@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.awt.Dimension;
@@ -18,12 +19,13 @@ public class GUIPanel extends JPanel {
 	private int gridX;
 	private int gridY;
 	private Node[] path;
+	private ArrayList<Node> traversed;
 	private Grid grid;
 	private Node current;
 	private Node end;
 	Timer timer;
 	
-	int counter = 1;
+	int counter;
 	
 	private int diameter;
 	private int margin;
@@ -36,6 +38,8 @@ public class GUIPanel extends JPanel {
 		margin = m;
 		padding = p;
 		choice = c;
+		
+		traversed = new ArrayList<Node>();
 		
 		// checks to see if it received a pre-defined grid as input
 		if (g == null)
@@ -65,7 +69,7 @@ public class GUIPanel extends JPanel {
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
-			
+			counter = path.length - 2;
 			if (path == null)
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
@@ -142,19 +146,22 @@ public class GUIPanel extends JPanel {
 	private void loop () {
 		if(choice.equals("D*Lite"))
 		{
-			current = path[counter++];
+			traversed.add(path[counter + 1]);
+			current = path[counter--];
 			grid.getVision(current, 2);
 			grid.setPos(current);
 			//path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
 		}
 		else if (choice.equals("LPA*"))
 		{
+			traversed.add(path[path.length- 1]);
 			current = path[path.length-2];
 			grid.setPos(current);
 			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
 		}
 		else
 		{
+			traversed.add(path[path.length - 1]);
 			current = path[path.length-2];
 			grid.setPos(current);
 			path = AStar.algorithm(grid, end, current);
@@ -238,24 +245,31 @@ public class GUIPanel extends JPanel {
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				}
 				
-				// colors start of path green
+				// colors goal green
 				if (path != null && path[0].equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.green);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				} 
-				// colors goal red
+				// colors current position red
 				else if (path != null && grid.getPos().equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.red);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				} 
+				// colors traversed nodes black
+				else if (traversed != null && traversed.contains(grid.getNode(i,j)))
+				{
+					p.setColor(Color.black);
+					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
+				}
 				// colors path blue
 				else if (path != null && Arrays.asList(path).contains(grid.getNode(i,j)))
 				{
 					p.setColor(Color.blue);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);
 				}
+				
 			}
 		}
 	}
