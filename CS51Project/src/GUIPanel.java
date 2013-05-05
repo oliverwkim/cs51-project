@@ -60,26 +60,42 @@ public class GUIPanel extends JPanel {
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
 		
+		int costThusFarAlt = 0;
+		
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
+<<<<<<< HEAD
 			
 			if (path == null)
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
 
+=======
+
+			costThusFarAlt = current.getGScore();
+>>>>>>> 3358349acf4e82f27072c09c2ce79e1ab1d2d7b9
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
 		}
 		else if (choice.equals("LPA*"))
 		{
 			path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+			costThusFarAlt = end.getGScore();
 		}
 		else
 		{
 			path = AStar.algorithm(grid, end, current);
+			costThusFarAlt = end.getGScore();
 		}
+		
+		int costThusFar = 0;
+		for (int i = 1; i <= path.length - 1; i++)
+		{
+			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
+		}
+		System.out.print(costThusFar);
 		
 		this.setPreferredSize(new Dimension(10 + padding + margin * gridX, padding * 2 + margin * gridY));
 		
@@ -141,13 +157,6 @@ public class GUIPanel extends JPanel {
 			path = AStar.algorithm(grid, end, current);
 			grid.getVision(current, 2);
 		}
-		
-		int costThusFar = 0;
-		for (int i = 1; i <= path.length - 1; i++)
-		{
-			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
-		}
-		System.out.print(costThusFar);
 		this.setPath(path);
 		this.repaint();			
 
