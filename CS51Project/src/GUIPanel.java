@@ -121,6 +121,12 @@ public class GUIPanel extends JPanel {
             	// if it reaches the end of the path, stop repeating
                 if(current.equals(end))
                 {
+                	int totalCost = 0;
+                	for(int i = 1; i < traversed.size(); i++)
+                	{
+                		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
+                	}
+                	System.out.print(totalCost);
                     timer.stop();
                 }
                 else
@@ -185,8 +191,9 @@ public class GUIPanel extends JPanel {
 			traversed.add(path[path.length - 1]);
 			current = path[path.length-2];
 			grid.setPos(current);
-			path = AStar.algorithm(grid, end, current);
 			grid.getVision(current, 2);
+			path = AStar.algorithm(grid, end, current);
+			
 		}
 		
 		this.setPath(path);
