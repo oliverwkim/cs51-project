@@ -55,7 +55,6 @@ public class DStarLite extends LPAstar{
 		while(keyCompare((open_set.peek().getKScore()), calculateKey(start))
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			System.out.println(open_set.peek().getPosition().getX() + " " + open_set.peek().getPosition().getY());
 			ArrayList<Integer> oldKey = open_set.peek().getKScore();//calculateKey(open_set.peek());
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
@@ -81,35 +80,44 @@ public class DStarLite extends LPAstar{
 		}	
 	}
 	
-	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput, Node[] newVisible)
+	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput, Node[] newVisibles)
 	{
 		Node last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
+		ArrayList<Node> result = new ArrayList<Node>();
 		while(!start.equals(goal))
 		{
+<<<<<<< HEAD
 			if (start.getGScore() == 2000000) //i.e. path does not exist 
+=======
+			result.add(start);
+			if (start.getGScore() == 2000000)//i.e. path does not exist 
+>>>>>>> 78941a76ea3491806886155d81be9d16c59b6908
 				return null;
 			start = minimize(start.getConnections()); 
-			
+			Node[] newVisible = g.getVision(start, 2);
 			if(newVisible != null){
+				costToCurrent = costToCurrent + hScore(last, start);  
+				last = start;
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
 					if(changedEdges != null){
-						costToCurrent = costToCurrent + hScore(start.getParent(), start);  
-						last = start;
-						for (Edge e : changedEdges)
+						updateVertex(n);
+						/*for (Edge e : changedEdges)
 						{
 							Node begin = e.getBegin();
 							updateVertex(begin);
-						}
+						}*/
 					}
 					
 				}
 				computeShortestPath();
 			}
 		}
-		return reconstructPath(startInput, goal, new ArrayList<Node>());
+		result.add(goal);
+		return result.toArray(new Node[result.size()]);
+		//return reconstructPath(startInput, goal, new ArrayList<Node>());
 	}
 	/* 
 	 * 	km = km + h(slast, sstart)
