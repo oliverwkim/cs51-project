@@ -40,7 +40,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 		}
 		else {
 			grid = g;
-			grid.setAllShadows();
+			grid.resetGrid();
 		}
 		
 		gridX = grid.getX();
@@ -54,7 +54,7 @@ public class GUIPanel extends JPanel implements KeyListener {
 
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
-		path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+		path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.add(this);
 		f.setContentPane(container);
@@ -90,9 +90,9 @@ public class GUIPanel extends JPanel implements KeyListener {
 	}
 	
 	private void loop () {
-		current = path[path.length - 2];
+		current = path[1];
 		grid.setPos(current);
-		path = LPAstar.algorithm(grid, end, current, grid.getVision(current, 2));
+		path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
 		this.setPath(path);
 		this.repaint();			
 

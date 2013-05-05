@@ -52,9 +52,11 @@ public class DStarLite extends LPAstar{
 	
 	public static void computeShortestPath()
 	{
+		int counter = 0;
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(start)) 
 					|| start.getRhsScore() != start.getGScore()) 
 		{
+			System.out.println(counter++);
 			ArrayList<Integer> oldKey = calculateKey(open_set.peek());
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
@@ -91,18 +93,20 @@ public class DStarLite extends LPAstar{
 				return null;
 			start = minimize(start.getConnections()); 
 			
-			for(Node n: newVisible){
-				Edge[] changedEdges = n.getNewEdges();
-				if(changedEdges != null){
-					costToCurrent = costToCurrent + hScore(last, start);  
-					last = start;
-					for (Edge e : changedEdges)
-					{
-						Node begin = e.getBegin();
-						updateVertex(begin);
+			if(newVisible != null){
+				for(Node n: newVisible){
+					Edge[] changedEdges = n.getNewEdges();
+					if(changedEdges != null){
+						costToCurrent = costToCurrent + hScore(last, start);  
+						last = start;
+						for (Edge e : changedEdges)
+						{
+							Node begin = e.getBegin();
+							updateVertex(begin);
+						}
 					}
+					computeShortestPath();
 				}
-				computeShortestPath();
 			}
 		}
 		return reconstructPath(startInput, goal, new ArrayList<Node>());

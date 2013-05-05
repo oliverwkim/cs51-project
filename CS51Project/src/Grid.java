@@ -157,12 +157,16 @@ public class Grid implements GridInterface {
 		}
 	}
 	
-	// Set all of the shadow connections for a fresh grid
-	public void setAllShadows(){
+	// Resets everything back to the default state
+	public void resetGrid(){
 		for(int x = 0; x < xLength; x++){
 			for(int y = 0; y < yLength; y++){
 				Node current = grid[x][y];
 				current.setShadows(getAdjacent(current));
+				current.setGScore(2000000);
+				current.setRhsScore(2000000);
+				current.setFScore(0);
+				current.setKScore(null);
 			}
 		}
 	}
