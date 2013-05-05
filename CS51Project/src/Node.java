@@ -15,7 +15,7 @@ public abstract class Node {
 	protected ArrayList<Node> connections;
 	protected ArrayList<Edge> edges;
 	
-	protected Node parent;
+	protected Node parent = this;
 	
 	protected int fScore = 0;
 	protected int gScore = 2000000;

@@ -48,6 +48,7 @@ public class LPAstar extends AStar {
 
 	public static boolean keyCompare(ArrayList<Integer> one, ArrayList<Integer> two)
 	{
+		//return (one.get(0) < two.get(0) || (one.get(0) == two.get(0) && one.get(1) <= two.get(1)));
 		if (one.get(0) < two.get(0))
 			return true;
 		else if (one.get(0) > two.get(0))
@@ -57,11 +58,27 @@ public class LPAstar extends AStar {
 		else if (one.get(1) > two.get(1))
 			return false;
 		return false;
+		/*if (one.get(0) == two.get(1))
+		{
+			if (one.get(1) > two.get(1))
+				return 1;
+			else if (one.get(1) < two.get(1))
+				return -1;
+			return 0;
+		}
+		else
+		{
+			if (one.get(0) > two.get(0))
+				return 1;
+			else if (one.get(0) < two.get(0))
+				return -1;
+			return 0;
+		}*/
 	}
 	
 	public static void computeShortestPath()
 	{
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) || goal.getRhsScore() != goal.getGScore())
+		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal))|| goal.getRhsScore() != goal.getGScore())
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))

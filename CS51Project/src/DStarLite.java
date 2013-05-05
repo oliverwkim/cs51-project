@@ -38,25 +38,28 @@ public class DStarLite extends LPAstar{
 	{
 		if (!u.equals(goal))
 			u.setRhsScore(findRhs(u)); 
+<<<<<<< HEAD
 
+=======
+		}		
+>>>>>>> 08cde48cab5815244aed57f82cba8e5e77f43d31
 		if (open_set.contains(u))
 			open_set.remove(u);
-		
 		if (u.getGScore() != u.getRhsScore())
 		{
 			u.setKScore(calculateKey(u));
 			open_set.add(u);
 		}
+		
 	}
 	
 	public static void computeShortestPath()
 	{
-		int counter = 0;
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(start)) 
+		while(keyCompare((open_set.peek().getKScore()), calculateKey(start))
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			System.out.println(counter++);
-			ArrayList<Integer> oldKey = calculateKey(open_set.peek());
+			System.out.println(open_set.peek().getPosition().getX() + " " + open_set.peek().getPosition().getY());
+			ArrayList<Integer> oldKey = open_set.peek().getKScore();//calculateKey(open_set.peek());
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
 			
@@ -69,7 +72,7 @@ public class DStarLite extends LPAstar{
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
-					updateVertex(s);
+					updateVertex(s);				
 			}
 			else
 			{
@@ -96,7 +99,7 @@ public class DStarLite extends LPAstar{
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
 					if(changedEdges != null){
-						costToCurrent = costToCurrent + hScore(last, start);  
+						costToCurrent = costToCurrent + hScore(start.getParent(), start);  
 						last = start;
 						for (Edge e : changedEdges)
 						{
@@ -104,8 +107,9 @@ public class DStarLite extends LPAstar{
 							updateVertex(begin);
 						}
 					}
-					computeShortestPath();
+					
 				}
+				computeShortestPath();
 			}
 		}
 		return reconstructPath(startInput, goal, new ArrayList<Node>());

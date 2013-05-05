@@ -135,6 +135,12 @@ public class GUIPanel extends JPanel implements KeyListener {
 			grid.getVision(current, 2);
 		}
 		
+		int costThusFar = 0;
+		for (int i = 1; i <= path.length - 1; i++)
+		{
+			costThusFar += grid.getEdgeLength(path[i], path[i-1]);
+		}
+		System.out.print(costThusFar);
 		this.setPath(path);
 		this.repaint();			
 
