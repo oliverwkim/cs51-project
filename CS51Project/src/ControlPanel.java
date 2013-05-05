@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -115,7 +116,7 @@ public class ControlPanel extends JPanel {
 		
 		p.add(algLabel);
 		p.add(algList);
-		
+				
 		f.setTitle("Pathfinding Control Panel");
 		f.setContentPane(p);
 		f.pack();

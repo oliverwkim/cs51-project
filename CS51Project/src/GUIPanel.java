@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,7 @@ import java.awt.event.KeyListener;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 public class GUIPanel extends JPanel implements KeyListener {
@@ -70,12 +72,20 @@ public class GUIPanel extends JPanel implements KeyListener {
 			path = AStar.algorithm(grid, end, current);
 		}
 		
+		this.setPreferredSize(new Dimension(10 + padding + margin * gridX, padding * 2 + margin * gridY));
+		
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.add(this);
-		f.setContentPane(container);
+		
+		JScrollPane jsp = new JScrollPane();
+		jsp.setViewportView(container);
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+		f.add(jsp);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
-		f.setSize(10 + padding + margin * gridX, padding * 2 + margin * gridY);
+		f.setSize(600,600);
 		
 		ActionListener action = new ActionListener()
         {   
@@ -225,9 +235,11 @@ public class GUIPanel extends JPanel implements KeyListener {
 		}
 	}
 
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_KP_LEFT)
+		{
+			System.out.println("Left!");
+		}
 	}
 
 	public void keyReleased(KeyEvent arg0) {
