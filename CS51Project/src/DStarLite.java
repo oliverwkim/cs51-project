@@ -16,7 +16,6 @@ public class DStarLite extends LPAstar{
 	private static Node start;
 	private static Node goal;
 	private static Grid g;
-	private static Node last;
 	
 	public static int[] calculateKey(Node s) 
 	{
@@ -84,13 +83,8 @@ public class DStarLite extends LPAstar{
 		while(keyCompare(open_set.peek().getKScore(), calculateKey(start)) < 0
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			if(keyCompare(open_set.peek().getKScore(), calculateKey(start)) < 0)
-				System.out.println("Because of key");
-			else
-				System.out.println("Because of start");
 			int[] oldKey = open_set.peek().getKScore();
 			Node u = open_set.poll();
-			//u.setRhsScore(findRhs(u));
 			
 			//if a node is under-consistent simply recalculate the key value and add back into the queue
 			if(keyCompare(oldKey, calculateKey(u)) < 0)
@@ -103,14 +97,12 @@ public class DStarLite extends LPAstar{
 			//rhs score and then update the neighboring vertices
 			if ((u.getGScore() > u.getRhsScore()))
 			{
-				System.out.println("Update friends");
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
 					updateVertex(s);				
 			}
 			else
 			{
-				System.out.println(u.getGScore() + ", " + u.getRhsScore() + " Update self + friends");
 				u.setGScore(2000000);
 				for (Node s : u.getConnections())
 					updateVertex(s);
@@ -125,16 +117,12 @@ public class DStarLite extends LPAstar{
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
-		last = startInput;
+		Node last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
-		int counter = 0;
 		path = new ArrayList<Node>();
 		while(!start.equals(goal))
 		{
-			if(counter++ > 50)
-				return path.toArray(new Node[path.size()]);
-			System.out.println(counter);
 			path.add(0, start);			
 
 			if (start.getGScore() == 2000000 || noPath) // path does not exist 

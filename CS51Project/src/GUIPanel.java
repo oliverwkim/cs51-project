@@ -66,9 +66,7 @@ public class GUIPanel extends JPanel {
 
 		grid.turnOnFog(current, 2);
 		grid.setPos(current);
-		
-		int costThusFarAlt = 0;
-		
+				
 		if(choice.equals("D*Lite"))
 		{
 			path = DStarLite.algorithm(grid, end, current);
@@ -77,7 +75,6 @@ public class GUIPanel extends JPanel {
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
 			counter = path.length - 2;
-			costThusFarAlt = current.getGScore();
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
 			f.setTitle(choice);
@@ -89,7 +86,6 @@ public class GUIPanel extends JPanel {
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
-			costThusFarAlt = end.getGScore();
 			f.setTitle(choice);
 		}
 		else
@@ -99,7 +95,6 @@ public class GUIPanel extends JPanel {
 			{
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
-			costThusFarAlt = end.getGScore();
 			f.setTitle(choice);
 		}
 		
@@ -160,7 +155,7 @@ public class GUIPanel extends JPanel {
             }
         };
         
-		timer = new Timer(500, action);
+		timer = new Timer(750, action);
 		
 		// checks if path exists
 		if(path != null)

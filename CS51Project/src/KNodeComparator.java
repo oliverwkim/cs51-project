@@ -2,23 +2,9 @@ import java.util.Comparator;
 
 public class KNodeComparator implements Comparator<Node> {
 	
+	// Calls the key comparator implemented in LPAstar
 	public int compare(Node one, Node two) {
-		if (one.getKScore()[0]== two.getKScore()[0])
-		{
-			if (one.getKScore()[1] > two.getKScore()[1])
-				return 1;
-			else if (one.getKScore()[1] < two.getKScore()[1])
-				return -1;
-			return 0;
-		}
-		else
-		{
-			if (one.getKScore()[0] > two.getKScore()[0])
-				return 1;
-			else if (one.getKScore()[0] < two.getKScore()[0])
-				return -1;
-			return 0;
-		}
+		return LPAstar.keyCompare(one.getKScore(), two.getKScore());
 	}
 	
 	public boolean equals(Node one, Node two){

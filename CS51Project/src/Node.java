@@ -93,9 +93,8 @@ public abstract class Node {
 		return result.toArray(new Edge[result.size()]);
 	}
 	
-	/* Returns all the potential edge connections that this node doesn't actually have
+	/* Returns all the elements in shadowConnections that are not in connections
 	 * i.e. all connections assumed to exist when node is not visible, but are seen to not exist when it is visible
-	 * This is all the elements in shadowConnections that are not in connections
 	 * NOTE: This will only return the newly discovered non-connections that have not already been discovered.
 	 *       If this is Node A, then seeing Node B first and seeing the A-B connection does not exist means that
 	 *       the A-B connection will be returned through Node B's method, but not Node A's.
