@@ -19,7 +19,7 @@ public abstract class Node {
 	
 	protected int fScore = 0;
 	protected int gScore = 2000000;
-	protected ArrayList<Integer> kScore = null;
+	protected int[] kScore = {2000000, 2000000};
 	protected int rhsScore = 2000000;
 	
 	/* These variables will contain connections to all neighbors.
@@ -167,12 +167,17 @@ public abstract class Node {
 		parent = n;
 	}
 	
-	ArrayList<Integer> getKScore(){
+	int[] getKScore(){
 		return kScore;	
 	}
 	
-	void setKScore(ArrayList<Integer> score){
+	void setKScore(int[] score){
 		kScore = score;
+	}
+	
+	void setKScore(int one, int two){
+		kScore[0] = one;
+		kScore[1] = two;
 	}
 	
 	int getRhsScore(){

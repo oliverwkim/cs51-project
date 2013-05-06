@@ -18,11 +18,11 @@ public class DStarLite extends LPAstar{
 	private static Grid g;
 	private static Node last;
 	
-	public static ArrayList<Integer> calculateKey(Node s) 
+	public static int[] calculateKey(Node s) 
 	{
-		ArrayList<Integer> key = new ArrayList<Integer>();
-		key.add(Math.min(s.getGScore(), s.getRhsScore()) + hScore(start,s) + costToCurrent);
-		key.add(Math.min(s.getGScore(), s.getRhsScore()));
+		int[] key = new int[2];
+		key[0] = (Math.min(s.getGScore(), s.getRhsScore()) + hScore(start,s) + costToCurrent);
+		key[1] = (Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
 	
@@ -84,11 +84,15 @@ public class DStarLite extends LPAstar{
 		while(keyCompare(open_set.peek().getKScore(), calculateKey(start)) < 0
 					|| start.getRhsScore() != start.getGScore()) 
 		{
-			ArrayList<Integer> oldKey = open_set.peek().getKScore();
+			if(keyCompare(open_set.peek().getKScore(), calculateKey(start)) < 0)
+				System.out.println("Because of key");
+			else
+				System.out.println("Because of start");
+			int[] oldKey = open_set.peek().getKScore();
 			Node u = open_set.poll();
-			u.setRhsScore(findRhs(u));
+			//u.setRhsScore(findRhs(u));
 			
-			//if a node is under-consistent simply recalculate the key value 
+			//if a node is under-consistent simply recalculate the key value and add back into the queue
 			if(keyCompare(oldKey, calculateKey(u)) < 0)
 			{
 				u.setKScore(calculateKey(u));
@@ -97,16 +101,16 @@ public class DStarLite extends LPAstar{
 			
 			//if a node is over-consistent set the g score to the actual 
 			//rhs score and then update the neighboring vertices
-			else if ((u.getGScore() > u.getRhsScore()))
+			if ((u.getGScore() > u.getRhsScore()))
 			{
+				System.out.println("Update friends");
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
 					updateVertex(s);				
 			}
-			
-			//
 			else
 			{
+				System.out.println(u.getGScore() + ", " + u.getRhsScore() + " Update self + friends");
 				u.setGScore(2000000);
 				for (Node s : u.getConnections())
 					updateVertex(s);
@@ -130,15 +134,13 @@ public class DStarLite extends LPAstar{
 		{
 			if(counter++ > 50)
 				return path.toArray(new Node[path.size()]);
-			System.out.println(start.getGScore() + " Node");
+			System.out.println(counter);
 			path.add(0, start);			
 
 			if (start.getGScore() == 2000000 || noPath) // path does not exist 
 				return path.toArray(new Node[path.size()]);			
 			start = minimize(start);
-			start.setParent(last);
-			//last = start;
-			//start = temp;
+
 			Node[] newVisible = g.getVision(start, 2);			
 
 			if(newVisible != null){
@@ -147,17 +149,14 @@ public class DStarLite extends LPAstar{
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
 					if(changedEdges != null){						
-						for (Edge e : changedEdges)
+						for (Edge e : changedEdges){
 							updateVertex(e.getEnd(n));
+						}
 						updateVertex(n);
 					}					
 				}
-				computeShortestPath();				
-				initialize(g, goal, start);
-				
-			}
-			
-					
+				computeShortestPath();								
+			}					
 		}
 		path.add(0, goal);
 		return path.toArray(new Node[path.size()]);
@@ -169,8 +168,7 @@ public class DStarLite extends LPAstar{
 		
 		for(Node s : u.getConnections())
 		{
-			if (g.getEdgeLength(s, u) + s.getGScore() <= g.getEdgeLength(min, u) + min.getGScore()
-					&& !(u.getParent().getParent()).equals(u))
+			if (g.getEdgeLength(s, u) + s.getGScore() <= g.getEdgeLength(min, u) + min.getGScore())
 				min = s;
 		}
 		return min;
@@ -189,7 +187,11 @@ public class DStarLite extends LPAstar{
 			}
 			if (values.size() == 0)
 				return -1;
-			return values.peek();			
+			// 2000000 is representative of infinity, so do not return higher than this value
+			if(values.peek() >= 2000000)
+				return 2000000;
+			else
+				return values.peek();
 		}
 		return 0;
 	}
