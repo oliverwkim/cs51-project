@@ -53,7 +53,7 @@ public class DStarLite extends LPAstar{
 	 * If edge costs are changed (which in our implementation corresponds
 	 * to finding that an edge doesn't exists) then we must update the
 	 * vertices bordering that edge in order to maintain the invariants 
-	 * necessitated in LPA*.
+	 * outlined in LPA*.
 	 */
 	
 	public static void updateVertex(Node u)
@@ -62,7 +62,7 @@ public class DStarLite extends LPAstar{
 			u.setRhsScore(findRhs(u)); 
 
 		if (open_set.contains(u))
-			open_set.remove(u); //
+			open_set.remove(u); 
 		
 		if (u.getGScore() != u.getRhsScore()) 
 		{
@@ -71,6 +71,12 @@ public class DStarLite extends LPAstar{
 		}
 		
 	}
+	
+	/*
+	 * While there remain inconsistencies in the grid computeShortestPath 
+	 * checks for nodes that are locally inconsistent, and then fixes those 
+	 * inconsistencies, and the resulting inconsistencies in neighboring nodes.
+	 */
 	
 	public static void computeShortestPath()
 	{
@@ -82,17 +88,23 @@ public class DStarLite extends LPAstar{
 			Node u = open_set.poll();
 			u.setRhsScore(findRhs(u));
 			
+			//if a node is under-consistent simply recalculate the key value 
 			if(keyCompare(oldKey, calculateKey(u)) < 0)
 			{
 				u.setKScore(calculateKey(u));
 				open_set.add(u);
 			}
+			
+			//if a node is over-consistent set the g score to the actual 
+			//rhs score and then update the neighboring vertices
 			else if ((u.getGScore() > u.getRhsScore()))
 			{
 				u.setGScore(u.getRhsScore());
 				for (Node s : u.getConnections())
 					updateVertex(s);				
 			}
+			
+			//
 			else
 			{
 				u.setGScore(2000000);
