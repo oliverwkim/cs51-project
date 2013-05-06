@@ -158,7 +158,7 @@ public class GUIPanel extends JPanel {
             }
         };
         
-		timer = new Timer(500, action);
+		timer = new Timer(750, action);
 		
 		// checks if path exists
 		if(path != null)
