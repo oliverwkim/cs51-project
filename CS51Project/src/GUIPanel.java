@@ -31,6 +31,7 @@ public class GUIPanel extends JPanel {
 	private int margin;
 	private int padding;
 	private String choice;
+	private int totalCost = 0;
 	
 	JFrame f;
 	
@@ -79,7 +80,7 @@ public class GUIPanel extends JPanel {
 			costThusFarAlt = current.getGScore();
 			grid.resetGrid();
 			grid.turnOnFog(current, 2);
-			f.setTitle("D*Lite");
+			f.setTitle(choice);
 		}
 		else if (choice.equals("LPA*"))
 		{
@@ -89,7 +90,7 @@ public class GUIPanel extends JPanel {
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
 			costThusFarAlt = end.getGScore();
-			f.setTitle("LPA*");
+			f.setTitle(choice);
 		}
 		else
 		{
@@ -99,7 +100,7 @@ public class GUIPanel extends JPanel {
 				JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
 			}
 			costThusFarAlt = end.getGScore();
-			f.setTitle("A*");
+			f.setTitle(choice);
 		}
 		
 		this.setPreferredSize(new Dimension(10 + padding + margin * gridX, padding * 2 + margin * gridY));
@@ -121,12 +122,11 @@ public class GUIPanel extends JPanel {
             	// if it reaches the end of the path, stop repeating
                 if(current.equals(end))
                 {
-                	int totalCost = 0;
                 	for(int i = 1; i < traversed.size(); i++)
                 	{
                 		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
                 	}
-                	System.out.print(totalCost);
+                	repaint();
                     timer.stop();
                 }
                 else
@@ -134,12 +134,11 @@ public class GUIPanel extends JPanel {
                 	loop();
         
             		if(path.length == 1 && path[0].equals(end)){
-            			int totalCost = 0;
                     	for(int i = 1; i < traversed.size(); i++)
                     	{
                     		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
                     	}
-                    	System.out.print(totalCost);
+                    	
             			current = end;
             			grid.setPos(current);
             			grid.getVision(current, 2);
@@ -152,12 +151,12 @@ public class GUIPanel extends JPanel {
         };
         
 		timer = new Timer(500, action);
+		
+		// checks if path exists
 		if(path != null)
 			timer.start();
 	}
-	
-	int totalCost = 0;
-	
+		
 	private void loop () {
 		if(choice.equals("D*Lite"))
 		{
@@ -213,6 +212,11 @@ public class GUIPanel extends JPanel {
 	public void paintComponent(Graphics p)
 	{
 		super.paintComponent(p);
+		p.setColor(Color.black);
+		
+		if(totalCost > 0)
+			p.drawString("Total Cost: " + totalCost, 25, 25);
+
 		for(int i = 0; i < gridY; i++)
 		{
 			for(int j = 0; j < gridX; j++)

@@ -28,7 +28,7 @@ public class LPAstar extends AStar {
 		noPath = false;
 		open_set = new PriorityQueue<Node>(11, kNodeComparator); 
 		start.setRhsScore(0);
-		start.setKScore(null);
+		start.setKScore(calculateKey(start));
 		open_set.add(start);
 	}
 
@@ -79,8 +79,13 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath()
 	{
+<<<<<<< HEAD
 
 		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) < 0|| goal.getRhsScore() != goal.getGScore())
+=======
+		while(keyCompare(open_set.peek().getKScore(), calculateKey(goal)) < 0
+				|| goal.getRhsScore() != goal.getGScore())
+>>>>>>> dc746ee3e5218122f3b1c265554a287601da34c9
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
