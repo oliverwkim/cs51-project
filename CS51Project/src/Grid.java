@@ -164,7 +164,7 @@ public class Grid implements GridInterface {
 				current.setGScore(2000000);
 				current.setRhsScore(2000000);
 				current.setFScore(0);
-				current.setKScore(null);
+				current.setKScore(2000000, 2000000);
 				current.setParent(current);
 			}
 		}

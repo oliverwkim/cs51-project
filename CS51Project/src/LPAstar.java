@@ -13,11 +13,11 @@ public class LPAstar extends AStar {
 	static Grid g;
 	static boolean noPath;
 	
-	public static ArrayList<Integer> calculateKey(Node s) 
+	public static int[] calculateKey(Node s) 
 	{
-		ArrayList<Integer> key = new ArrayList<Integer>();
-		key.add(Math.min(s.getGScore(), s.getRhsScore()) + hScore(s,goal));
-		key.add(Math.min(s.getGScore(), s.getRhsScore()));
+		int[] key = new int[2];
+		key[0] = (Math.min(s.getGScore(), s.getRhsScore()) + hScore(s,goal));
+		key[1] = (Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
 
@@ -47,31 +47,21 @@ public class LPAstar extends AStar {
 		}
 	}
 
-	public static int keyCompare(ArrayList<Integer> one, ArrayList<Integer> two)
+	public static int keyCompare(int[] one, int[] two)
 	{
-		//return (one.get(0) < two.get(0) || (one.get(0) == two.get(0) && one.get(1) <= two.get(1)));
-		/*if (one.get(0) < two.get(0))
-			return true;
-		else if (one.get(0) > two.get(0))
-			return false;
-		else if (one.get(1) < two.get(1))
-			return true;
-		else if (one.get(1) > two.get(1))
-			return false;
-		return false;*/
-		if (one.get(0) == two.get(0))
+		if (one[0] == two[0])
 		{
-			if (one.get(1) > two.get(1))
+			if (one[1] > two[1])
 				return 1;
-			else if (one.get(1) < two.get(1))
+			else if (one[1] < two[1])
 				return -1;
 			return 0;
 		}
 		else
 		{
-			if (one.get(0) > two.get(0))
+			if (one[0] > two[0])
 				return 1;
-			else if (one.get(0) < two.get(0))
+			else if (one[0] < two[0])
 				return -1;
 			return 0;
 		}
@@ -79,13 +69,8 @@ public class LPAstar extends AStar {
 	
 	public static void computeShortestPath()
 	{
-<<<<<<< HEAD
-
-		while(keyCompare(calculateKey(open_set.peek()), calculateKey(goal)) < 0|| goal.getRhsScore() != goal.getGScore())
-=======
 		while(keyCompare(open_set.peek().getKScore(), calculateKey(goal)) < 0
 				|| goal.getRhsScore() != goal.getGScore())
->>>>>>> dc746ee3e5218122f3b1c265554a287601da34c9
 		{
 			Node u = open_set.poll();
 			if ((u.getGScore() > u.getRhsScore()))
