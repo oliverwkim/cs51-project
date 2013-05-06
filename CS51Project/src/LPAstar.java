@@ -20,6 +20,31 @@ public class LPAstar extends AStar {
 		key[1] = (Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
+	
+	
+	/* This method is separate from the one in KNodeComparator, as this directly compares the keys
+	 * This method cannot be placed in KNodeComparator because of interface implementation issues,
+	 * and is put here instead
+	 */
+	public static int keyCompare(int[] one, int[] two)
+	{
+		if (one[0] == two[0])
+		{
+			if (one[1] > two[1])
+				return 1;
+			else if (one[1] < two[1])
+				return -1;
+			return 0;
+		}
+		else
+		{
+			if (one[0] > two[0])
+				return 1;
+			else if (one[0] < two[0])
+				return -1;
+			return 0;
+		}
+	}
 
 	public static void initialize()
 	{
@@ -44,26 +69,6 @@ public class LPAstar extends AStar {
 		{
 			u.setKScore(calculateKey(u));
 			open_set.add(u);
-		}
-	}
-
-	public static int keyCompare(int[] one, int[] two)
-	{
-		if (one[0] == two[0])
-		{
-			if (one[1] > two[1])
-				return 1;
-			else if (one[1] < two[1])
-				return -1;
-			return 0;
-		}
-		else
-		{
-			if (one[0] > two[0])
-				return 1;
-			else if (one[0] < two[0])
-				return -1;
-			return 0;
 		}
 	}
 	

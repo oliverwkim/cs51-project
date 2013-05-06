@@ -85,7 +85,6 @@ public class DStarLite extends LPAstar{
 		{
 			int[] oldKey = open_set.peek().getKScore();
 			Node u = open_set.poll();
-			//u.setRhsScore(findRhs(u));
 			
 			//if a node is under-consistent simply recalculate the key value and add back into the queue
 			if(keyCompare(oldKey, calculateKey(u)) < 0)
