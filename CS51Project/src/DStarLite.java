@@ -2,10 +2,17 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 
+/*
+ * D* Lite builds on LPA* to implement a simpler version of the D* algorithm
+ * D* Lite reverses the search direction of LPA*, starting at the goal node
+ * and working to reach the start node. Consequently the RHS and G score 
+ * methods are different from those in LPA*.
+ */
+
 public class DStarLite extends LPAstar{
 
-	private static int costToCurrent;
-	private static PriorityQueue<Node> open_set;
+	private static int costToCurrent; // cost from start to current node
+	private static PriorityQueue<Node> open_set; 
 	private static Node start;
 	private static Node goal;
 	private static Grid g;
@@ -18,6 +25,13 @@ public class DStarLite extends LPAstar{
 		key.add(Math.min(s.getGScore(), s.getRhsScore()));
 		return key;
 	}
+	
+	/*
+	 * In our implementation of initialize, we do not need to explicitly set  
+	 * the RHS and G scores of every node to infinity 
+	 * (which we express as 2,000,000) since this is already the default value
+	 * for those variables.
+	 */
 	
 	public static void initialize(Grid gridInput, Node gInput, Node sInput)
 	{
@@ -36,15 +50,22 @@ public class DStarLite extends LPAstar{
 		open_set.add(goal);
 	}
 	
+	/*
+	 * If edge costs are changed (which in our implementation corresponds
+	 * to finding that an edge doesn't exists) then we must update the
+	 * vertices bordering that edge in order to maintain the invariants 
+	 * necessitated in LPA*.
+	 */
+	
 	public static void updateVertex(Node u)
 	{
 		if (!u.equals(goal))
 			u.setRhsScore(findRhs(u)); 
 
 		if (open_set.contains(u))
-			open_set.remove(u);
+			open_set.remove(u); //
 		
-		if (u.getGScore() != u.getRhsScore())
+		if (u.getGScore() != u.getRhsScore()) 
 		{
 			u.setKScore(calculateKey(u));
 			open_set.add(u);
