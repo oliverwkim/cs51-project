@@ -122,6 +122,7 @@ public class GUIPanel extends JPanel {
             	// if it reaches the end of the path, stop repeating
                 if(current.equals(end))
                 {
+                	// sums the edge costs between the traversed nodes, returns the total cost
                 	for(int i = 1; i < traversed.size(); i++)
                 	{
                 		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
@@ -141,6 +142,7 @@ public class GUIPanel extends JPanel {
 
         
                 	else if(path.length == 1 && path[0].equals(end)){
+                		// sums the edge costs between the traversed nodes, returns the total cost
                     	for(int i = 1; i < traversed.size(); i++)
                     	{
                     		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
