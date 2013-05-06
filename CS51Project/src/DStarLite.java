@@ -9,6 +9,7 @@ public class DStarLite extends LPAstar{
 	private static Node start;
 	private static Node goal;
 	private static Grid g;
+	private static Node last;
 	
 	public static ArrayList<Integer> calculateKey(Node s) 
 	{
@@ -53,8 +54,7 @@ public class DStarLite extends LPAstar{
 	
 	public static void computeShortestPath()
 	{
-		start.setKScore(calculateKey(start));
-		while(keyCompare(open_set.peek().getKScore(), start.getKScore()) < 0
+		while(keyCompare(open_set.peek().getKScore(), calculateKey(start)) < 0
 					|| start.getRhsScore() != start.getGScore()) 
 		{
 			ArrayList<Integer> oldKey = open_set.peek().getKScore();
@@ -88,7 +88,7 @@ public class DStarLite extends LPAstar{
 	
 	public static Node[] algorithm(Grid gInput, Node goalInput, Node startInput)
 	{
-		Node last = startInput;
+		last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
 		while(!start.equals(goal))
@@ -97,12 +97,14 @@ public class DStarLite extends LPAstar{
 			path.add(0, start);
 			if (start.getGScore() == 2000000 || noPath) // path does not exist 
 				return path.toArray(new Node[path.size()]);
-			start = minimize(start.getConnections(), start);
+			Node temp = minimize(start.getConnections(), start);
+			last = start;
+			start = temp;
 			Node[] newVisible = g.getVision(start, 2);
 
 			if(newVisible != null){
 				costToCurrent = costToCurrent + g.getEdgeLength(last, start);  
-				last = start;
+				//last = start;
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
 					if(changedEdges != null){
@@ -122,10 +124,14 @@ public class DStarLite extends LPAstar{
 	private static Node minimize (Node[] nodeList, Node u)
 	{
 		Node min = nodeList[0];
+		//if(min.equals(last))
+		//	min = nodeList[1];
+		
 		
 		for(Node s : nodeList)
 		{
-			if (g.getEdgeLength(s, u) + s.getGScore() < g.getEdgeLength(min, u) + min.getGScore())
+			if (g.getEdgeLength(s, u) + s.getGScore() < g.getEdgeLength(min, u) + min.getGScore()
+					&& !s.equals(last))
 				min = s;
 		}
 		return min;
