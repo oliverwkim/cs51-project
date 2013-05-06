@@ -2,6 +2,10 @@ import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.ArrayList;
 
+/*
+ * Only the algorithm method should be called from this class, to run the LPAstar algorithm
+ */
+
 public class LPAstar extends AStar { 
 
 	final static int lineOfSight = 2;

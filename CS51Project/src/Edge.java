@@ -1,4 +1,6 @@
-
+/*
+ * Edge objects for connecting adjacent nodes in the grid
+ */
 public class Edge {
 	private int length;
 	private Node begin;

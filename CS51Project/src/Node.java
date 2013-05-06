@@ -1,6 +1,9 @@
 import java.awt.Point;
 import java.util.ArrayList;
 
+/* This is the basic Node object used in the graphs
+ * In our implementation, we dealt only with square graphs, and so only used SquareNodes
+ */
 public abstract class Node {
 	
 	protected Point position;

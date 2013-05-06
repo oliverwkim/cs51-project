@@ -1,5 +1,8 @@
 import java.util.Comparator; 
 
+/*
+ * Used for comparing keys in the priority queues of LPAstar and D* Lite
+ */
 public class KNodeComparator implements Comparator<Node> {
 	
 	// Calls the key comparator implemented in LPAstar

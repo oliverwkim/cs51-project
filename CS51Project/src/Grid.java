@@ -1,6 +1,11 @@
 import java.awt.Point;
 import java.util.ArrayList;
 
+/*
+ * Grid structure for the path-finding algorithms to navigate.
+ * Consists of a 2-dimensional array of nodes
+ */
+
 public class Grid implements GridInterface {
 
 	protected Node[][] grid;

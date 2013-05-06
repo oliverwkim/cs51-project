@@ -1,5 +1,8 @@
 import java.util.Comparator; 
 
+/*
+ * Used for comparing node scores in the Astar algorithm
+ */
 public class NodeComparator implements Comparator<Node> {
 	
 	public int compare(Node one, Node two) {

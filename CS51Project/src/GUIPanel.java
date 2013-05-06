@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
+/*
+ * For use by the ControlPanel class, to display the grids
+ */
+
 public class GUIPanel extends JPanel {
 	
 	private int gridX;
@@ -153,7 +157,7 @@ public class GUIPanel extends JPanel {
             }
         };
         
-		timer = new Timer(750, action);
+		timer = new Timer(500, action);
 		
 		// checks if path exists
 		if(path != null)

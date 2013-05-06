@@ -1,3 +1,7 @@
+/* 
+ * Node with 8 possible connections: 4 diagonal and 4 cardinal
+ */
+
 public class SquareNode extends Node {
 
 	// Maximum number of nodes this can be connected to
