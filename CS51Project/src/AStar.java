@@ -65,7 +65,7 @@ public class AStar {
 			return 14 * xDiff + 10 * (yDiff - xDiff);
 	}
 
-	// traverses the list of Nodes and returns a path
+	// traverses the list of Nodes and returns a path as a list of Nodes
 	private static Node[] reconstructPath(Node start, Node current)
 	{
 		ArrayList<Node> path = new ArrayList<Node> ();

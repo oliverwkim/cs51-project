@@ -126,6 +126,7 @@ public class GUIPanel extends JPanel {
                 	{
                 		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
                 	}
+                	totalCost += grid.getEdgeLength(traversed.get(traversed.size() - 1), end);
                 	repaint();
                     timer.stop();
                 }
@@ -140,11 +141,11 @@ public class GUIPanel extends JPanel {
 
         
                 	else if(path.length == 1 && path[0].equals(end)){
-            			int totalCost = 0;
                     	for(int i = 1; i < traversed.size(); i++)
                     	{
                     		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
                     	}
+                    	totalCost += grid.getEdgeLength(traversed.get(traversed.size() - 1), end);
                     	
             			current = end;
             			grid.setPos(current);
