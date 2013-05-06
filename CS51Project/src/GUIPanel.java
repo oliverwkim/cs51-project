@@ -141,7 +141,7 @@ public class GUIPanel extends JPanel {
         
                 	else if(path.length == 1 && path[0].equals(end)){
             			int totalCost = 0;
-                    	for(int i = 1; i < traversed.size(); i++)
+                    	for(int i = 1; i <= traversed.size(); i++)
                     	{
                     		totalCost += grid.getEdgeLength(traversed.get(i), traversed.get(i-1));
                     	}
