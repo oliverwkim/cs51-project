@@ -25,7 +25,7 @@ public class GUIPanel extends JPanel {
 	private Node end;
 	Timer timer;
 	
-	int counter;
+	private int counter;
 	
 	private int diameter;
 	private int margin;
@@ -132,8 +132,14 @@ public class GUIPanel extends JPanel {
                 else
                 {
                 	loop();
+                	if(path == null){
+                		repaint();
+                		timer.stop();
+            			JOptionPane.showMessageDialog(f,"No path found!","No path found",JOptionPane.ERROR_MESSAGE);
+                	}
+
         
-            		if(path.length == 1 && path[0].equals(end)){
+                	else if(path.length == 1 && path[0].equals(end)){
             			int totalCost = 0;
                     	for(int i = 1; i < traversed.size(); i++)
                     	{
@@ -176,7 +182,6 @@ public class GUIPanel extends JPanel {
 				grid.setPos(current);
 			}
 			
-			//path = DStarLite.algorithm(grid, end, current, grid.getVision(current, 2));
 		}
 		else if (choice.equals("LPA*"))
 		{
@@ -274,7 +279,7 @@ public class GUIPanel extends JPanel {
 				}
 				
 				// colors goal green
-				if (path != null && path[0].equals(grid.getNode(i,j)))
+				if (path != null && end.equals(grid.getNode(i,j)))
 				{
 					p.setColor(Color.green);
 					p.fillOval(padding + margin * i, padding + margin * j, diameter, diameter);

@@ -157,6 +157,8 @@ public class LPAstar extends AStar {
 			}
 			if(closestNode == null){
 				deadends.add(pathGoal);
+				if(def == null)
+					return null;
 				return reconstructPath(def, pathStart, deadends);
 				//return path.toArray(new Node[path.size()]);
 			}

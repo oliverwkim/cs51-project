@@ -40,14 +40,14 @@ public class DStarLite extends LPAstar{
 		goal = gInput;
 		costToCurrent = 0;
 		noPath = false;
-		
-		path = new ArrayList<Node>();
-		
+				
 		kNodeComparator = new KNodeComparator();
 		open_set = new PriorityQueue<Node>(11, kNodeComparator);
 		goal.setRhsScore(0);
 		goal.setKScore(calculateKey(goal));
 		open_set.add(goal);
+		
+		g.getVision(sInput, 2);
 	}
 	
 	/*
@@ -112,47 +112,53 @@ public class DStarLite extends LPAstar{
 		last = startInput;
 		initialize(gInput, goalInput, startInput);
 		computeShortestPath();
+		int counter = 0;
+		path = new ArrayList<Node>();
 		while(!start.equals(goal))
 		{
-			System.out.print(start.getGScore() + " ");
-			path.add(0, start);
-			if (start.getGScore() == 2000000 || noPath) // path does not exist 
+			if(counter++ > 50)
 				return path.toArray(new Node[path.size()]);
-			Node temp = minimize(start.getConnections(), start);
-			last = start;
-			start = temp;
-			Node[] newVisible = g.getVision(start, 2);
+			System.out.println(start.getGScore() + " Node");
+			path.add(0, start);			
+
+			if (start.getGScore() == 2000000 || noPath) // path does not exist 
+				return path.toArray(new Node[path.size()]);			
+			start = minimize(start);
+			start.setParent(last);
+			//last = start;
+			//start = temp;
+			Node[] newVisible = g.getVision(start, 2);			
 
 			if(newVisible != null){
-				costToCurrent = costToCurrent + g.getEdgeLength(last, start);  
-				//last = start;
+				costToCurrent = costToCurrent + hScore(last, start);  
+				last = start;
 				for(Node n: newVisible){
 					Edge[] changedEdges = n.getNewEdges();
-					if(changedEdges != null){
-						
+					if(changedEdges != null){						
 						for (Edge e : changedEdges)
 							updateVertex(e.getEnd(n));
 						updateVertex(n);
 					}					
 				}
-				computeShortestPath();
+				computeShortestPath();				
+				initialize(g, goal, start);
+				
 			}
+			
+					
 		}
 		path.add(0, goal);
 		return path.toArray(new Node[path.size()]);
 	}
 	
-	private static Node minimize (Node[] nodeList, Node u)
+	private static Node minimize (Node u)
 	{
-		Node min = nodeList[0];
-		//if(min.equals(last))
-		//	min = nodeList[1];
+		Node min = u.getConnections()[0];
 		
-		
-		for(Node s : nodeList)
+		for(Node s : u.getConnections())
 		{
-			if (g.getEdgeLength(s, u) + s.getGScore() < g.getEdgeLength(min, u) + min.getGScore()
-					&& !s.equals(last))
+			if (g.getEdgeLength(s, u) + s.getGScore() <= g.getEdgeLength(min, u) + min.getGScore()
+					&& !(u.getParent().getParent()).equals(u))
 				min = s;
 		}
 		return min;
